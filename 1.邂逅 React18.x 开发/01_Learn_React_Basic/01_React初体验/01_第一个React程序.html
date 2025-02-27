@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <div id="app"></div>
+
+    <!-- 添加依赖 -->
+    <!-- 依赖三个包 -->
+    <!-- CDN引入 -->
+    <script
+      src="https://unpkg.com/react@18/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <!-- 下载引入 -->
+
+    <!-- npm下载 -->
+    <!-- 我们引入了babel，必须在script标签中加入type="text/babel"，告诉它是文本类型，类型里面放在babel
+    只有加上这东西，babel才会对里面的jsx代码进行转化 
+    -->
+    <script type="text/babel">
+      //编写React代码
+      // jsx语法 -> 普通的JavaScript代码 ：通过babel转化的
+
+      // 渲染Hello World
+      // React18之前：ReactDOM.rander
+      // ReactDOM.render(<h2>Hello World</h2>, document.querySelector("#root"));
+
+      // React18之后：
+      //  ReactDOM.createRoot函数：用于创建一个React根，之后渲染的内容会包含这个根
+      //  参数:将渲染的内容,挂载到哪个HTML元素上
+      // 可以创建多个根元素
+      const root = ReactDOM.createRoot(document.querySelector("#root"));
+      // 渲染元素:root.render函数,参数:要渲染的根组件
+      root.render(<h2>Hello World</h2>);
+
+      // const app = ReactDOM.createRoot(document.querySelector("#app"));
+      // app.render(<h2>你好啊，李银河</h2>);
+    </script>
+  </body>
+</html>

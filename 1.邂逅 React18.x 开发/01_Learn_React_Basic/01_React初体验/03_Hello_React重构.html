@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script src="../lib/react.js"></script>
+    <script src="../lib/react-dom.js"></script>
+    <script src="../lib/babel.js"></script>
+
+    <script type="text/babel">
+      // 使用了babel转化，会开启严格模式
+      /*
+      message是数据(data),
+      btnClick是函数/方法,
+      rootRender是reader函数
+      单独来看他们都是独立的,但是他们之间存不存在联系呢?存在的,他们最终的目的是把内容给渲染出来
+      所以可以把他们封装到一起,可以称为:组件
+      封装成组件就可以直接渲染root.render(<APP/>),不要再把上面的data,函数,reader函数写出来
+      */
+
+      // let message = "Hello World";
+      // function btnClick() {
+      //   // 点击按钮修改文本
+      //   message = "Hello React";
+      //   // 重新渲染页面
+      //   rootRender();
+      // }
+      // // 创建根元素
+      // const root = ReactDOM.createRoot(document.querySelector("#root"));
+      // // 渲染元素
+      // rootRender();
+      // function rootRender() {
+      //   root.render(
+      //     <div>
+      //       <h2>{message}</h2>
+      //       <button onClick={btnClick}>修改文本</button>
+      //     </div>
+      //   );
+      // }
+
+      // 使用组件重构代码
+      // 类组件和函数式组件
+      // 1.类组件必须继承React.Component才能成为组件
+      // 不管有没有使用babel转化。在类当中默认是严格模式，
+      // 严格模式下，方法当中的this指向underfined
+      class App extends React.Component {
+        // 组件数据
+        constructor() {
+          // 这里我们使用了继承必须使用super()
+          super();
+
+          // 参与界面更新的数据：参与数据流,这个数据是定义在当前对象的 state 中
+          // 这个名字是固定的
+          this.state = {
+            message: "Hello World",
+          };
+
+          // 对需要绑定方法，提前绑定好
+          // 为了在回调函数中使用this，这个绑定是必不可少的
+          this.btnClick = this.btnClick.bind(this);
+        }
+        // 组件方法（实例方法）
+        btnClick() {
+          console.log(this);
+          // setState是继承React.Component过来的
+          // setState做了两件事：1.将state中值修改的、2.自动重新执行render函数
+          this.setState({
+            message: "Hello React",
+          });
+        }
+        // 渲染内容 render方法
+        render() {
+          // 使用数据，this.state.message=当前对象下的state对应的message
+          // 这里提前给方法绑定了this，就可以省略.bind.(this)写法 <button onClick={this.btnClick.bind(this)}>修改文本</button>
+          // 使用方法，this.btnClick.bind(this)=当前对象下的btnClick方法,并绑定当前对象this给这个方法
+          // render函数当中的this，指向的是当前实例
+          return (
+            <div>
+              <h2>{this.state.message}</h2>
+              <button onClick={this.btnClick}>修改文本</button>
+            </div>
+          );
+        }
+      }
+
+      // 将组件渲染到界面上
+      const root = ReactDOM.createRoot(document.querySelector("#root"));
+      root.render(<App />);
+
+      // this绑定问题
+      // const APP = new App() //创建实例
+      // const foo = app.btnClick //赋值foo函数
+      //this的指向：
+      //foo()//如果没有使用babel转化代码(使用babel会变成严格模式)，默认指向=>window. 严格模式下指向 => undefined
+    </script>
+  </body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script src="../lib/react.js"></script>
+    <script src="../lib/react-dom.js"></script>
+    <script src="../lib/babel.js"></script>
+
+    <script type="text/babel">
+      // 1.定义App根组件
+      class App extends React.Component {
+        constructor() {
+          super(); //继承了就要调用super
+          this.state = {
+            //数据固定放在state中
+            message: "Hello World",
+          };
+        }
+
+        render() {
+          const { message } = this.state;
+          return (
+            <div>
+              <h2>{message}</h2>
+            </div>
+          );
+        }
+      }
+
+      // 1.创建root并且渲染App组件
+      const root = ReactDOM.createRoot(document.querySelector("#root"));
+      root.render(<App />);
+    </script>
+  </body>
+</html>
