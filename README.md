@@ -131,6 +131,41 @@ React18 全家桶+Hooks+项目实战
 1.JSX 是什么？
 .JSX 是一种 JavaScript 的语法扩展(eXtension),也在很多地方称之为 JavaScript XML，因为看起来就是一段 XML 语法；
 .它用于描述我们 UI 界面，并且其完全可以和 JavaScript 融合在一起使用
+例子：const element = <h1>Hello, world!</h1>;
+html 写进了 js（html in js），css 也可以写进去（css in js），所以也可以成为 all in js
+
+问题：为什么 React 选择 JSX？
+React 认为渲染逻辑本质上与其他 UI 逻辑存在内在耦合（html 和 js），比如，在 UI 中需要绑定事件（button，a 原生）、状态等。
+他们之间是密不可分，所以 React 没有标记分离到不同的文件中，而是将它门组合到一起，这个地方就是组件（Component）
+.这里我们只需要知道，JSX 其实是嵌入到 JavaScript 中的一种结构语法
+
+.JSX 的书写规范
+--JSX 的顶层只能有一个根元素，所以我们很多时候会在外层包裹一个 div 元素
+--为了方便阅读，我们通常在 jsx 的外层包裹一个小括号(),这样可以方便阅读，并且 jsx 可以进行换行书写
+--JSX 中的标签可以是单标签，叶可以是双标签，单标签，必须以/>结尾
+
+2.JSX 的基本使用
+.JSX 的注释：{/_ 注释内容 _/}
+
+2.1.JSX 嵌入变量作为子元素
+.情况一：当变量是 Nunber，String，Array 类型时，可以直接显示
+.情况二：当变量是 null，undefined，Boolean 类型时，内容为空
+--如果希望可以显示 null，undefined，false，需要转成字符串
+--转换的方式有很多，比如 toString 方法，和空字符串拼接，String(变量)等
+.情况三：Object 对象类型不能作为子元素
+
+2.2.JSX 嵌入表达式
+.运算表达式
+.三元运算符
+.执行一个函数
+
+2.3.JSX 的使用
+.jsx 绑定属性
+..比如元素都会有 title 属性
+..比如 img 元素会有 src 属性
+..比如 a 元素会有 href 属性
+..比如元素可能需要绑定 class
+..比如原生使用内联样式 style
 
 1.认识 JSX 语法
 

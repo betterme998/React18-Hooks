@@ -13,44 +13,35 @@
     <script src="../lib/babel.js"></script>
 
     <script type="text/babel">
-      // 1.创建root
-      const root = ReactDOM.createRoot(document.querySelector("#root"));
-
-      // 2.创建类组件
+      // 1.定义App根组件
       class App extends React.Component {
         constructor() {
           super(); //继承了就要调用super
           this.state = {
             //数据固定放在state中
-            count: 0,
+            message: "Hello World",
           };
-        }
-        dowClick() {
-          console.log(this);
-
-          this.setState({
-            count: this.state.count - 1,
-          });
-        }
-        upClick() {
-          this.setState({
-            count: this.state.count + 1,
-          });
         }
 
         render() {
-          const { count } = this.state;
+          const { message } = this.state;
+          // 书写规范
+          // 1.jsx结构中只能有一个根元素
+          // 2.jsx结构通常会包含一个()，将整个jsx当做一个整体，实现换行
+          // 3.jsx可以是单标签，也可以是双标签，但是单标签必须以/>结尾
+
           return (
             <div>
-              <h2>{count}</h2>
-              <button onClick={this.upClick.bind(this)}>+1</button>
-              <button onClick={this.dowClick.bind(this)}>-1</button>
+              <h2>{message}</h2>
+              <br />
             </div>
+            //<div></div> 报错因为只能有一个根元素
           );
         }
       }
 
-      // 3.渲染函数
+      // 1.创建root并且渲染App组件
+      const root = ReactDOM.createRoot(document.querySelector("#root"));
       root.render(<App />);
     </script>
   </body>
