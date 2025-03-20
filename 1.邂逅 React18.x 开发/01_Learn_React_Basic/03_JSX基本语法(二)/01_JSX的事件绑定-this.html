@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script src="../lib/react.js"></script>
+    <script src="../lib/react-dom.js"></script>
+    <script src="../lib/babel.js"></script>
+
+    <script type="text/babel">
+      const obj = {
+        foo: function () {
+          console.log("foo:", this);
+        },
+      };
+      obj.foo(); //obj
+
+      const config = {
+        onClick: obj.foo.bind(obj),
+      };
+      // 默认调用默认情况下指向window，严格模式下指向undefined
+      const click = config.onClick;
+      click(); //undefined
+      /*
+      this的四种绑定规则：
+        1.默认绑定：独立执行foo()
+        2.隐式绑定：被一个对象执行obj.foo() -> obj
+        3.显示绑定：通过call/apply/bind foo.call("aaa") -> String("aaa") -> "aaa"
+        4.new绑定： new foo() -> 创建一个新对象，并且赋值给this
+
+      
+      */
+
+      // 1.定义App根组件
+      class App extends React.Component {
+        // class fields
+        name = "App";
+        constructor() {
+          super(); //继承了就要调用super
+          this.state = {
+            //数据固定放在state中
+            message: "Hello World",
+            counter: 100,
+          };
+          this.brn1Click = this.brn1Click.bind(this); //在构造函数中绑定this，防止后面调用时丢失上下文环境
+        }
+
+        brn1Click() {
+          console.log("brn1Click");
+          this.setState({ counter: this.state.counter + 1 });
+        }
+        brn2Click = () => {
+          console.log("brn2Click");
+          this.setState({ counter: 1000 });
+        };
+        brn3Click() {
+          console.log("brn3Click", this);
+          this.setState({ counter: 9000 });
+        }
+
+        render() {
+          const { message } = this.state;
+          return (
+            <div>
+              {/* 1.this绑定方式一：bind绑定 */}
+              <button onClick={this.brn1Click}>按钮1</button>
+
+              {/* 2.this绑定方式二：ES6 class fields */}
+              <button onClick={this.brn2Click}>按钮2</button>
+
+              {/* 3.this绑定方式三：直接传入一个箭头函数(*********重要************) */}
+              {/* 箭头函数没有this，往上一层找this，这里箭头函数的this指向App组件 */}
+              {/* 箭头函数里面的方法要加()，保证函数能被调用，这里函数this指向->箭头函数->App组件 */}
+              <button onClick={() => console.log("brn3Click")}>按钮3</button>
+              <button onClick={() => this.brn3Click()}>按钮3</button>
+
+              <h2>当前计数：{this.state.counter}</h2>
+            </div>
+          );
+        }
+      }
+
+      // 1.创建root并且渲染App组件
+      const root = ReactDOM.createRoot(document.querySelector("#root"));
+      root.render(<App />);
+    </script>
+  </body>
+</html>

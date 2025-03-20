@@ -76,6 +76,7 @@
                 ))}
               </ul>
               // {/*这里按钮点击会报错，因为this指向不对，需要绑定this*/}
+              {/*如果按钮调用方法时，方法后面加了()，那么this就是App的实例,没有加就是underfined*/}
               <ul>{this.getMovieEls()}</ul>
               <button onClick={this.getMovieEls}>-1</button>
             </div>
