@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script src="../lib/react.js"></script>
+    <script src="../lib/react-dom.js"></script>
+    <script src="../lib/babel.js"></script>
+
+    <script type="text/babel">
+      // 1.定义App根组件
+      class App extends React.Component {
+        constructor() {
+          super(); //继承了就要调用super
+          this.state = {
+            //数据固定放在state中
+            message: "Hello World",
+          };
+        }
+
+        render() {
+          const { message } = this.state;
+          // 下面代码会经过babel编译，每遇到一个标签，转换成React.createElement()的形式
+          // div -> React.createElement('div', {class,id}, [])参数1：标签名，参数2：属性，参数3：子元素
+          // 通过参数3的形式，实现了虚拟DOM的嵌套，树结构
+          // 参数一，是虚拟节点
+          // 再根据虚拟DOM，生成真实DOM，挂载到页面上
+          return (
+            <div>
+              <div className="header">Header</div>
+              <div className="Content">
+                <div>Banner</div>
+                <ul>
+                  <li>列表数据1</li>
+                  <li>列表数据2</li>
+                  <li>列表数据3</li>
+                  <li>列表数据4</li>
+                  <li>列表数据5</li>
+                </ul>
+              </div>
+              <div className="footer"></div>
+            </div>
+          );
+        }
+      }
+
+      // 1.创建root并且渲染App组件
+      const root = ReactDOM.createRoot(document.querySelector("#root"));
+      root.render(<App />);
+    </script>
+  </body>
+</html>

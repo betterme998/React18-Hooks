@@ -238,6 +238,18 @@ React 列表渲染
 口 这个我们在后续内容中再进行讲解:
 
 6.JSX 的原理和本质
+实际上，jsx 仅仅只是 React.createElement(component,props,...children) 函数的语法糖。
+口 所有的 jsx 最终都会被转换成 React.createElement 的函数调用。
+
+■createElement 需要传递三个参数:
+参数-:type
+口当前 ReactElement 的类型;
+口 如果是标签元素，那么就使用字符串表示“div”
+口 如果是组件元素，那么就直接使用组件的名称;
+参数二:config
+口 所有 jsx 中的属性都在 config 中以对象的属性和值的形式存储;口比如传入 className 作为元素的 class;
+参数三:children
+口 存放在标签中的内容，以 children 数组的方式进行存储;口 当然，如果是多个元素呢?React 内部有对它们进行处理，处理的源码在下方
 
 # 4.2.React18.x 的核心语法
 
