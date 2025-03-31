@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .item {
+        margin: 10px;
+        padding: 0 20px;
+        border: 1px solid #ccc;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script src="../lib/react.js"></script>
+    <script src="../lib/react-dom.js"></script>
+    <script src="../lib/babel.js"></script>
+
+    <script type="text/babel">
+      // 1.定义App根组件
+      class App extends React.Component {
+        constructor() {
+          super(); //继承了就要调用super
+          this.state = {
+            //数据固定放在state中
+            students: [
+              { id: 1, name: "张三", age: 18 },
+              { id: 2, name: "李四", age: 19 },
+              { id: 3, name: "王五", age: 20 },
+            ],
+          };
+        }
+
+        render() {
+          const { students } = this.state;
+
+          //年龄大于18的学生渲染到页面上
+          const filterStudents = students.filter((item) => item.age > 18);
+
+          // 年龄大于18，只展示一个人的信息
+          // slice(start, end) :[start, end) 截取数组，但不包含end索引处的元素
+          const sliceStudents = filterStudents.slice(0, 1);
+
+          return (
+            <div>
+              <h2>学生列表数据</h2>
+              <div className="list">
+                {students
+                  .filter((item) => item.age > 18)
+                  .slice(0, 1)
+                  .map((item) => {
+                    return (
+                      <div className="item" key={item.id}>
+                        <h2>学号：{item.id}</h2>
+                        <h3>姓名：{item.name}</h3>
+                        <h1>年龄：{item.age}</h1>
+                      </div>
+                    );
+                  })}
+              </div>
+            </div>
+          );
+        }
+      }
+
+      // 1.创建root并且渲染App组件
+      const root = ReactDOM.createRoot(document.querySelector("#root"));
+      root.render(<App />);
+    </script>
+  </body>
+</html>
