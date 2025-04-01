@@ -252,6 +252,29 @@ React 列表渲染
 参数三:children
 口 存放在标签中的内容，以 children 数组的方式进行存储;口 当然，如果是多个元素呢?React 内部有对它们进行处理，处理的源码在下方
 
+虚拟 DOM 的创建过程
+我们通过 React.createElement 最终创建出来一个 ReactElement 对象
+■ 这个 ReactElement 对象是什么作用呢?React 为什么要创建它呢?
+口 原因是 React 利用 ReactElement 对象组成了一个 JavaScript 的对象树
+口 JavaScript 的对象树就是虚拟 DOM(Virtual DOM)
+
+jsx-虚拟 DOM-真实 DOM
+
+声明式编程
+.虚拟 DOM 帮助我们从命令式编程转到了声明式编程的模式
+React 官方的说法:Virtual DOM 是一种编程理念。
+口 在这个理念中，UI 以一种理想化或者说虚拟化的方式保存在内存中，并且它是一个相对简单的 JavaScript 对象
+口我们可以通过 ReactDOM.render 让虚拟 DOM 和真实 DOM 同步起来，这个过程中叫做协调(Reconciliation);
+
+这种编程的方式赋予了 React 声明式的 API:
+口 你只需要告诉 React 希望让 UI 是什么状态;
+口 React 来确保 DOM 和这些状态是匹配的;
+口 你不需要直接进行 DOM 操作，就可以从手动更改 DOM、属性操作、事件处理中解放出来;
+
+.更新数据时，React 会根据最新的数据和之前的虚拟 DOM 对比(diff)，只更新需要变化的部分，从而提高效率
+.虚拟 DOM 是 js 对象，react 可以将虚拟 DOM 渲染成（web 端）真实的 DOM，然后插入到页面中，也可以渲染成控件（移动端）的原生控件
+.可以做跨平台开发
+
 # 4.2.React18.x 的核心语法
 
 # 4.3.Rudex 状态管理使用
