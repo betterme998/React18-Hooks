@@ -471,9 +471,9 @@ render 函数的返回值
 ■ 除了上面介绍的生命周期函数之外，还有一些不常用的生命周期函数:  
 口 getDerividStateFromProps:state 的值在任何时候都依赖于 props 时使用;该方法返回一个对象来更新 state;  
 口 getSnapshotBeforeUpdate:在 React 更新 DOM 之前回调的一个函数，可以获取 DOM 更新前的一些信息(比如说滚动位置);  
-口 shouldComponentUpdate:该生命周期函数很常用，但是我们等待讲性能优化时再来详细讲解;
+口 shouldComponentUpdate:该生命周期函数很常用，但是我们等待讲性能优化时再来详细讲解;  
 
-■ 另外，React 中还提供了一些过期的生命周期函数，这些函数已经不推荐使用。
+■ 另外，React 中还提供了一些过期的生命周期函数，这些函数已经不推荐使用。  
 
 # React 组件间的通信
 
