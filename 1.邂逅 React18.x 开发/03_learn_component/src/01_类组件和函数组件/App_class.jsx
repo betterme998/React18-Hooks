@@ -13,7 +13,13 @@ class App extends React.Component {
     const { message } = this.state;
     // render返回值
     // 1.react元素:通过jsx编写的代码就会被编译成React.createElement,，所以返回的就是一个React元素
-    return <h2>{message}</h2>;
+    // return <h2>{message}</h2>;
+
+    // 2.数组和片段（fragment）:可以将多个元素组合到一起
+    // return [<h2 key="1">{message}</h2>, <p key="2">段落</p>];
+
+    // 3.字符串和数字:可以直接返回字符串和数字
+    return "hello world";
   }
 }
 
