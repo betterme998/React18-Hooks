@@ -496,6 +496,18 @@ render 函数的返回值
 口 父组件通过 属性=值 的形式来传递给子组件数据,  
 口 子组件通过 props 参数获取父组件传递过来的数据
 
+父组件传递子组件-类组件和函数组件
+
+propTypes （弃用）   
+■ 对于传递给子组件的数据，有时候我们可能希望进行验证，特别是对于大型项目来说:  
+口 当然，如果你项目中默认继承了 Flow 或者 TypeScript，那么直接就可以进行类型验证;  
+口 但是，即使我们没有使用 Flow 或者 TypeScript，也可以通过 prop-types 库来进行参数验证;
+
+更多的验证方式，可以参考官网:https://zh-hans.reactis.org/docs/typechecking-with-proptypes.html  
+口 比如验证数组，并且数组中包含哪些元素;  
+口 比如验证对象，并且对象中包含哪些 key 以及 value 是什么类型;  
+口 比如某个原生是必须的，使用 requiredFunc: PropTypes.func.iskequired
+
 # React 组件插槽用法
 
 # React 非父子的通信
