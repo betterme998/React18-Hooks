@@ -26,7 +26,7 @@ export class TabControl extends Component {
   }
 
   render() {
-    const { titles } = this.props;
+    const { titles, itemType } = this.props;
     const { currentIndex } = this.state;
     return (
       <div className="tab-control">
@@ -37,7 +37,9 @@ export class TabControl extends Component {
               key={item}
               onClick={(e) => this.itemClick(index)}
             >
-              <span className="text">{item}</span>
+              {/* <span className="text">{item}</span> */}
+              {/* 作用域插槽，调用父组件传入的回调函数，将item传递给父组件 */}
+              {itemType(item)}
             </div>
           );
         })}

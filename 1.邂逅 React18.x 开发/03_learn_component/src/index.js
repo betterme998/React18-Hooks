@@ -6,7 +6,9 @@ import { createRoot } from "react-dom/client";
 // import App from "./04_组件通信-父传子/App";
 // import App from "./05_组件通信-子传父/App";
 // import App from "./06_组件通信案例练习/App";
-import App from "./07_组件的插槽实现/App";
+// import App from "./07_组件的插槽实现/App";
+// import App from "./08_组件作用域插槽/App";
+import App from "./09_非父子通信-Context/App";
 
 const root = createRoot(document.getElementById("root"));
 root.render(<App />);
