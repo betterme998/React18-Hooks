@@ -537,7 +537,7 @@ React 中的插槽(slot)
 2.props 实现插槽
 ■ 通过 children 实现的方案虽然可行，但是有一个弊端:通过索引值获取传入的元素很容易出错，不能精准的获取传入的原生;
 
-# React 非父子的通信
+# React 非父子的通信 Context （上下文）
 
 Context 应用场景
 ■ 非父子组件数据的共享:
@@ -551,6 +551,36 @@ Context 应用场景
 口 Context 提供了一种在组件之间共享此类值的方式，而不必显式地通过组件树的逐层传递 props;口 Context 设计目的是为了共享那些对于一个组件树而言是“全局”的数据，例如当前认证的用户、主题或首选语言;
 
 Context 相关 API
+■ React.createContext
+口 创建一个需要共享的 Context 对象:
+口 如果一个组件订阅了 Context，那么这个组件会从离自身最近的那个匹配的 Provider 中读取到当前的 context 值;
+口 defaultValue 是组件在顶层查找过程中没有找到对应的 Provider，那么就使用默认值
+
+■ Context.Provider
+口每个 Context 对象都会返回一个 Provider React 组件，它允许消费组件订阅 context 的变化:
+口 Provider 接收一个 value 属性，传递给消费组件;
+口 -个 Provider 可以和多个消费组件有对应关系;
+口 多个 Provider 也可以嵌套使用，里层的会覆盖外层的数据;
+口 当 Provider 的 value 值发生变化时，它内部的所有消费组件都会重新渲染
+
+■ Class.contextType
+口 挂载在 class 上的 contextType 属性会被重赋值为一个由 React.createContext() 创建的 Context 对象:
+口 这能让你使用 this.context 来消费最近 Context 上的那个值;
+口 你可以在任何生命周期中访问到它，包括 render 函数中:
+
+■ useContext
+useContext 是一个 React Hook，可以让你读取和订阅组件中的 context。
+
+Context 代码演练
+■ Context 的基本使用
+■ 什么时候使用默认值 defaultValue 呢? 不在 Provider 包裹时
+
+■ 什么时候使用 useContext
+口 1.当使用 value 的组件是一个函数式组件时
+
+# React 非父子的通信 EventBus (事件总线)
+
+1.使用第三方组件库
 
 # setState 的使用详解
 

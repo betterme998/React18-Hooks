@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import Home from "./Home";
 // 1.引入上下文
-import ThemeContext from "./context/theme-context";
+import { ThemeContext } from "./context/theme-context";
+import Profile from "./Profile";
 // 实现在App组件中，将info对象直接传递给HomeInfo组件
 // 不经过home组件，直接传递给HomeInfo组件
 
@@ -28,6 +29,7 @@ export class App extends Component {
         <ThemeContext.Provider value={{ color: "red" }}>
           <Home {...info} />
         </ThemeContext.Provider>
+        <Profile />
       </div>
     );
   }

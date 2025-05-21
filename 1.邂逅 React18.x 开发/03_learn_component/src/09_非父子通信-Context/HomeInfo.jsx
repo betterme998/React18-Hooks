@@ -2,12 +2,14 @@ import React, { Component } from "react";
 // 1.引入上下文
 import ThemeContext from "./context/theme-context";
 
+// 类数组
 export class HomeInfo extends Component {
   render() {
     // 4.第四部操作：获取数据，并使用数据
     console.log(this.context); // { color: "red" }
 
-    return <div>HomeInfo: {this.context.color}</div>;
+    // return <div>HomeInfo: {this.context.color}</div>;
+    return <div>HomeInfo: </div>;
   }
 }
 
