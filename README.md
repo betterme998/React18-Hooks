@@ -584,6 +584,15 @@ Context 代码演练
 
 # setState 的使用详解
 
+为什么使用 setState
+■ 开发中我们并不能直接通过修改 state 的值来让界面发生更新:
+口 因为我们修改了 state 之后，希望 React 根据最新的 State 来重新渲染界面，但是这种方式的修改 React 并不知道数据发生了变化;
+口 React 并没有实现类似于 Vue2 中的 Object.defineProperty 或者 Vue3 中的 Proxy 的方式来监听数据的变化;
+口 我们必须通过 setState 来告知 React 数据已经发生了变化;
+
+疑惑:在组件中并没有实现 setState 的方法，为什么可以调用呢?
+口 原因很简单，setState 方法是从 Component 中继承过来的
+
 # 4.3.Rudex 状态管理使用
 
 # 4.4.React Router6.x 路由
