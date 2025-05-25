@@ -593,6 +593,23 @@ Context 代码演练
 疑惑:在组件中并没有实现 setState 的方法，为什么可以调用呢?
 口 原因很简单，setState 方法是从 Component 中继承过来的
 
+setState 异步更新
+■ setState 的更新是异步的?
+口 最终打印结果是 Hello World (在修改 state 之后立马打印 state 的值，值没有被修改);
+口 可见 setState 是异步的操作，我们并不能在执行完 setState 之后立马拿到最新的 state 的结果
+
+■ 为什么 setState 设计为异步呢?
+口 setState 设计为异步其实之前在 GitHub 上也有很多的讨论;
+口 React 核心成员(Redux 的作者)Dan Abramov 也有对应的回复，有兴趣的同学可以参考一下;
+口https://github.com/facebook/react/issues/11527#issuecomment-360199710;
+
+■ 我对其回答做一个简单的总结:
+■ setState 设计为异步，可以显著的提升性能;
+口 如果每次调用 setState 都进行一次更新，那么意味着 render 函数会被频繁调用，界面重新渲染，这样效率是很低的:
+口 最好的办法应该是获取到多个更新，之后进行批量更新:
+■ 如果同步更新了 state，但是还没有执行 render 函数，那么 state 和 props 不能保持同步;
+口 state 和 props 不能保持一致性，会在开发中产生很多的问题;
+
 # 4.3.Rudex 状态管理使用
 
 # 4.4.React Router6.x 路由
