@@ -612,7 +612,8 @@ setState 异步更新
 
 # React 组件化开发（二）
 
-1.React 性能优化 SCU（**重要**）
+# 1.React 性能优化 SCU（**重要**）
+
 ■ 1.1.React 更新机制
 .我们在前面已经学习 React 的渲染流程:
 .JSX->虚拟 DOM->真实 DOM
@@ -620,7 +621,71 @@ setState 异步更新
 ■ 那么 React 的更新流程呢?
 .peops/state 改变 -> render 函数重新执行 -> 产生新的 DOM 树 -> 新旧 DOM 树进行 diff -> 计算出差异进行更新 -> 更新到真实的 DOM
 
-2.获取 DOM 方式 refs
+■ React 在 props 或 state 发生改变时，会调用 React 的 render 方法，会创建一颗不同的树。 2.获取 DOM 方式 refs
+
+■ React 需要基于这两颗不同的树之间的差别来判断如何有效的更新 U1:
+口 如果一棵树参考另外一棵树进行完全比较更新，那么即使是最先进的算法，该算法的复杂程度为 O(n2)，其中 n 是树中元素的数量;
+口 https://grfia.dlsi.ua.es/ml/algorithms/references/editsurvey bille.pdf;
+口 如果在 React 中使用了该算法，那么展示 1000 个元素所需要执行的计算量将在十亿的量级范围;
+口 这个开销太过昂贵了，React 的更新性能会变得非常低效;
+
+■ 于是，React 对这个算法进行了优化，将其优化成了 O(n)，如何优化的呢?
+口 同层节点之间相互比较，不会垮节点比较;
+口 不同类型的节点，产生不同的树结构;
+口 开发中，可以通过 key 来指定哪些节点在不同的渲染下保持稳定;
+
+keys 的优化
+■ 我们在前面遍历列表时，总是会提示一个警告，让我们加入一个 key 属性
+
+■ 方式一:在最后位置插入数据
+口 这种情况，有无 key 意义并不大
+
+■ 方式二:在前面插入数据
+口 这种做法，在没有 key 的情况下，所有的 li 都需要进行修改;
+
+■ 当子元素(这里的 li)拥有 key 时，React 使用 key 来匹配原有树上的子元素以及最新树上的子元素
+口 在下面这种场景下，key 为 111 和 222 的元素仅仅进行位移，不需要进行任何的修改;
+口 将 key 为 333 的元素插入到最前面的位置即可;
+
+■ key 的注意事项:
+口 key 应该是唯一的;
+口 key 不要使用随机数(随机数在下一次 render 时，会重新生成一个数字);
+口 使用 index 作为 key，对性能是没有优化的;
+
+render 函数被调用
+■ 我们使用之前的一个嵌套案例:
+口 在 App 中，我们增加了一个计数器的代码;
+口 当点击+1 时，会重新调用 App 的 render 函数;
+口 而当 App 的 render 函数被调用时，所有的子组件的 render 函数都会被重新调用;
+
+■ 那么，我们可以思考一下，在以后的开发中，我们只要是修改了 App 中的数据，所有的组件都需要重新 render，进行 diff 算法，性能必然是很低的:
+口事实上，很多的组件没有必须要重新 render;
+口 它们调用 render 应该有一个前提，就是依赖的数据:(state、props)发生改变时，再调用自己的 render 方法;
+
+■ 如何来控制 render 方法是否被调用呢?
+口 通过 shouldComponentUpdate 方法即可;
+
+shouldComponentUpdate
+■ React 给我们提供了一个生命周期方法 shouldComponentUpdate(很多时候，我们简称为 SCU)，这个方法接受参数，并且需要有返回值:
+■ 该方法有两个参数:
+口 参数-:nextProps 修改之后，最新的 props 属性
+口 参数二:nextState 修改之后，最新的 state 属性
+
+■ 该方法返回值是一个 boolean 类型:
+口 返回值为 true，那么就需要调用 render 方法;
+口 返回值为 false，那么久不需要调用 render 方法;
+口 默认返回的是 true，也就是只要 state 发生改变，就会调用 render 方法;
+
+■ 比如我们在 App 中增加一个 message 属性:
+口 jsx 中并没有依赖这个 message，那么它的改变不应该引起重新染;
+口 但是因为 render 监听到 state 的改变，就会重新 render，所以最后 render 方法还是被重新调用了;
+
+这样一直判断很繁琐，有没有更好的方式呢? 有，那就是使用 PureComponent;
+
+PureComponent （Pure：纯）
+■ 如果所有的类，我们都需要手动来实现 shouldComponentUpdate，那么会给我们开发者增加非常多的工作量。
+口 我们来设想一下 shouldComponentUpdate 中的各种判断的目的是什么?
+口 props 或者 state 中的数据是否发生了改变，来决定 shouldComponentUpdate 返回 true 或者 false;
 
 3.受控和非受控组件 （**重要**）
 
