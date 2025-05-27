@@ -623,7 +623,7 @@ setState 异步更新
 
 ■ React 在 props 或 state 发生改变时，会调用 React 的 render 方法，会创建一颗不同的树。 2.获取 DOM 方式 refs
 
-■ React 需要基于这两颗不同的树之间的差别来判断如何有效的更新 U1:
+■ React 需要基于这两颗不同的树之间的差别来判断如何有效的更新 Ui:
 口 如果一棵树参考另外一棵树进行完全比较更新，那么即使是最先进的算法，该算法的复杂程度为 O(n2)，其中 n 是树中元素的数量;
 口 https://grfia.dlsi.ua.es/ml/algorithms/references/editsurvey bille.pdf;
 口 如果在 React 中使用了该算法，那么展示 1000 个元素所需要执行的计算量将在十亿的量级范围;
