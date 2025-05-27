@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { flushSync } from "react-dom";
 
 function Hello(props) {
   return <h1>{props.message}</h1>;
@@ -13,45 +14,19 @@ export class App extends Component {
       counter: 0,
     };
   }
-  changeText() {}
-  increment() {
-    // 1.当我们多次调用this.setState时,React只会执行一次更新操作
-    /*
-    react会将this.setState放入队列当中，会在合适的时机进行合并更新操作，而不是多次更新。
-
-    */
-    //传出入对象时，this.state.counter为0，因为对象被创建出来时，this.state.counter就已经是0了
-    // this.setState({
-    //   counter: this.state.counter + 1,
-    // });
-    // this.setState({
-    //   counter: this.state.counter + 1,
-    // });
-    // this.setState({
-    //   counter: this.state.counter + 1,
-    // });
-
-    // 传入函数时，当前的回调函数会将之前的state和props传递进来
-    // 调用三次后，会将state的值加3，也会合并更新，只会调用一次render函数
-    // 这里的参数是之前的state
-    this.setState((state) => {
-      return {
-        counter: state.counter + 1,
-      };
-    });
-    // 会传入上一个state
-    this.setState((state) => {
-      return {
-        counter: state.counter + 1,
-      };
-    });
-    // 会传入上一个state
-    this.setState((state) => {
-      return {
-        counter: state.counter + 1,
-      };
+  changeText() {
+    setTimeout(() => {
+      // 在react18之前，setTimeout中setState是同步的，但是在react18之后变成了异步的
+      // 在react18之后，setTimeout中setState在事件处理函数中是异步的（批处理：当有多个setState的时候，会放到一个render函数中执行）
+      // 只有在reater事件当中才会批处理
+      // 但是如果我们在setTimeout中使用flushSync，那么就可以让setState变成同步的了
+      flushSync(() => {
+        this.setState({ message: "你好啊，李银河" });
+      });
+      console.log(this.state.message);
     });
   }
+  increment() {}
   render() {
     const { message, counter } = this.state;
     console.log(

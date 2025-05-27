@@ -610,6 +610,26 @@ setState 异步更新
 ■ 如果同步更新了 state，但是还没有执行 render 函数，那么 state 和 props 不能保持同步;
 口 state 和 props 不能保持一致性，会在开发中产生很多的问题;
 
+# React 组件化开发（二）
+
+1.React 性能优化 SCU（**重要**）
+■ 1.1.React 更新机制
+.我们在前面已经学习 React 的渲染流程:
+.JSX->虚拟 DOM->真实 DOM
+
+■ 那么 React 的更新流程呢?
+.peops/state 改变 -> render 函数重新执行 -> 产生新的 DOM 树 -> 新旧 DOM 树进行 diff -> 计算出差异进行更新 -> 更新到真实的 DOM
+
+2.获取 DOM 方式 refs
+
+3.受控和非受控组件 （**重要**）
+
+4.React 的高阶组件
+
+5.portals 和 fragment
+
+6.StrictMode 严格模式
+
 # 4.3.Rudex 状态管理使用
 
 # 4.4.React Router6.x 路由
