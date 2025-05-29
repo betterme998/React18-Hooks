@@ -1,6 +1,7 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import Home from "./Home";
 import Recommend from "./Recommend";
+import Profile from "./Profile";
 /*
 当页面加载时，render函数会被调用，其中的组件
 <Home />
@@ -16,8 +17,15 @@ import Recommend from "./Recommend";
 
 子组件当中也可以使用shouldComponentUpdate来控制子组件的render函数是否被调用。
 
+问题：这样一直判断很繁琐，有没有更好的方式呢? 有，那就是使用 PureComponent (过时API);
+在类组件当中class组件继承自 React.PureComponent 而不是 React.Component。
+PureComponent 会自动帮你做新旧值的对比，如果新旧值相同，就不会调用 render 方法。
+
+问题2：那函数组件呢？函数组件没有生命周期方法，也没有继承关系，如何优化呢？
+memo函数组件可以使用 React.memo() 来优化。
+
 */
-export class App extends Component {
+export class App extends PureComponent {
   constructor() {
     super();
 
@@ -35,15 +43,15 @@ export class App extends Component {
   口 参数二:nextState 修改之后，最新的 state 属性
   */
   //控制 render 方法是否被调用
-  shouldComponentUpdate(nextProps, nextState) {
-    if (
-      this.state.message !== nextState.message ||
-      this.state.counter !== nextState.counter
-    ) {
-      return true; // 需要重新渲染
-    }
-    return false; // 不需要重新渲染
-  }
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   if (
+  //     this.state.message !== nextState.message ||
+  //     this.state.counter !== nextState.counter
+  //   ) {
+  //     return true; // 需要重新渲染
+  //   }
+  //   return false; // 不需要重新渲染
+  // }
   changeText() {
     this.setState({ message: "你好啊，李银河" });
 
@@ -67,6 +75,8 @@ export class App extends Component {
           {/* 父组件传入值给子组件 */}
           <Home message={message} />
           <Recommend counter={counter} />
+          {/* 函数组件 */}
+          <Profile message={message} />
         </h2>
       </div>
     );

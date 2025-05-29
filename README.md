@@ -682,10 +682,26 @@ shouldComponentUpdate
 
 这样一直判断很繁琐，有没有更好的方式呢? 有，那就是使用 PureComponent;
 
-PureComponent （Pure：纯）
+过时了，废弃了。
+PureComponent （Pure：纯）如果当前组件是类组件
 ■ 如果所有的类，我们都需要手动来实现 shouldComponentUpdate，那么会给我们开发者增加非常多的工作量。
 口 我们来设想一下 shouldComponentUpdate 中的各种判断的目的是什么?
 口 props 或者 state 中的数据是否发生了改变，来决定 shouldComponentUpdate 返回 true 或者 false;
+
+■ 事实上 React 已经考虑到了这一点，所以 React 已经默认帮我们实现好了，如何实现呢?
+口 将 class 继承自 PureComponent。
+
+问题 2：那函数组件呢？函数组件没有生命周期方法，也没有继承关系，如何优化呢？
+memo 函数组件可以使用 React.memo() 来优化。
+
+如何使用 ref
+■ 在 React 的开发模式中，通常情况下不需要、也不建议直接操作 DOM 原生，但是某些特殊的情况，确实需要获取到 DOM 进行某些操作:
+口 管理焦点，文本选择或媒体播放;
+口 触发强制动画;
+口 集成第三方 DOM 库;
+口 我们可以通过 refs 获取 DOM;
+
+■ 如何创建 refs 来获取对应的 DOM 呢?目前有三种方式:
 
 3.受控和非受控组件 （**重要**）
 

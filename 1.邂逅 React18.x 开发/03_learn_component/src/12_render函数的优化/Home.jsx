@@ -10,16 +10,18 @@ export class Home extends Component {
     };
   }
   // 数据更新时是否需要重新渲染的声明周期钩子函数
-  shouldComponentUpdate(newProps, newState) {
-    // 自己对比state是否发生改变:this.state 和 newState
+  // class组件继承PureComponent后，会自动对比新旧props和state，
+  // 如果新旧值相同，则不会调用render方法。
+  // shouldComponentUpdate(newProps, newState) {
+  //   // 自己对比state是否发生改变:this.state 和 newState
 
-    // 子组件当中需要判断父组件传递的props是否发生改变:this.props 和 newProps
-    if (this.props.message !== newProps.message) {
-      return true; // 需要重新渲染
-    }
+  //   // 子组件当中需要判断父组件传递的props是否发生改变:this.props 和 newProps
+  //   if (this.props.message !== newProps.message) {
+  //     return true; // 需要重新渲染
+  //   }
 
-    return false;
-  }
+  //   return false;
+  // }
   render() {
     console.log("Home render");
 
