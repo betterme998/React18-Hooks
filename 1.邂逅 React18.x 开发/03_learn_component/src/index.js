@@ -13,7 +13,7 @@ import { createRoot } from "react-dom/client";
 // import App from "./11_setState详细使用/App";
 // import App from "./12_render函数的优化/App";
 // import App from "./13_数据不可变的力量/App";
-import App from "./14_ref获取DOM操作/App";
+import App from "./14_ref获取DOM和组件/03_ref获取函数组件的DOM";
 
 const root = createRoot(document.getElementById("root"));
 // 给子组件传递数据
