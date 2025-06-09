@@ -8,6 +8,11 @@ export class App extends PureComponent {
       username: "",
       password: "",
       isAgree: false,
+      hobbis: [
+        { value: "sing", text: "唱", isChecked: false },
+        { value: "dance", text: "跳", isChecked: false },
+        { value: "rap", text: "rap", isChecked: false },
+      ],
       // 初始值
     };
   }
@@ -19,7 +24,10 @@ export class App extends PureComponent {
       "表单数据:",
       this.state.username,
       this.state.password,
-      this.state.isAgree
+      this.state.isAgree,
+      this.state.hobbis
+        .filter((item) => item.isChecked)
+        .map((item) => item.value)
     );
 
     // 3.以网络请求的方式，将数据传递给服务器(ajax/fetch/axios...)
@@ -36,8 +44,18 @@ export class App extends PureComponent {
       isAgree: e.target.checked,
     });
   }
+  // 多选
+  handleHobbisChange(e, index) {
+    const hobbis = [...this.state.hobbis]; // 创建一个新的数组
+    const isChecked = e.target.checked; // 获取checkbox的id值
+    hobbis[index].isChecked = isChecked; // 修改数组中对应项的值
+
+    this.setState({
+      hobbis: hobbis,
+    });
+  }
   render() {
-    const { username, password, isAgree } = this.state;
+    const { username, password, isAgree, hobbis } = this.state;
     return (
       <div>
         {/* 监听表单点击  submit */}
@@ -78,6 +96,24 @@ export class App extends PureComponent {
             />
             同意协议
           </label>
+
+          {/* 3.checkbox 多选*/}
+          <div>
+            您的爱好:
+            {hobbis.map((item, index) => {
+              return (
+                <label htmlFor={item.value} key={item.value}>
+                  <input
+                    type="checkbox"
+                    id={item.value}
+                    checked={item.isChecked}
+                    onChange={(e) => this.handleHobbisChange(e, index)}
+                  />
+                  {item.text}
+                </label>
+              );
+            })}
+          </div>
           <div>
             <button type="submit">提交</button>
           </div>
