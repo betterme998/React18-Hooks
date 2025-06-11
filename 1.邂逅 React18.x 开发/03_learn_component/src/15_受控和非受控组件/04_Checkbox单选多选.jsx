@@ -6,8 +6,7 @@ import React, { PureComponent } from "react";
 ■ 而在 React 中，可变状态(mutable state)通常保存在组件的 state 属性中，并且只能通过使用 setState()来更新
 口 我们将两者结合起来，使 React 的 state 成为“唯一数据源”
 口 渲染表单的 React 组件还控制着用户输入过程中表单发生的操作,
-ロ 被 React 以这种方式控制取值的表单输入元素就叫做“受控组件”
-*/
+ロ 被 React 以这种方式控制取值的表单输入元素就叫做“受控组件”*/
 export class App extends PureComponent {
   constructor() {
     super();
@@ -21,7 +20,6 @@ export class App extends PureComponent {
         { value: "dance", text: "跳", isChecked: false },
         { value: "rap", text: "rap", isChecked: false },
       ],
-      fruit: ["orange"],
       // 初始值
     };
   }
@@ -36,8 +34,7 @@ export class App extends PureComponent {
       this.state.isAgree,
       this.state.hobbis
         .filter((item) => item.isChecked)
-        .map((item) => item.value),
-      this.state.fruit
+        .map((item) => item.value)
     );
 
     // 3.以网络请求的方式，将数据传递给服务器(ajax/fetch/axios...)
@@ -54,7 +51,7 @@ export class App extends PureComponent {
       isAgree: e.target.checked,
     });
   }
-  // checkbox 多选
+  // 多选
   handleHobbisChange(e, index) {
     const hobbis = [...this.state.hobbis]; // 创建一个新的数组
     const isChecked = e.target.checked; // 获取checkbox的id值
@@ -64,30 +61,8 @@ export class App extends PureComponent {
       hobbis: hobbis,
     });
   }
-
-  // select元素 多选
-  handleFruitChange(e) {
-    // e.target.selectedOptions是可迭代器，可以将其转换为数组
-    // e.target.selectedOptions获取选中的option元素
-
-    // const options = Array.from(e.target.selectedOptions); // 转换为数组
-    // const values = options.map((option) => option.value); // 获取选中项的值
-    const values = Array.from(e.target.selectedOptions, (item) => item.value);
-
-    console.log(values);
-
-    this.setState({
-      fruit: values,
-    });
-
-    // 额外补充： Array.from(传入可迭代对象) 可以将可迭代对象转换为数组
-    // Array.from(arguments); //arguments 参数 是类数组对象
-
-    //Array.from()可传人第二个参数，mapping函数，可以对转换后的数组进行二次处理
-    // const values = Array.from(e.target.selectedOptions, item => item.value)
-  }
   render() {
-    const { username, password, isAgree, hobbis, fruit } = this.state;
+    const { username, password, isAgree, hobbis } = this.state;
     return (
       <div>
         {/* 监听表单点击  submit */}
@@ -147,16 +122,6 @@ export class App extends PureComponent {
             })}
           </div>
 
-          {/* 4.select元素 ,当设置了多选时*/}
-          <select
-            value={fruit}
-            onChange={(e) => this.handleFruitChange(e)}
-            multiple
-          >
-            <option value="apple">苹果</option>
-            <option value="banana">香蕉</option>
-            <option value="orange">橘子</option>
-          </select>
           <div>
             <button type="submit">提交</button>
           </div>
