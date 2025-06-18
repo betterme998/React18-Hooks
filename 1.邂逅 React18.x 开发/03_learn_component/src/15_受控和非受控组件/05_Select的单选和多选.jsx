@@ -1,4 +1,4 @@
-import React, { createRef, PureComponent } from "react";
+import React, { PureComponent } from "react";
 /*
 ■ 在 React 中，HTML 表单的处理方式和普通的 DOM 元素不太一样:表单元素通常会保存在一些内部的 state
 
@@ -22,19 +22,9 @@ export class App extends PureComponent {
         { value: "rap", text: "rap", isChecked: false },
       ],
       fruit: ["orange"],
-      intro: "哈哈哈",
       // 初始值
     };
-
-    this.introRef = createRef();
   }
-
-  componentDidMount() {
-    // this.introRef.current.addEventListener("click", (e) => {
-    //   console.log("点击了段落");
-    // });
-  }
-
   handleSubmitClick(e) {
     // 1.阻止默认的行为。表单按钮点击会默认刷新页面
     e.preventDefault();
@@ -47,8 +37,7 @@ export class App extends PureComponent {
       this.state.hobbis
         .filter((item) => item.isChecked)
         .map((item) => item.value),
-      this.state.fruit,
-      console.log("非受控组件的值:", this.introRef.current.value)
+      this.state.fruit
     );
 
     // 3.以网络请求的方式，将数据传递给服务器(ajax/fetch/axios...)
@@ -98,7 +87,7 @@ export class App extends PureComponent {
     // const values = Array.from(e.target.selectedOptions, item => item.value)
   }
   render() {
-    const { username, password, isAgree, hobbis, fruit, intro } = this.state;
+    const { username, password, isAgree, hobbis, fruit } = this.state;
     return (
       <div>
         {/* 监听表单点击  submit */}
@@ -169,9 +158,6 @@ export class App extends PureComponent {
             <option value="orange">橘子</option>
           </select>
 
-          {/* 5.非受控组件 */}
-          {/* 非受控组件设置默认值，也是非受控组件 */}
-          <input type="text" defaultValue={intro} ref={this.introRef} />
           <div>
             <button type="submit">提交</button>
           </div>
