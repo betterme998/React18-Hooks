@@ -1,41 +1,45 @@
 import React, { PureComponent } from "react";
+import enhancedUserInfo from "./hoc/enhanced_props";
+import Abouts from "./pages/Abouts";
 
-/*
-■ 那么说明是高阶组件呢?
-口 高阶组件的英文是 Higher-Order Components，简称为 HOC
-口 官方的定义:高阶组件是参数为组件，返回值为新组件的函数
+// 使用高阶组件来增强Home组件
+const Home = enhancedUserInfo(function (props) {
+  return (
+    <div>
+      <h1>
+        Home: {props.name} - {props.age}
+      </h1>
+      {/* 组件本身传入的数据 */}
+      <ul>
+        {props.banners.map((item) => {
+          return <li key={item}>{item}</li>;
+        })}
+      </ul>
+    </div>
+  );
+});
 
-注：1.高阶组件本身不是一个组件，而是一个函数;
-特点：*接受一个组件作为它的参数。 *返回一个新组件
-*/
-// 定义一个高阶组件,*接受一个组件作为它的参数
-function hoc(WrapperComponent) {
-  // 1.定义类组件
-  class NewCpn extends PureComponent {
-    // 这相当于给HelloWorld组件做了一层拦截，可以添加一些逻辑，属性等
-    render() {
-      return <WrapperComponent name="hoc" />;
-    }
-  }
-  return NewCpn;
+const Profile = enhancedUserInfo(function (props) {
+  return <h1>Profile</h1>;
+});
 
-  // 2.定义函数组件
-  // function NewCpn2(props) {}
-  // return NewCpn2;
-}
-
-class HelloWorld extends PureComponent {
-  render() {
-    return <div>HelloWorld</div>;
-  }
-}
-const HelloWorldHoc = hoc(HelloWorld);
+const HelloFriend = enhancedUserInfo(function (props) {
+  return (
+    <h1>
+      HelloFriend: {props.name} - {props.age}
+    </h1>
+  );
+});
 
 export class App extends PureComponent {
   render() {
     return (
       <div>
-        <HelloWorldHoc />
+        {/* 本身有传数据 */}
+        <Home banners={["轮播图1", "轮播图2"]} />
+        <Profile />
+        <HelloFriend />
+        <Abouts />
       </div>
     );
   }
