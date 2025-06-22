@@ -3,7 +3,7 @@ import enhancedUserInfo from "../hoc/enhanced_props";
 
 export class Abouts extends PureComponent {
   render() {
-    return <div>Abouts</div>;
+    return <div>Abouts：{this.props.name}</div>;
   }
 }
 
