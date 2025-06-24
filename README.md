@@ -766,6 +766,10 @@ ref 的转发
 Portals 的使用
 ■ 某些情况下，我们希望渲染的内容独立于父组件，甚至是独立于当前挂载到的 DOM 元素中(默认都是挂载到 id 为 root 的 DOM 元素上的)
 
+■ Portal 提供了一种将子节点渲染到存在于父组件以外的 DOM 节点的优秀的方案:
+口第一个参数(child)是任何可渲染的 React 子元素，例如一个元素，字符串或 fragment;
+口第二个参数(container)是一个 DOM 元素;
+
 6.StrictMode 严格模式
 
 # 4.3.Rudex 状态管理使用
