@@ -770,6 +770,18 @@ Portals 的使用
 口第一个参数(child)是任何可渲染的 React 子元素，例如一个元素，字符串或 fragment;
 口第二个参数(container)是一个 DOM 元素;
 
+fragment 片段
+
+■ 在之前的开发中，我们总是在一个组件中返回内容时包裹一个 div 元素:
+
+■ 我们又希望可以不渲染这样一个 div 应该如何操作呢?
+口 使用 Fragment
+口 Fragment 允许你将子列表分组，而无需向 DOM 添加额外节点
+
+■ React 还提供了 Fragment 的短语法:
+口 它看起来像空标签<></>
+口 但是，如果我们需要在 Fragment 中添加 key，那么就不能使用短语法
+
 6.StrictMode 严格模式
 
 # 4.3.Rudex 状态管理使用
