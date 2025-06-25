@@ -17,7 +17,8 @@ import { createRoot } from "react-dom/client";
 // import App from "./15_受控和非受控组件/App";
 // import App from "./16_React高阶组件/App";
 // import App from "./17_React的Portals/App";
-import App from "./18_React的fragment/App";
+// import App from "./18_React的fragment/App";
+import App from "./19_React的严格模式/App";
 
 const root = createRoot(document.getElementById("root"));
 // 给子组件传递数据
