@@ -1,0 +1,37 @@
+/* 
+■ 它们有三种状态，需要定义对应的CSS样式:
+口 第一类:开始状态:对应的类是-appear、-enter、exit;
+口 第二类:执行动画:对应的类是-appear-active、-enter-active、-exit-active;
+口 第三类:执行结束:对应的类是-appear-done、-enter-done、-exit-done;
+*/
+
+/* 0.第一次进入的动画 */
+.why-appear {
+  transform: translateX(-150px);
+}
+
+.why-appear-active {
+  transform: translateX(0);
+  transition: transform 2s ease;
+}
+
+/* 1.进入动画 */
+.why-enter {
+  opacity: 0;
+}
+
+.why-enter-active {
+  opacity: 1;
+  transition: opacity 2s ease;
+}
+
+/* 2.退出动画 */
+
+.why-exit {
+  opacity: 1;
+}
+
+.why-exit-active {
+  opacity: 0;
+  transition: opacity 2s ease;
+}

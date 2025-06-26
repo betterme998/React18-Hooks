@@ -1,0 +1,29 @@
+/* 
+/*
+■ CSSTransition是基于Transition组件构建的:
+口 CSSTransition执行过程中，有三个状态:appear、enter、exit; (出现，进入，离开)
+
+■ 它们有三种状态，需要定义对应的CSS样式:
+口 第一类:开始状态:对应的类是-appear、-enter、exit;
+口 第二类:执行动画:对应的类是-appear-active、-enter-active、-exit-active;
+口 第三类:执行结束:对应的类是-appear-done、-enter-done、-exit-done;
+*/
+.login-enter {
+  transform: translateX(100px);
+  opacity: 0;
+}
+.login-enter-active {
+  transform: translateX(0);
+  opacity: 1;
+  transition: all 1s ease;
+}
+
+.login-exit {
+  transform: translateX(0);
+  opacity: 1;
+}
+.login-exit-active {
+  transform: translateX(-100px);
+  opacity: 0;
+  transition: all 1s ease;
+}

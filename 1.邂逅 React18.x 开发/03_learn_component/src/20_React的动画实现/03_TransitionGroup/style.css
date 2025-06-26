@@ -1,0 +1,16 @@
+/* 
+■ 它们有三种状态，需要定义对应的CSS样式:
+口 第一类:开始状态:对应的类是-appear、-enter、exit;
+口 第二类:执行动画:对应的类是-appear-active、-enter-active、-exit-active;
+口 第三类:执行结束:对应的类是-appear-done、-enter-done、-exit-done;
+*/
+.book-enter {
+  transform: translateX(100px);
+  opacity: 0;
+}
+
+.book-enter-active {
+  transform: translateX(0);
+  opacity: 1;
+  transition: all 1s ease-in;
+}

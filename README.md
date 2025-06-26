@@ -815,13 +815,86 @@ fragment 片段
 
 1.React 的过渡动画
 
-2.CSSTransiton 使用
+react-transition-group 介绍
+■ 在开发中，我们想要给一个组件的显示和消失添加某种过渡动画，可以很好的增加用户体验。
+■ 当然，我们可以通过原生的 CSS 来实现这些过渡动画，但是 React 社区为我们提供了 react-transition-group 用来完成过渡动画。
+■ React 曾为开发者提供过动画插件 react-addons-css-transition-group，后由社区维护，形成了现在的 ■ react-transition-group.
+口 这个库可以帮助我们方便的实现组件的 入场 和 离场 动画，使用时需要进行额外的安装
 
-3.常见的属性设置
+# npm
+
+npm install react-transition-group --save
+
+# yarn
+
+yarn add react-transition-group
+
+react-transition-group 主要组件
+
+■ react-transition-group 主要包含四个组件:
+■ Transition
+口 该组件是一个和平台无关的组件(不一定要结合 CSS):
+口 在前端开发中，我们一般是结合 CSS 来完成样式，所以比较常用的是 CSSTransition;
+
+■ CSSTransition
+口 在前端开发中，通常使用 CSSTransition 来完成过渡动画效果
+
+■ SwitchTransition
+口 两个组件显示和隐藏切换时，使用该组件
+
+■ TransitionGroup
+口 将多个动画组件包裹在其中，一般用于列表中元素的动画
+
+2.CSSTransiton 使用
+■ CSSTransition 是基于 Transition 组件构建的:
+口 CSSTransition 执行过程中，有三个状态:appear、enter、exit; (出现，进入，离开)
+
+■ 它们有三种状态，需要定义对应的 CSS 样式:
+口 第一类:开始状态:对应的类是-appear、-enter、exit;
+口 第二类:执行动画:对应的类是-appear-active、-enter-active、-exit-active;
+口 第三类:执行结束:对应的类是-appear-done、-enter-done、-exit-done;
+
+■ CSSTransition 常见对应的属性:
+■ 1.in:触发进入或者退出状态
+口 如果添加了 unmountOnExit={true}，那么该组件会在执行退出动画结束后被移除掉;口 当 in 为 true 时，触发进入状态，会添加-enter、-enter-acitve 的 class 开始执行动画，当动画执行结束后，会移除两个 class 并且添加-enter-done 的 class
+口 当 in 为 false 时，触发退出状态，会添加-exit、-exit-active 的 class 开始执行动画，当动画执行结束后，会移除两个 class，并且添加-enter-done 的 class;
+
+■ 2.classNames:动画 class 的名称
+口 决定了在编写 css 时，对应的 class 名称:比如 card-enter、card-enter-active、card-enter-done;
+
+■ 3.timeout:
+口 过渡动画的时间
+
+■ 4.appear:
+口 是否在初次进入添加动画(需要和 in 同时为 true)
+
+■ 5.unmountOnExit:退出后卸载组件
+
+■ 6.CSSTransition 对应的钩子函数:主要为了检测动画的执行过程，来完成一些 JavaScript 的操作
+口 onEnter:在进入动画之前被触发;
+口 onEntering:在应用进入动画时被触发,
+口 onEntered:在应用进入动画结束后被触发;
+口 onExit:在退出动画之前被触发;
+口 onExiting:在应用退出动画时被触发;
+口 onExited:在应用退出动画结束后被触发;
 
 4.SwitchTransition
 
+■ SwitchTransition 可以完成两个组件之间切换的炫酷动画:
+口 比如我们有一个按钮需要在 on 和 of 之间切换，我们希望看到 on 先从左侧退出，off 再从右侧进入:
+口 这个动画在 vue 中被称之为 vue transition modes;
+口 react-transition-group 中使用 SwitchTransition 来实现该动画
+
+■ SwitchTransition 中主要有一个属性:mode，有两个值
+口 in-out:表示新组件先进入，旧组件再移除;
+口 out-in:表示就组件先移除，新组件再进入
+
+■ 如何使用 SwitchTransition 呢?
+口 SwitchTransition 组件里面要有 CSSTransition 或者 Transition 组件，不能直接包惠你想要切换的组件;
+口 SwitchTransition 里面的 CSSTransition 或 Transition 组件不再像以前那样接受 in 属性来判断元素是何种状态，取而代之的是 key 属性;
+
 5.TransitionGroup
+■ 需要将这些 CSSTransition 放入到一个 TransitionGroup 中来完成动画:当我们有一组动画时，
 
 # 4.3.Rudex 状态管理使用
 
