@@ -17,13 +17,39 @@ export class App extends PureComponent {
       ],
     };
     // 使用createRef创建一个ref数组，用于保存每个li的ref
-    this.booksRefs = [];
+    this.booksRefs = {};
+  }
+
+  getItemRef = (id) => {
+    if (!this.booksRefs[id]) {
+      this.booksRefs[id] = createRef();
+    }
+    return this.booksRefs[id];
+  };
+  removeBook(index) {
+    // 删除书籍
+    const books = [...this.state.books];
+    books.splice(index, 1);
+    this.setState({ books }, () => {
+      console.log(this.state.books);
+    });
+    // 这里需要清除对应的ref
+    const bookId = books[index]?.id;
+    console.log(bookId);
+
+    if (bookId && this.booksRefs[bookId]) {
+      delete this.booksRefs[bookId];
+    }
+    console.log(this.booksRefs);
   }
 
   addNewBook() {
     const books = [...this.state.books];
     books.push({ name: "《ReactJS》", id: books.length + 1 });
-    this.setState({ books });
+    this.setState({ books }, () => {
+      console.log(this.state.books);
+    });
+    console.log(this.booksRefs);
   }
   render() {
     const { books } = this.state;
@@ -39,16 +65,13 @@ export class App extends PureComponent {
 
               <CSSTransition
                 key={book.id}
-                nodeRef={this.booksRefs[index]}
+                nodeRef={this.getItemRef(book.id)}
                 timeout={1000}
                 classNames="book" // 书籍动画的类名
               >
-                <li
-                  ref={(el) => {
-                    this.booksRefs[index] = el; // 保存每个li的ref
-                  }}
-                >
+                <li ref={this.getItemRef(book.id)}>
                   {book.name}
+                  <button onClick={(e) => this.removeBook(index)}>删除</button>
                 </li>
               </CSSTransition>
             );
