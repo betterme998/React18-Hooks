@@ -35,7 +35,6 @@ export class App extends PureComponent {
     });
     // 这里需要清除对应的ref
     const bookId = books[index]?.id;
-    console.log(bookId);
 
     if (bookId && this.booksRefs[bookId]) {
       delete this.booksRefs[bookId];
@@ -45,11 +44,14 @@ export class App extends PureComponent {
 
   addNewBook() {
     const books = [...this.state.books];
-    books.push({ name: "《ReactJS》", id: books.length + 1 });
+    books.push({
+      name: "《ReactJS》",
+      id: new Date().getTime(),
+    });
     this.setState({ books }, () => {
       console.log(this.state.books);
+      console.log(this.booksRefs);
     });
-    console.log(this.booksRefs);
   }
   render() {
     const { books } = this.state;
