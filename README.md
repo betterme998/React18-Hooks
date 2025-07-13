@@ -959,7 +959,38 @@ React 中的 CSS
 口 .css/.less/.scss 等样式文件都需要修改成 .module.css/.module.less/.module.scss 等;
 口 之后就可以引用并且进行使用了;
 
+■ 使用 craco 插件-网上搜一下怎么用
+
 5.CSs in Js 解决方案
+■ 官方文档也有提到过 CSsin Js 这种方案:
+口 “CSS-in-JS”是指一种模式，其中 CSS 由 JavaScript 生成而不是在外部文件中定义
+口 注意此功能并不是 React 的一部分，而是由第三方库提供;
+口 React 对样式如何定义并没有明确态度;
+
+■ 在传统的前端开发中，我们通常会将结构(HTML)、样式(CSS)、逻辑(JavaScript)进行分离。
+口 但是在前面的学习中，我们就提到过，React 的思想中认为逻辑本身和 UI 是无法分离的，所以才会有了 JSX 的语法。
+口 样式呢?样式也是属于 UI 的一部分;
+口 事实上 CSS-in-JS 的模式就是一种将样式(CSS)也写人到 JavaScript 中的方式，并且可以方便的使用 JavaScript 的状态
+口 所以 React 有被人称之为 All in Js;
+
+当然，这种开发的方式也受到了很多的批评:
+口 Stop using CSS in JavaScript for web development
+口 https://hackernoon.com/stop-using-css-in-javascript-for-web-development-fa32fb873dcc
+
+认识 styled-components
+
+■ 批评声音虽然有，但是在我们看来很多优秀的 CSS-in-Js 的库依然非常强大、方便:
+口 CSS-in-JS 通过 JavaScript 来为 CSS 赋予一些能力，包括类似于 CSS 预处理器一样的样式嵌套、函数定义、逻辑复用、动态修改状态等等;
+口 虽然 CSS 预处理器也具备某些能力，但是获取动态状态依然是一个不好处理的点;
+口 所以，目前可以说 CSS-in-JS 是 React 编写 CSS 最为受欢迎的一种解决方案;
+
+目前比较流行的 CsS-in-Js 的库有哪些呢?
+口 styled-components
+口 emotion
+口 glamorous
+
+■ 目前可以说 styled-components 依然是社区最流行的 CSS-in-JS 库，所以我们以 styled-components 的讲解为主;
+■ 安装 styled-components:
 
 6.classnames 库使用
 
