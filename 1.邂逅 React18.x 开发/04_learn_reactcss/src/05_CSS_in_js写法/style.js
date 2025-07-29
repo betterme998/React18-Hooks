@@ -9,6 +9,14 @@ foo`hello world`; // ["hello world"]
 
 */
 
+// 引入全局变量
+import {
+  primaryColor,
+  secondaryColor,
+  smallFontSize,
+  mediumFontSize,
+  largeFontSize,
+} from "./style/variables";
 // 导入第三方库styled-components来编写CSS样式
 import styled from "styled-components";
 
@@ -24,9 +32,10 @@ export const AppWrapper = styled.div`
 // 2.子元素单独抽取到一个样式组件
 // 3.可以接受外部传染的props参数
 // 4.attrs:设置默认值，如果没有传入props参数，则使用默认值
-export const SectionWrapper = styled.div.attrs({
-  tColor: ((props) => props.color) || "blue",
-})`
+export const SectionWrapper = styled.div.attrs((props) => ({
+  tColor: props.color || "yellow", // 设置默认颜色为黄色
+  size: props.size || 20, // 设置默认字体大小为20px
+}))`
   border: 1px solid red;
 
   .title {
@@ -40,7 +49,7 @@ export const SectionWrapper = styled.div.attrs({
   }
 
   .content {
-    color: green;
-    font-size: 20px;
+    color: ${primaryColor};
+    font-size: ${largeFontSize}px;
   }
 `;

@@ -1,4 +1,5 @@
 import React, { PureComponent } from "react";
+import Home from "./home";
 // 导入由styled-components生成的组件，用它代替div
 import { AppWrapper, SectionWrapper } from "./style";
 
@@ -25,6 +26,8 @@ export class App extends PureComponent {
             修改颜色
           </button>
         </SectionWrapper>
+
+        <Home />
         <div className="footer">
           <p>免责声明</p>
           <p>版权声明</p>
