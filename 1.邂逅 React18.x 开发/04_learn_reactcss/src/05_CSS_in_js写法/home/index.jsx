@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { HomeWrapper } from "./style";
+import { HomeWrapper, HYButtonWrapper } from "./style";
 
 export class index extends PureComponent {
   render() {
@@ -16,6 +16,7 @@ export class index extends PureComponent {
             <li className="item">商品列表3</li>
           </ul>
         </div>
+        <HYButtonWrapper>按钮哈哈</HYButtonWrapper>
       </HomeWrapper>
     );
   }

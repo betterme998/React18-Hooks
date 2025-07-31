@@ -1,5 +1,16 @@
 import styled from "styled-components";
 
+// 演示继承
+const HYButton = styled.button`
+  border: 1px solid red;
+  border-radius: 5px;
+`;
+export const HYButtonWrapper = styled(HYButton)`
+  /* 会继承 HYButton 的样式 */
+  background-color: red;
+  color: #fff;
+`;
+
 export const HomeWrapper = styled.div`
   .top {
     .banner {
