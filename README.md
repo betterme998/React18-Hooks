@@ -807,7 +807,7 @@ fragment 片段
 
 ■ 5.检测过时的 context API  
 口 早期的 Context 是通过 static 属性声明 Context 对象属性，通过 getChildContext 返回 Context 对象等方式来使用 Context 的;  
-口 目前这种方式已经不推荐使用，大家可以自行学习了解一下它的用法;0
+口 目前这种方式已经不推荐使用，大家可以自行学习了解一下它的用法;
 
 # React 过渡动画实现
 
