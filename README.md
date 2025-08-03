@@ -508,74 +508,72 @@ propTypes （弃用）
 口 比如验证对象，并且对象中包含哪些 key 以及 value 是什么类型;  
 口 比如某个原生是必须的，使用 requiredFunc: PropTypes.func.iskequired
 
-子组件传递父组件
-■ 某些情况，我们也需要子组件向父组件传递消息:
-口 在 vue 中是通过自定义事件来完成的;
-口在 React 中同样是通过 props 传递消息，只是让父组件给子组件传递一个回调函数，在子组件中调用这个函数即可
-我们这里来完成一个案例:
-口 将计数器案例进行拆解，
-口 将按钮封装到子组件中:CounterButton;
+子组件传递父组件  
+■ 某些情况，我们也需要子组件向父组件传递消息:  
+口 在 vue 中是通过自定义事件来完成的;  
+口在 React 中同样是通过 props 传递消息，只是让父组件给子组件传递一个回调函数，在子组件中调用这个函数即可  
+我们这里来完成一个案例:  
+口 将计数器案例进行拆解，  
+口 将按钮封装到子组件中:CounterButton;  
 口 CounterButton 发生点击事件，将内容传递到父组件中，修改 counter 的值;
 
 组件通信案例
 
 # React 组件插槽用法
 
-React 中的插槽(slot)
-■ 在开发中，我们抽取了一个组件，但是为了让这个组件具备更强的通用性，我们不能将组件中的内容限制为固定的 div、span 等等
-这些元素。
-■ 我们应该让使用者可以决定某一块区域到底存放什么内容
+React 中的插槽(slot)  
+■ 在开发中，我们抽取了一个组件，但是为了让这个组件具备更强的通用性，我们不能将组件中的内容限制为固定的 div、span 等等这些元素。  
+■ 我们应该让使用者可以决定某一块区域到底存放什么内容  
 ■ 这种需求在 Vue 当中有一个固定的做法是通过 slot 来完成的，React 呢?
 
-■ React 对于这种需要插槽的情况非常灵活，有两种方案可以实现
-口 组件的 children 子元素;
+■ React 对于这种需要插槽的情况非常灵活，有两种方案可以实现  
+口 组件的 children 子元素;  
 口 props 属性传递 React 元素，
 
-1.children 实现插槽
+1.children 实现插槽  
 ■ 每个组件都可以获取到 props.children:它包含组件的开始标签和结束标签之间的内容。
 
-2.props 实现插槽
+2.props 实现插槽  
 ■ 通过 children 实现的方案虽然可行，但是有一个弊端:通过索引值获取传入的元素很容易出错，不能精准的获取传入的原生;
 
 # React 非父子的通信 Context （上下文）
 
-Context 应用场景
-■ 非父子组件数据的共享:
-口 在开发中，比较常见的数据传递方式是通过 props 属性自上而下(由父到子)进行传递。
-口 但是对于有一些场景:比如一些数据需要在多个组件中进行共享(地区偏好、UI 主题、用户登录状态、用户信息等)。
-口 如果我们在顶层的 App 中定义这些信息，之后一层层传递下去，那么对于一些中间层不需要数据的组件来说，是一种冗余的
-操作。
+Context 应用场景  
+■ 非父子组件数据的共享:  
+口 在开发中，比较常见的数据传递方式是通过 props 属性自上而下(由父到子)进行传递。  
+口 但是对于有一些场景:比如一些数据需要在多个组件中进行共享(地区偏好、UI 主题、用户登录状态、用户信息等)。  
+口 如果我们在顶层的 App 中定义这些信息，之后一层层传递下去，那么对于一些中间层不需要数据的组件来说，是一种冗余的操作。
 
-■ 但是，如果层级更多的话，一层层传递是非常麻烦，并且代码是非常冗余的:
-口 React 提供了一个 APl:Context;
+■ 但是，如果层级更多的话，一层层传递是非常麻烦，并且代码是非常冗余的:  
+口 React 提供了一个 APl:Context;  
 口 Context 提供了一种在组件之间共享此类值的方式，而不必显式地通过组件树的逐层传递 props;口 Context 设计目的是为了共享那些对于一个组件树而言是“全局”的数据，例如当前认证的用户、主题或首选语言;
 
-Context 相关 API
-■ React.createContext
-口 创建一个需要共享的 Context 对象:
-口 如果一个组件订阅了 Context，那么这个组件会从离自身最近的那个匹配的 Provider 中读取到当前的 context 值;
+Context 相关 API  
+■ React.createContext  
+口 创建一个需要共享的 Context 对象:  
+口 如果一个组件订阅了 Context，那么这个组件会从离自身最近的那个匹配的 Provider 中读取到当前的 context 值;  
 口 defaultValue 是组件在顶层查找过程中没有找到对应的 Provider，那么就使用默认值
 
-■ Context.Provider
-口每个 Context 对象都会返回一个 Provider React 组件，它允许消费组件订阅 context 的变化:
-口 Provider 接收一个 value 属性，传递给消费组件;
-口 -个 Provider 可以和多个消费组件有对应关系;
-口 多个 Provider 也可以嵌套使用，里层的会覆盖外层的数据;
+■ Context.Provider  
+口每个 Context 对象都会返回一个 Provider React 组件，它允许消费组件订阅 context 的变化:  
+口 Provider 接收一个 value 属性，传递给消费组件;  
+口 -个 Provider 可以和多个消费组件有对应关系;  
+口 多个 Provider 也可以嵌套使用，里层的会覆盖外层的数据;  
 口 当 Provider 的 value 值发生变化时，它内部的所有消费组件都会重新渲染
 
-■ Class.contextType
-口 挂载在 class 上的 contextType 属性会被重赋值为一个由 React.createContext() 创建的 Context 对象:
-口 这能让你使用 this.context 来消费最近 Context 上的那个值;
+■ Class.contextType  
+口 挂载在 class 上的 contextType 属性会被重赋值为一个由 React.createContext() 创建的 Context 对象:  
+口 这能让你使用 this.context 来消费最近 Context 上的那个值;  
 口 你可以在任何生命周期中访问到它，包括 render 函数中:
 
-■ useContext
+■ useContext  
 useContext 是一个 React Hook，可以让你读取和订阅组件中的 context。
 
-Context 代码演练
-■ Context 的基本使用
+Context 代码演练  
+■ Context 的基本使用  
 ■ 什么时候使用默认值 defaultValue 呢? 不在 Provider 包裹时
 
-■ 什么时候使用 useContext
+■ 什么时候使用 useContext  
 口 1.当使用 value 的组件是一个函数式组件时
 
 # React 非父子的通信 EventBus (事件总线)
@@ -584,213 +582,213 @@ Context 代码演练
 
 # setState 的使用详解
 
-为什么使用 setState
-■ 开发中我们并不能直接通过修改 state 的值来让界面发生更新:
-口 因为我们修改了 state 之后，希望 React 根据最新的 State 来重新渲染界面，但是这种方式的修改 React 并不知道数据发生了变化;
-口 React 并没有实现类似于 Vue2 中的 Object.defineProperty 或者 Vue3 中的 Proxy 的方式来监听数据的变化;
+为什么使用 setState  
+■ 开发中我们并不能直接通过修改 state 的值来让界面发生更新:  
+口 因为我们修改了 state 之后，希望 React 根据最新的 State 来重新渲染界面，但是这种方式的修改 React 并不知道数据发生了变化;  
+口 React 并没有实现类似于 Vue2 中的 Object.defineProperty 或者 Vue3 中的 Proxy 的方式来监听数据的变化;  
 口 我们必须通过 setState 来告知 React 数据已经发生了变化;
 
-疑惑:在组件中并没有实现 setState 的方法，为什么可以调用呢?
+疑惑:在组件中并没有实现 setState 的方法，为什么可以调用呢?  
 口 原因很简单，setState 方法是从 Component 中继承过来的
 
-setState 异步更新
-■ setState 的更新是异步的?
-口 最终打印结果是 Hello World (在修改 state 之后立马打印 state 的值，值没有被修改);
+setState 异步更新  
+■ setState 的更新是异步的?  
+口 最终打印结果是 Hello World (在修改 state 之后立马打印 state 的值，值没有被修改);  
 口 可见 setState 是异步的操作，我们并不能在执行完 setState 之后立马拿到最新的 state 的结果
 
-■ 为什么 setState 设计为异步呢?
-口 setState 设计为异步其实之前在 GitHub 上也有很多的讨论;
-口 React 核心成员(Redux 的作者)Dan Abramov 也有对应的回复，有兴趣的同学可以参考一下;
+■ 为什么 setState 设计为异步呢?  
+口 setState 设计为异步其实之前在 GitHub 上也有很多的讨论;  
+口 React 核心成员(Redux 的作者)Dan Abramov 也有对应的回复，有兴趣的同学可以参考一下;  
 口https://github.com/facebook/react/issues/11527#issuecomment-360199710;
 
-■ 我对其回答做一个简单的总结:
-■ setState 设计为异步，可以显著的提升性能;
-口 如果每次调用 setState 都进行一次更新，那么意味着 render 函数会被频繁调用，界面重新渲染，这样效率是很低的:
-口 最好的办法应该是获取到多个更新，之后进行批量更新:
-■ 如果同步更新了 state，但是还没有执行 render 函数，那么 state 和 props 不能保持同步;
+■ 我对其回答做一个简单的总结:  
+■ setState 设计为异步，可以显著的提升性能;  
+口 如果每次调用 setState 都进行一次更新，那么意味着 render 函数会被频繁调用，界面重新渲染，这样效率是很低的:  
+口 最好的办法应该是获取到多个更新，之后进行批量更新:  
+■ 如果同步更新了 state，但是还没有执行 render 函数，那么 state 和 props 不能保持同步;  
 口 state 和 props 不能保持一致性，会在开发中产生很多的问题;
 
 # React 组件化开发（二）
 
 # 1.React 性能优化 SCU（**重要**）
 
-■ 1.1.React 更新机制
-.我们在前面已经学习 React 的渲染流程:
+■ 1.1.React 更新机制  
+.我们在前面已经学习 React 的渲染流程:  
 .JSX->虚拟 DOM->真实 DOM
 
-■ 那么 React 的更新流程呢?
+■ 那么 React 的更新流程呢?  
 .peops/state 改变 -> render 函数重新执行 -> 产生新的 DOM 树 -> 新旧 DOM 树进行 diff -> 计算出差异进行更新 -> 更新到真实的 DOM
 
 ■ React 在 props 或 state 发生改变时，会调用 React 的 render 方法，会创建一颗不同的树。 2.获取 DOM 方式 refs
 
-■ React 需要基于这两颗不同的树之间的差别来判断如何有效的更新 Ui:
-口 如果一棵树参考另外一棵树进行完全比较更新，那么即使是最先进的算法，该算法的复杂程度为 O(n2)，其中 n 是树中元素的数量;
-口 https://grfia.dlsi.ua.es/ml/algorithms/references/editsurvey bille.pdf;
-口 如果在 React 中使用了该算法，那么展示 1000 个元素所需要执行的计算量将在十亿的量级范围;
+■ React 需要基于这两颗不同的树之间的差别来判断如何有效的更新 Ui:  
+口 如果一棵树参考另外一棵树进行完全比较更新，那么即使是最先进的算法，该算法的复杂程度为 O(n2)，其中 n 是树中元素的数量;  
+口 https://grfia.dlsi.ua.es/ml/algorithms/references/editsurvey bille.pdf;  
+口 如果在 React 中使用了该算法，那么展示 1000 个元素所需要执行的计算量将在十亿的量级范围;  
 口 这个开销太过昂贵了，React 的更新性能会变得非常低效;
 
-■ 于是，React 对这个算法进行了优化，将其优化成了 O(n)，如何优化的呢?
-口 同层节点之间相互比较，不会垮节点比较;
-口 不同类型的节点，产生不同的树结构;
+■ 于是，React 对这个算法进行了优化，将其优化成了 O(n)，如何优化的呢?  
+口 同层节点之间相互比较，不会垮节点比较;  
+口 不同类型的节点，产生不同的树结构;  
 口 开发中，可以通过 key 来指定哪些节点在不同的渲染下保持稳定;
 
-keys 的优化
+keys 的优化  
 ■ 我们在前面遍历列表时，总是会提示一个警告，让我们加入一个 key 属性
 
-■ 方式一:在最后位置插入数据
+■ 方式一:在最后位置插入数据  
 口 这种情况，有无 key 意义并不大
 
-■ 方式二:在前面插入数据
+■ 方式二:在前面插入数据  
 口 这种做法，在没有 key 的情况下，所有的 li 都需要进行修改;
 
-■ 当子元素(这里的 li)拥有 key 时，React 使用 key 来匹配原有树上的子元素以及最新树上的子元素
-口 在下面这种场景下，key 为 111 和 222 的元素仅仅进行位移，不需要进行任何的修改;
+■ 当子元素(这里的 li)拥有 key 时，React 使用 key 来匹配原有树上的子元素以及最新树上的子元素  
+口 在下面这种场景下，key 为 111 和 222 的元素仅仅进行位移，不需要进行任何的修改;  
 口 将 key 为 333 的元素插入到最前面的位置即可;
 
-■ key 的注意事项:
-口 key 应该是唯一的;
-口 key 不要使用随机数(随机数在下一次 render 时，会重新生成一个数字);
+■ key 的注意事项:  
+口 key 应该是唯一的;  
+口 key 不要使用随机数(随机数在下一次 render 时，会重新生成一个数字);  
 口 使用 index 作为 key，对性能是没有优化的;
 
-render 函数被调用
-■ 我们使用之前的一个嵌套案例:
-口 在 App 中，我们增加了一个计数器的代码;
-口 当点击+1 时，会重新调用 App 的 render 函数;
+render 函数被调用  
+■ 我们使用之前的一个嵌套案例:  
+口 在 App 中，我们增加了一个计数器的代码;  
+口 当点击+1 时，会重新调用 App 的 render 函数;  
 口 而当 App 的 render 函数被调用时，所有的子组件的 render 函数都会被重新调用;
 
-■ 那么，我们可以思考一下，在以后的开发中，我们只要是修改了 App 中的数据，所有的组件都需要重新 render，进行 diff 算法，性能必然是很低的:
-口事实上，很多的组件没有必须要重新 render;
+■ 那么，我们可以思考一下，在以后的开发中，我们只要是修改了 App 中的数据，所有的组件都需要重新 render，进行 diff 算法，性能必然是很低的:  
+口事实上，很多的组件没有必须要重新 render;  
 口 它们调用 render 应该有一个前提，就是依赖的数据:(state、props)发生改变时，再调用自己的 render 方法;
 
-■ 如何来控制 render 方法是否被调用呢?
+■ 如何来控制 render 方法是否被调用呢?  
 口 通过 shouldComponentUpdate 方法即可;
 
-shouldComponentUpdate
-■ React 给我们提供了一个生命周期方法 shouldComponentUpdate(很多时候，我们简称为 SCU)，这个方法接受参数，并且需要有返回值:
-■ 该方法有两个参数:
-口 参数-:nextProps 修改之后，最新的 props 属性
+shouldComponentUpdate  
+■ React 给我们提供了一个生命周期方法 shouldComponentUpdate(很多时候，我们简称为 SCU)，这个方法接受参数，并且需要有返回值:  
+■ 该方法有两个参数:  
+口 参数-:nextProps 修改之后，最新的 props 属性  
 口 参数二:nextState 修改之后，最新的 state 属性
 
-■ 该方法返回值是一个 boolean 类型:
-口 返回值为 true，那么就需要调用 render 方法;
-口 返回值为 false，那么久不需要调用 render 方法;
+■ 该方法返回值是一个 boolean 类型:  
+口 返回值为 true，那么就需要调用 render 方法;  
+口 返回值为 false，那么久不需要调用 render 方法;  
 口 默认返回的是 true，也就是只要 state 发生改变，就会调用 render 方法;
 
 ■ 比如我们在 App 中增加一个 message 属性:
-口 jsx 中并没有依赖这个 message，那么它的改变不应该引起重新染;
+口 jsx 中并没有依赖这个 message，那么它的改变不应该引起重新染;  
 口 但是因为 render 监听到 state 的改变，就会重新 render，所以最后 render 方法还是被重新调用了;
 
 这样一直判断很繁琐，有没有更好的方式呢? 有，那就是使用 PureComponent;
 
-过时了，废弃了。
-PureComponent （Pure：纯）如果当前组件是类组件
-■ 如果所有的类，我们都需要手动来实现 shouldComponentUpdate，那么会给我们开发者增加非常多的工作量。
-口 我们来设想一下 shouldComponentUpdate 中的各种判断的目的是什么?
+过时了，废弃了。  
+PureComponent （Pure：纯）如果当前组件是类组件  
+■ 如果所有的类，我们都需要手动来实现 shouldComponentUpdate，那么会给我们开发者增加非常多的工作量。  
+口 我们来设想一下 shouldComponentUpdate 中的各种判断的目的是什么?  
 口 props 或者 state 中的数据是否发生了改变，来决定 shouldComponentUpdate 返回 true 或者 false;
 
-■ 事实上 React 已经考虑到了这一点，所以 React 已经默认帮我们实现好了，如何实现呢?
+■ 事实上 React 已经考虑到了这一点，所以 React 已经默认帮我们实现好了，如何实现呢?  
 口 将 class 继承自 PureComponent。
 
-问题 2：那函数组件呢？函数组件没有生命周期方法，也没有继承关系，如何优化呢？
+问题 2：那函数组件呢？函数组件没有生命周期方法，也没有继承关系，如何优化呢？  
 memo 函数组件可以使用 React.memo() 来优化。
 
 # 如何使用 ref
 
-■ 在 React 的开发模式中，通常情况下不需要、也不建议直接操作 DOM 原生，但是某些特殊的情况，确实需要获取到 DOM 进行某些操作:
-口 管理焦点，文本选择或媒体播放;
-口 触发强制动画;
-口 集成第三方 DOM 库;
+■ 在 React 的开发模式中，通常情况下不需要、也不建议直接操作 DOM 原生，但是某些特殊的情况，确实需要获取到 DOM 进行某些操作:  
+口 管理焦点，文本选择或媒体播放;  
+口 触发强制动画;  
+口 集成第三方 DOM 库;  
 口 我们可以通过 refs 获取 DOM;
 
 ■ 如何创建 refs 来获取对应的 DOM 呢?目前有三种方式:
 
-ref 的转发
-■ 在前面我们学习 ref 时讲过，ref 不能应用于函数式组件:
+ref 的转发  
+■ 在前面我们学习 ref 时讲过，ref 不能应用于函数式组件:  
 口 因为函数式组件没有实例，所以不能获取到对应的组件对象
 
-■ 但是，在开发中我们可能想要获取函数式组件中某个元素的 DOM，这个时候我们应该如何操作呢?
-口 方式一:直接传入 ref 属性(错误的做法)
+■ 但是，在开发中我们可能想要获取函数式组件中某个元素的 DOM，这个时候我们应该如何操作呢?  
+口 方式一:直接传入 ref 属性(错误的做法)  
 口 方式二:通过 forwardRef 高阶函数;
 
 # 3.受控和非受控组件 （**重要**）
 
 ■ 在 React 中，HTML 表单的处理方式和普通的 DOM 元素不太一样:表单元素通常会保存在一些内部的 state
 
-■ 在 HTML 中，表单元素(如<input>、<textarea>和<select>)之类的表单元素通常自己维护 state，并根据用户输入进行更新。
-■ 而在 React 中，可变状态(mutable state)通常保存在组件的 state 属性中，并且只能通过使用 setState()来更新
-口 我们将两者结合起来，使 React 的 state 成为“唯一数据源”
-口 渲染表单的 React 组件还控制着用户输入过程中表单发生的操作,
+■ 在 HTML 中，表单元素(如<input>、<textarea>和<select>)之类的表单元素通常自己维护 state，并根据用户输入进行更新。  
+■ 而在 React 中，可变状态(mutable state)通常保存在组件的 state 属性中，并且只能通过使用 setState()来更新  
+口 我们将两者结合起来，使 React 的 state 成为“唯一数据源”  
+口 渲染表单的 React 组件还控制着用户输入过程中表单发生的操作,  
 ロ 被 React 以这种方式控制取值的表单输入元素就叫做“受控组件”
 
 非受控组件
 
-■ React 推荐大多数情况下使用 受控组件 来处理表单数据:
-口一个受控组件中，表单数据是由 React 组件来管理的;
+■ React 推荐大多数情况下使用 受控组件 来处理表单数据:  
+口一个受控组件中，表单数据是由 React 组件来管理的;  
 口 另一种替代方案是使用非受控组件，这时表单数据将交由 DOM 节点来处理
 
-■ 如果要使用非受控组件中的数据，那么我们需要使用 ref 来从 DOM 节点中获取表单数据。
-口 我们来进行一个简单的演练:
+■ 如果要使用非受控组件中的数据，那么我们需要使用 ref 来从 DOM 节点中获取表单数据。  
+口 我们来进行一个简单的演练:  
 口 使用 ref 来获取 input 元素;
 
 # 4.React 的高阶组件
 
-认识高阶函数
-■ 什么是高阶组件呢?
-口 相信很多同学都知道(听说过?)，也用过 高阶函数
+认识高阶函数  
+■ 什么是高阶组件呢?  
+口 相信很多同学都知道(听说过?)，也用过 高阶函数  
 口 它们非常相似，所以我们可以先来回顾一下什么是 高阶函数。
 
-高阶函数的维基百科定义:至少满足以下条件之一:
-口 接受一个或多个函数作为输入;
+高阶函数的维基百科定义:至少满足以下条件之一:  
+口 接受一个或多个函数作为输入;  
 口 输出一个函数;
 
-■ JavaScript 中比较常见的 filter、map、reduce 都是高阶函数。
-■ 那么说明是高阶组件呢?
-口 高阶组件的英文是 Higher-Order Components，简称为 HOC
+■ JavaScript 中比较常见的 filter、map、reduce 都是高阶函数。  
+■ 那么说明是高阶组件呢?  
+口 高阶组件的英文是 Higher-Order Components，简称为 HOC  
 口 官方的定义:高阶组件是参数为组件，返回值为新组件的函数
 
-注：1.高阶组件本身不是一个组件，而是一个函数;
+注：1.高阶组件本身不是一个组件，而是一个函数;  
 特点：*接受一个组件作为它的参数。 *返回一个新组件。
 
-高阶函数的意义
+高阶函数的意义  
 ■ 我们会发现利用高阶组件可以针对某些 React 代码进行更加优雅的处理。
 
-■ 当然，HOC 也有自己的一些缺陷:
-口 HOC 需要在原组件上进行包裹或者嵌套，如果大量使用 HOC，将会产生非常多的嵌套，这让调试变得非常困难
+■ 当然，HOC 也有自己的一些缺陷:  
+口 HOC 需要在原组件上进行包裹或者嵌套，如果大量使用 HOC，将会产生非常多的嵌套，这让调试变得非常困难  
 口 HOC 可以劫持 props，在不遵守约定的情况下也可能造成冲突;
 
-■ Hooks 的出现，是开创性的，它解决了很多 React 之前的存在的问题
+■ Hooks 的出现，是开创性的，它解决了很多 React 之前的存在的问题  
 口 比如 this 指向问题、比如 hoc 的嵌套复杂度问题等等
 
 5.portals 和 fragment
 
-Portals 的使用
+Portals 的使用  
 ■ 某些情况下，我们希望渲染的内容独立于父组件，甚至是独立于当前挂载到的 DOM 元素中(默认都是挂载到 id 为 root 的 DOM 元素上的)
 
-■ Portal 提供了一种将子节点渲染到存在于父组件以外的 DOM 节点的优秀的方案:
-口第一个参数(child)是任何可渲染的 React 子元素，例如一个元素，字符串或 fragment;
+■ Portal 提供了一种将子节点渲染到存在于父组件以外的 DOM 节点的优秀的方案:  
+口第一个参数(child)是任何可渲染的 React 子元素，例如一个元素，字符串或 fragment;  
 口第二个参数(container)是一个 DOM 元素;
 
 fragment 片段
 
 ■ 在之前的开发中，我们总是在一个组件中返回内容时包裹一个 div 元素:
 
-■ 我们又希望可以不渲染这样一个 div 应该如何操作呢?
-口 使用 Fragment
+■ 我们又希望可以不渲染这样一个 div 应该如何操作呢?  
+口 使用 Fragment  
 口 Fragment 允许你将子列表分组，而无需向 DOM 添加额外节点
 
-■ React 还提供了 Fragment 的短语法:
-口 它看起来像空标签<></>
+■ React 还提供了 Fragment 的短语法:  
+口 它看起来像空标签<></>  
 口 但是，如果我们需要在 Fragment 中添加 key，那么就不能使用短语法
 
 6.StrictMode 严格模式
 
-■ StrictMode 是一个用来突出显示应用程序中潜在问题的工具:
-口 与 Fragment 一样，StrictMode 不会渲染任何可见的 UI
-口 它为其后代元素触发额外的检查和警告
+■ StrictMode 是一个用来突出显示应用程序中潜在问题的工具:  
+口 与 Fragment 一样，StrictMode 不会渲染任何可见的 UI  
+口 它为其后代元素触发额外的检查和警告  
 口 严格模式检查仅在开发模式下运行;它们不会影响生产构建
 
-■ 可以为应用程序的任何部分启用严格模式:
-口 不会对 Header 和 Footer 组件运行严格模式检查;
+■ 可以为应用程序的任何部分启用严格模式:  
+口 不会对 Header 和 Footer 组件运行严格模式检查;  
 口 但是，ComponentOne 和 ComponentTwo 以及它们的所有后代元素都将进行检查;
 
 严格模式检查的是什么?
@@ -799,26 +797,26 @@ fragment 片段
 
 ■ 2.使用过时的 ref API
 
-■ 3.检查意外的副作用
-口 这个组件的 constructor 会被调用两次;
-口 这是严格模式下故意进行的操作，让你来查看在这里写的一些逻辑代码被调用多次时，是否会产生一些副作用;
+■ 3.检查意外的副作用  
+口 这个组件的 constructor 会被调用两次;  
+口 这是严格模式下故意进行的操作，让你来查看在这里写的一些逻辑代码被调用多次时，是否会产生一些副作用;  
 口 在生产环境中，是不会被调用两次的
 
-■ 4.使用废弃的 findDOMNode 方法
+■ 4.使用废弃的 findDOMNode 方法  
 口 在之前的 React API 中，可以通过 findDOMNode 来获取 DOM，不过已经不推荐使用了，可以自行学习演练一下
 
-■ 5.检测过时的 context API
-口 早期的 Context 是通过 static 属性声明 Context 对象属性，通过 getChildContext 返回 Context 对象等方式来使用 Context 的;
+■ 5.检测过时的 context API  
+口 早期的 Context 是通过 static 属性声明 Context 对象属性，通过 getChildContext 返回 Context 对象等方式来使用 Context 的;  
 口 目前这种方式已经不推荐使用，大家可以自行学习了解一下它的用法;0
 
 # React 过渡动画实现
 
 1.React 的过渡动画
 
-react-transition-group 介绍
-■ 在开发中，我们想要给一个组件的显示和消失添加某种过渡动画，可以很好的增加用户体验。
-■ 当然，我们可以通过原生的 CSS 来实现这些过渡动画，但是 React 社区为我们提供了 react-transition-group 用来完成过渡动画。
-■ React 曾为开发者提供过动画插件 react-addons-css-transition-group，后由社区维护，形成了现在的 ■ react-transition-group.
+react-transition-group 介绍  
+■ 在开发中，我们想要给一个组件的显示和消失添加某种过渡动画，可以很好的增加用户体验。  
+■ 当然，我们可以通过原生的 CSS 来实现这些过渡动画，但是 React 社区为我们提供了 react-transition-group 用来完成过渡动画。  
+■ React 曾为开发者提供过动画插件 react-addons-css-transition-group，后由社区维护，形成了现在的 ■ react-transition-group.  
 口 这个库可以帮助我们方便的实现组件的 入场 和 离场 动画，使用时需要进行额外的安装
 
 # npm
@@ -831,173 +829,173 @@ yarn add react-transition-group
 
 react-transition-group 主要组件
 
-■ react-transition-group 主要包含四个组件:
-■ Transition
-口 该组件是一个和平台无关的组件(不一定要结合 CSS):
+■ react-transition-group 主要包含四个组件:  
+■ Transition  
+口 该组件是一个和平台无关的组件(不一定要结合 CSS):  
 口 在前端开发中，我们一般是结合 CSS 来完成样式，所以比较常用的是 CSSTransition;
 
-■ CSSTransition
+■ CSSTransition  
 口 在前端开发中，通常使用 CSSTransition 来完成过渡动画效果
 
-■ SwitchTransition
+■ SwitchTransition  
 口 两个组件显示和隐藏切换时，使用该组件
 
-■ TransitionGroup
+■ TransitionGroup  
 口 将多个动画组件包裹在其中，一般用于列表中元素的动画
 
-2.CSSTransiton 使用
-■ CSSTransition 是基于 Transition 组件构建的:
+2.CSSTransiton 使用  
+■ CSSTransition 是基于 Transition 组件构建的:  
 口 CSSTransition 执行过程中，有三个状态:appear、enter、exit; (出现，进入，离开)
 
-■ 它们有三种状态，需要定义对应的 CSS 样式:
-口 第一类:开始状态:对应的类是-appear、-enter、exit;
-口 第二类:执行动画:对应的类是-appear-active、-enter-active、-exit-active;
+■ 它们有三种状态，需要定义对应的 CSS 样式:  
+口 第一类:开始状态:对应的类是-appear、-enter、exit;  
+口 第二类:执行动画:对应的类是-appear-active、-enter-active、-exit-active;  
 口 第三类:执行结束:对应的类是-appear-done、-enter-done、-exit-done;
 
-■ CSSTransition 常见对应的属性:
-■ 1.in:触发进入或者退出状态
-口 如果添加了 unmountOnExit={true}，那么该组件会在执行退出动画结束后被移除掉;口 当 in 为 true 时，触发进入状态，会添加-enter、-enter-acitve 的 class 开始执行动画，当动画执行结束后，会移除两个 class 并且添加-enter-done 的 class
+■ CSSTransition 常见对应的属性:  
+■ 1.in:触发进入或者退出状态  
+口 如果添加了 unmountOnExit={true}，那么该组件会在执行退出动画结束后被移除掉;口 当 in 为 true 时，触发进入状态，会添加-enter、-enter-acitve 的 class 开始执行动画，当动画执行结束后，会移除两个 class 并且添加-enter-done 的 class  
 口 当 in 为 false 时，触发退出状态，会添加-exit、-exit-active 的 class 开始执行动画，当动画执行结束后，会移除两个 class，并且添加-enter-done 的 class;
 
-■ 2.classNames:动画 class 的名称
+■ 2.classNames:动画 class 的名称  
 口 决定了在编写 css 时，对应的 class 名称:比如 card-enter、card-enter-active、card-enter-done;
 
-■ 3.timeout:
+■ 3.timeout:  
 口 过渡动画的时间
 
-■ 4.appear:
+■ 4.appear:  
 口 是否在初次进入添加动画(需要和 in 同时为 true)
 
 ■ 5.unmountOnExit:退出后卸载组件
 
-■ 6.CSSTransition 对应的钩子函数:主要为了检测动画的执行过程，来完成一些 JavaScript 的操作
-口 onEnter:在进入动画之前被触发;
-口 onEntering:在应用进入动画时被触发,
-口 onEntered:在应用进入动画结束后被触发;
-口 onExit:在退出动画之前被触发;
-口 onExiting:在应用退出动画时被触发;
+■ 6.CSSTransition 对应的钩子函数:主要为了检测动画的执行过程，来完成一些 JavaScript 的操作  
+口 onEnter:在进入动画之前被触发;  
+口 onEntering:在应用进入动画时被触发,  
+口 onEntered:在应用进入动画结束后被触发;  
+口 onExit:在退出动画之前被触发;  
+口 onExiting:在应用退出动画时被触发;  
 口 onExited:在应用退出动画结束后被触发;
 
 4.SwitchTransition
 
-■ SwitchTransition 可以完成两个组件之间切换的炫酷动画:
-口 比如我们有一个按钮需要在 on 和 of 之间切换，我们希望看到 on 先从左侧退出，off 再从右侧进入:
-口 这个动画在 vue 中被称之为 vue transition modes;
+■ SwitchTransition 可以完成两个组件之间切换的炫酷动画:  
+口 比如我们有一个按钮需要在 on 和 of 之间切换，我们希望看到 on 先从左侧退出，off 再从右侧进入:  
+口 这个动画在 vue 中被称之为 vue transition modes;  
 口 react-transition-group 中使用 SwitchTransition 来实现该动画
 
-■ SwitchTransition 中主要有一个属性:mode，有两个值
-口 in-out:表示新组件先进入，旧组件再移除;
+■ SwitchTransition 中主要有一个属性:mode，有两个值  
+口 in-out:表示新组件先进入，旧组件再移除;  
 口 out-in:表示就组件先移除，新组件再进入
 
-■ 如何使用 SwitchTransition 呢?
-口 SwitchTransition 组件里面要有 CSSTransition 或者 Transition 组件，不能直接包惠你想要切换的组件;
+■ 如何使用 SwitchTransition 呢?  
+口 SwitchTransition 组件里面要有 CSSTransition 或者 Transition 组件，不能直接包惠你想要切换的组件;  
 口 SwitchTransition 里面的 CSSTransition 或 Transition 组件不再像以前那样接受 in 属性来判断元素是何种状态，取而代之的是 key 属性;
 
-5.TransitionGroup
+5.TransitionGroup  
 ■ 需要将这些 CSSTransition 放入到一个 TransitionGroup 中来完成动画:当我们有一组动画时，
 
 # 4.2.React 中如何编写 CSS？
 
 1.React 中 CSS 的概述
 
-组件化天下的 CSS
-■ 前面说过，整个前端已经是组件化的天下!
+组件化天下的 CSS  
+■ 前面说过，整个前端已经是组件化的天下!  
 口 而 CSS 的设计就不是为组件化而生的，所以在目前组件化的框架中都在需要一种合适的 CSS 解决方案。
 
-■ 在组件化中选择合适的 CSS 解决方案应该符合以下条件:
-口 可以编写局部 css:css 具备自己的具备作用域，不会随意污染其他组件内的元素，
-口 可以编写动态的 css:可以获取当前组件的一些状态，根据状态的变化生成不同的 css 样式;
-口 支持所有的 css 特性:伪类、动画、媒体查询等;
-口 编写起来简洁方便、最好符合一贯的 css 风格特点;
+■ 在组件化中选择合适的 CSS 解决方案应该符合以下条件:  
+口 可以编写局部 css:css 具备自己的具备作用域，不会随意污染其他组件内的元素，  
+口 可以编写动态的 css:可以获取当前组件的一些状态，根据状态的变化生成不同的 css 样式;  
+口 支持所有的 css 特性:伪类、动画、媒体查询等;  
+口 编写起来简洁方便、最好符合一贯的 css 风格特点;  
 口 等等
 
-React 中的 CSS
+React 中的 CSS  
 ■ 事实上，css 一直是 React 的痛点，也是被很多开发者吐槽、诟病的一个点。
 
-■ 在这一点上，Vue 做的要好于 React:
-口 Vue 通过在.vue 文件中编写<style><style>标签来编写自己的样式
-口 通过是否添加 scoped 属性来决定编写的样式是全局有效还是局部有效;
-口 通过 lang 属性来设置你喜欢的 less、sass 等预处理器
-口 通过内联样式风格的方式来根据最新状态设置和改变 css;
+■ 在这一点上，Vue 做的要好于 React:  
+口 Vue 通过在.vue 文件中编写<style><style>标签来编写自己的样式  
+口 通过是否添加 scoped 属性来决定编写的样式是全局有效还是局部有效;  
+口 通过 lang 属性来设置你喜欢的 less、sass 等预处理器  
+口 通过内联样式风格的方式来根据最新状态设置和改变 css;  
 口 等等..
 
 ■ Vue 在 CSS 上虽然不能称之为完美，但是已经足够简洁、自然、方便了，至少统一的样式风格不会出现多个开发人员、多个项目采用不一样的样式风格。
 
-■ 相比而言，React 官方并没有给出在 React 中统一的样式风格:
-口由此，从普通的 css，到 css modules，再到 css in js，有几十种不同的解决方案，上百个不同的库
+■ 相比而言，React 官方并没有给出在 React 中统一的样式风格:  
+口由此，从普通的 css，到 css modules，再到 css in js，有几十种不同的解决方案，上百个不同的库  
 口 大家一致在寻找最好的或者说最适合自己的 CSS 方案，但是到目前为止也没有统一的方案;
 
 2.内联样式 CSS 写法
 
-■ 内联样式是官方推荐的一种 css 样式的写法:
-口 style 接受一个采用小驼峰命名属性的 JavaScript 对象，，而不是 CSS 字符串,
+■ 内联样式是官方推荐的一种 css 样式的写法:  
+口 style 接受一个采用小驼峰命名属性的 JavaScript 对象，，而不是 CSS 字符串,  
 口 并且可以引用 state 中的状态来设置相关的样式;
 
-■ 内联样式的优点:
-口 1.内联样式,样式之间不会有冲突
+■ 内联样式的优点:  
+口 1.内联样式,样式之间不会有冲突  
 口 2.可以动态获取当前 state 中的状态
 
-■ 内联样式的缺点:
-口 1.写法上都需要使用驼峰标识
-口 2.某些样式没有提示
-口 3.大量的样式,代码混乱
+■ 内联样式的缺点:  
+口 1.写法上都需要使用驼峰标识  
+口 2.某些样式没有提示  
+口 3.大量的样式,代码混乱  
 口 4.某些样式无法编写(比如伪类/伪元素)
 
-3.普通 CSS 文件写法
+3.普通 CSS 文件写法  
 ■ 普通的 css 我们通常会编写到一个单独的文件，之后再进行引入。
 
-■ 这样的编写方式和普通的网页开发中编写方式是一致的:
-口 如果我们按照普通的网页标准去编写，那么也不会有太大的问题;
-口 但是组件化开发中我们总是希望组件是一个独立的模块，即便是样式也只是在自己内部生效，不会相互影响;
+■ 这样的编写方式和普通的网页开发中编写方式是一致的:  
+口 如果我们按照普通的网页标准去编写，那么也不会有太大的问题;  
+口 但是组件化开发中我们总是希望组件是一个独立的模块，即便是样式也只是在自己内部生效，不会相互影响;  
 口 但是普通的 css 都属于全局的 css，样式之间会相互影响;
 
-4.CSS Module 写法
-■ css modules 并不是 React 特有的解决方案，而是所有使用了类似于 webpack 配置的环境下都可以使用的。
+4.CSS Module 写法  
+■ css modules 并不是 React 特有的解决方案，而是所有使用了类似于 webpack 配置的环境下都可以使用的。  
 口 如果在其他项目中使用它，那么我们需要自己来进行配置，比如配置 webpack.config.js 中的 modules: true 等。
 
-■ React 的脚手架已经内置了 css modules 的配置:
-口 .css/.less/.scss 等样式文件都需要修改成 .module.css/.module.less/.module.scss 等;
+■ React 的脚手架已经内置了 css modules 的配置:  
+口 .css/.less/.scss 等样式文件都需要修改成 .module.css/.module.less/.module.scss 等;  
 口 之后就可以引用并且进行使用了;
 
 ■ 使用 craco 插件-网上搜一下怎么用
 
-5.CSs in Js 解决方案
-■ 官方文档也有提到过 CSsin Js 这种方案:
-口 “CSS-in-JS”是指一种模式，其中 CSS 由 JavaScript 生成而不是在外部文件中定义
-口 注意此功能并不是 React 的一部分，而是由第三方库提供;
+5.CSs in Js 解决方案  
+■ 官方文档也有提到过 CSsin Js 这种方案:  
+口 “CSS-in-JS”是指一种模式，其中 CSS 由 JavaScript 生成而不是在外部文件中定义  
+口 注意此功能并不是 React 的一部分，而是由第三方库提供;  
 口 React 对样式如何定义并没有明确态度;
 
-■ 在传统的前端开发中，我们通常会将结构(HTML)、样式(CSS)、逻辑(JavaScript)进行分离。
-口 但是在前面的学习中，我们就提到过，React 的思想中认为逻辑本身和 UI 是无法分离的，所以才会有了 JSX 的语法。
-口 样式呢?样式也是属于 UI 的一部分;
-口 事实上 CSS-in-JS 的模式就是一种将样式(CSS)也写人到 JavaScript 中的方式，并且可以方便的使用 JavaScript 的状态
+■ 在传统的前端开发中，我们通常会将结构(HTML)、样式(CSS)、逻辑(JavaScript)进行分离。  
+口 但是在前面的学习中，我们就提到过，React 的思想中认为逻辑本身和 UI 是无法分离的，所以才会有了 JSX 的语法。  
+口 样式呢?样式也是属于 UI 的一部分;  
+口 事实上 CSS-in-JS 的模式就是一种将样式(CSS)也写人到 JavaScript 中的方式，并且可以方便的使用 JavaScript 的状态  
 口 所以 React 有被人称之为 All in Js;
 
-当然，这种开发的方式也受到了很多的批评:
-口 Stop using CSS in JavaScript for web development
+当然，这种开发的方式也受到了很多的批评:  
+口 Stop using CSS in JavaScript for web development  
 口 https://hackernoon.com/stop-using-css-in-javascript-for-web-development-fa32fb873dcc
 
 认识 styled-components
 
-■ 批评声音虽然有，但是在我们看来很多优秀的 CSS-in-Js 的库依然非常强大、方便:
-口 CSS-in-JS 通过 JavaScript 来为 CSS 赋予一些能力，包括类似于 CSS 预处理器一样的样式嵌套、函数定义、逻辑复用、动态修改状态等等;
-口 虽然 CSS 预处理器也具备某些能力，但是获取动态状态依然是一个不好处理的点;
+■ 批评声音虽然有，但是在我们看来很多优秀的 CSS-in-Js 的库依然非常强大、方便:  
+口 CSS-in-JS 通过 JavaScript 来为 CSS 赋予一些能力，包括类似于 CSS 预处理器一样的样式嵌套、函数定义、逻辑复用、动态修改状态等等;  
+口 虽然 CSS 预处理器也具备某些能力，但是获取动态状态依然是一个不好处理的点;  
 口 所以，目前可以说 CSS-in-JS 是 React 编写 CSS 最为受欢迎的一种解决方案;
 
-目前比较流行的 CsS-in-Js 的库有哪些呢?
-口 styled-components
-口 emotion
+目前比较流行的 CsS-in-Js 的库有哪些呢?  
+口 styled-components  
+口 emotion  
 口 glamorous
 
-■ 目前可以说 styled-components 依然是社区最流行的 CSS-in-JS 库，所以我们以 styled-components 的讲解为主;
+■ 目前可以说 styled-components 依然是社区最流行的 CSS-in-JS 库，所以我们以 styled-components 的讲解为主;  
 ■ 安装 styled-components:
 
 6.classnames 库使用
 
-React 中添加 class
+React 中添加 class  
 ■ React 在 JSX 给了我们开发者足够多的灵活性，你可以像编写 JavaScript 代码一样，通过一些逻辑来决定是否添加某些 class:
 
-■ 这个时候我们可以借助于一个第三方的库:classnames
+■ 这个时候我们可以借助于一个第三方的库:classnames  
 口 很明显，这是一个用于动态添加 classnames 的一个库
 
 # 4.3.Rudex 状态管理使用
