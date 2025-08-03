@@ -714,7 +714,8 @@ ref 的转发
 
 ■ 在 React 中，HTML 表单的处理方式和普通的 DOM 元素不太一样:表单元素通常会保存在一些内部的 state
 
-■ 在 HTML 中，表单元素(如<input>、<textarea>和<select>)之类的表单元素通常自己维护 state，并根据用户输入进行更新。  
+■ 在 HTML 中，表单元素(如<input>、<textarea>和<select>)之类的表单元素通常自己维护 state，并根据用户输入进行更新。
+
 ■ 而在 React 中，可变状态(mutable state)通常保存在组件的 state 属性中，并且只能通过使用 setState()来更新  
 口 我们将两者结合起来，使 React 的 state 成为“唯一数据源”  
 口 渲染表单的 React 组件还控制着用户输入过程中表单发生的操作,  
