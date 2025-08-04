@@ -1104,6 +1104,30 @@ const action3 ={ type: "CHANGE_NAME", playload: { index: 0, newName: "coderwhy" 
 口 reducer 是一个纯函数,
 口 reducer 做的事情就是将传入的 state 和 action 结合起来生成一个新的 state;
 
+Redux 的三大原则
+■ 1.单一数据源
+口 整个应用程序的 state 被存储在一颗 object tree 中，并且这个 object tree 只存储在一个 store 中:
+口 Redux 并没有强制让我们不能创建多个 Store，但是那样做并不利于数据的维护;
+口 单一的数据源可以让整个应用程序的 state 变得方便维护、追踪、修改;
+
+■ 2.State 是只读的
+口 唯一修改 State 的方法一定是触发 action，不要试图在其他地方通过任何的方式来修改 State:
+口 这样就确保了 View 或网络请求都不能直接修改 state，它们只能通过 action 来描述自己,想要如何修改 state
+口 这样可以保证所有的修改都被集中化处理，并且按照严格的顺序来执行，所以不需要担心 race condition(竞态)的问题;
+
+■ 3.使用纯函数来执行修改
+口 通过 reducer 将 旧 state 和 actions 联系在一起，并且返回一个新的 Stat&
+口 随着应用程序的复杂度增加，我们可以将 reducer 拆分成多个小的 reducers，分别操作不同 state tree 的一部分,
+口 但是所有的 reducer 都应该是纯的数，不能产生任何的副作用:
+
+Redux 结构划分
+■ 如果我们将所有的逻辑代码写到一起，那么当 redux 变得复杂时代码就难以维护
+口 接下来，我会对代码进行拆分，将 store、reducer、action、constants 拆分成一个个文件
+口 创建 store/index.js 文件: //创建 store，返回 store 的
+口 创建 store/reducer.js 文件: //创建 reducer,初始化值，返回一个函数
+口 创建 store/actionCreators.js 文件: //创建 action，动态返回一个对象
+口 创建 store/constants.js 文件: //创建常量，方便管理 action 的 type 值
+
 三.React 结合 Redux
 
 四.Redux 的异步操作
