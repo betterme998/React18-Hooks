@@ -1130,6 +1130,9 @@ Redux 结构划分
 
 三.React 结合 Redux
 
+redux 融入 react 代码
+■ 目前 redux 在 react 中使用是最多的，所以我们需要将之前编写的 redux 代码，融入到 react 当中去。
+
 四.Redux 的异步操作
 
 五.redux-devtool
