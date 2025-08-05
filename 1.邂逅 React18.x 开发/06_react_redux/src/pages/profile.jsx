@@ -1,5 +1,6 @@
 import React, { PureComponent } from "react";
 import store from "../store";
+import { subNumberAction } from "../store/actionCreators";
 
 export class profile extends PureComponent {
   constructor() {
@@ -10,6 +11,10 @@ export class profile extends PureComponent {
       // 第一次state的值要用下面方法取
       counter: store.getState().counter,
     };
+  }
+  subNumber(num) {
+    // 触发action，修改store中的数据
+    store.dispatch(subNumberAction(num));
   }
   componentDidMount() {
     // 订阅store的变化
@@ -24,9 +29,9 @@ export class profile extends PureComponent {
       <div>
         <h2>profile Counter: {counter}</h2>
         <div>
-          <button>-1</button>
-          <button>-5</button>
-          <button>-8</button>
+          <button onClick={(e) => this.subNumber(1)}>-1</button>
+          <button onClick={(e) => this.subNumber(5)}>-5</button>
+          <button onClick={(e) => this.subNumber(8)}>-8</button>
         </div>
       </div>
     );

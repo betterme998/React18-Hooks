@@ -1,5 +1,6 @@
 import React, { PureComponent } from "react";
 import store from "../store";
+import { addNumberAction } from "../store/actionCreators";
 
 export class home extends PureComponent {
   constructor() {
@@ -19,15 +20,20 @@ export class home extends PureComponent {
     });
   }
 
+  addNumber(num) {
+    // 触发action，修改store中的数据
+    store.dispatch(addNumberAction(num));
+  }
+
   render() {
     const { counter } = this.state;
     return (
       <div>
         <h2>Home Counter: {counter}</h2>
         <div>
-          <button>+1</button>
-          <button>+5</button>
-          <button>+8</button>
+          <button onClick={(e) => this.addNumber(1)}>+1</button>
+          <button onClick={(e) => this.addNumber(5)}>+5</button>
+          <button onClick={(e) => this.addNumber(8)}>+8</button>
         </div>
       </div>
     );

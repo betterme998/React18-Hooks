@@ -1133,7 +1133,21 @@ Redux 结构划分
 redux 融入 react 代码
 ■ 目前 redux 在 react 中使用是最多的，所以我们需要将之前编写的 redux 代码，融入到 react 当中去。
 
+react-redux 使用
+
+■ 开始之前需要强调一下，redux 和 react 没有直接的关系，你完全可以在 React,Angular, Ember, jQuery, or vanilaJavaScript 中使用 Redux。
+
+■ 尽管这样说，redux 依然是和 React 库结合的更好，因为他们是通过 state 函数来描述界面的状态，Redux 可以发射状态的更新让他们作出相应。
+
 四.Redux 的异步操作
+
+组件中异步操作
+
+■ 在之前简单的案例中，redux 中保存的 counter 是一个本地定义的数据
+口 我们可以直接通过同步的操作来 dispatch action，state 就会被立即更新。
+口 但是真实开发中，redux 中保存的很多数据可能来自服务器，我们需要进行异步的请求，再将数据保存到 redux 中。
+
+■ 在之前学习网络请求的时候我们讲过，网络请求可以在 class 组件的 componentDidMount 中发送，所以我们可以有这样的结构:
 
 五.redux-devtool
 

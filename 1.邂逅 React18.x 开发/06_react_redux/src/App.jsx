@@ -4,10 +4,23 @@ redux 和 react 结合使用
 2.创建store文件夹 -> 创建index.js -> 创建store并传入reducer函数
 3.因为要reducer函数，所以创建reducer.js文件
 4.在App组件中使用store,对store进行订阅，获取state的值
+5.修改store的数据，-> 在store文件夹中创建actionCreators.js文件
+6.action中的字符串凑成常量到一个文件中统一管理
+7.使用store时，很多页面都需要订阅store的变化，出现大量重复代码：使用高阶组件拦截，社区已经提供了connect高阶组件
+8.下载高阶组件库：npm install react-redux。整个库目的是为了让react和redux结合使用
+9.在App组件中使用Provider包裹，传入store
+10.在组件中使用connect高阶组件，传入mapStateToProps和mapDispatchToProps
+11.通过props接收store中的数据和dispatch方法
+12.下载axios，请求网络请求，并保存到store中
+13.将网络请求的代码写在redux中
+14.使用redux-thunk中间件，处理异步请求
 */
 import React, { PureComponent } from "react";
 import Home from "./pages/home";
 import Profile from "./pages/profile";
+import About from "./pages/about";
+import Category from "./pages/category";
+
 import "./style.css";
 import store from "./store";
 
@@ -37,6 +50,8 @@ export class App extends PureComponent {
         <div className="pages">
           <Home />
           <Profile />
+          <About />
+          <Category />
         </div>
       </div>
     );
