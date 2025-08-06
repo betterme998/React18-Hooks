@@ -3,7 +3,7 @@
 import { connect } from "react-redux";
 
 import React, { PureComponent } from "react";
-import { addNumberAction } from "../store/counter";
+import { addNumberAction } from "../store/actionCreators";
 
 export class about extends PureComponent {
   calcNumber(num, isAdd) {
@@ -19,13 +19,10 @@ export class about extends PureComponent {
 
   render() {
     // 注意：因为数据通过props传递，所以这里的this.props.counter就是从store中映射过来的数据
-    const { counter, banners, recommends, userInfo } = this.props;
+    const { counter, banners, recommends } = this.props;
 
     return (
       <div>
-        <div className="user">
-          <h2>nickname:{userInfo.nickname}</h2>
-        </div>
         <h2>About Page: {counter} </h2>
         {/* react-redux修改数据 */}
         <div>
@@ -84,10 +81,9 @@ export class about extends PureComponent {
 // };
 
 const mapStateToProps = (state) => ({
-  counter: state.counter.counter,
-  banners: state.home.banners,
-  recommends: state.home.recommends,
-  userInfo: state.user.userInfo,
+  counter: state.counter,
+  banners: state.banners,
+  recommends: state.recommends,
 });
 
 const mapDispatchToProps = (dispatch) => ({

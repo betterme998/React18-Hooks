@@ -1149,9 +1149,35 @@ react-redux 使用
 
 ■ 在之前学习网络请求的时候我们讲过，网络请求可以在 class 组件的 componentDidMount 中发送，所以我们可以有这样的结构:
 
+理解中间件
+
+■ redux 也引入了中间件(Middleware)的概念:
+口 这个中间件的目的是在 dispatch 的 action 和最终达到的 reducer 之间，扩展一些自己的代码
+口 比如日志记录、调用异步接口、添加代码调试功能等等
+
+■ 我们现在要做的事情就是发送异步的网络请求，所以我们可以添加对应的中间件:
+口 这里官网推荐的、包括演示的网络请求的中间件是使用 redux-thunk;
+
+■ redux-thunk 是如何做到让我们可以发送异步的请求呢?
+口 我们知道，默认情况下的 dispatch(action)，action 需要是一个 JavaScript 的对象;
+口 redux-thunk 可以让 dispatch(action 函数)，action 可以是一个函数;
+口 该函数会被调用，并且会传给这个函数一个 dispatch 函数和 getState 函数;
+√ dispatch 函数用于我们之后再次派发 action;
+√ getState 函数考虑到我们之后的一些操作需要依赖原来的状态，用于让我们可以获取之前的一些状态;
+
 五.redux-devtool
 
 六.reducer 的模版拆分
+
+combineReducers 函数原理
+
+■ 那么 combineReducers 是如何实现的呢?
+口事实上，它也是将我们传入的 reducers 合并到一个对象中，最终返回一个 combination 的函数(相当于我们之前的 reducer 函
+数了)
+口 在执行 combination 函数的过程中，它会通过判断前后返回的数据是否相同来决定返回之前的 state 还是新的 state,
+口 新的 state 会触发订阅者发生对应的刷新，而旧的 state 可以有效的组织订阅者发生刷新;
+
+# Redux 的使用详解(二)
 
 # 4.4.React Router6.x 路由
 

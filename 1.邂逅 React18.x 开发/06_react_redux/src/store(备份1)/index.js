@@ -1,31 +1,10 @@
 // applyMiddleware:应用中间件
-import { createStore, applyMiddleware, compose, combineReducers } from "redux";
+import { createStore, applyMiddleware, compose } from "redux";
 // 3.导入reducer函数
-import counterReducer from "./counter";
-import homeReducer from "./home";
-import userReducer from "./user";
+import reducer from "./reducer";
+
 // 4.增强store,导入中间件
 import { thunk } from "redux-thunk";
-
-// 3.2:合并多个reducer函数
-const reducer = combineReducers({
-  counter: counterReducer,
-  home: homeReducer,
-  user: userReducer,
-});
-
-// combineReducers实现原理
-// function reducer2(state = {}, action) {
-//   // 返回一个对象,store的state就是这个对象
-//   return {
-//     // 这里执行每个reducer函数，因为state={}，所以这里的state.counter,state.home,state.user都是undefined
-//     // 但是每个reducer函数都有默认值，所以不会报错，所以这里的state.counter,state.home,state.user都是初始值
-
-//     counter: counterReducer(state.counter, action),
-//     home: homeReducer(state.home, action),
-//     user: userReducer(state.user, action),
-//   };
-// }
 
 // 开发环境下，可以使用redux-devtools-extension扩展工具,
 // 兼容写法：如果浏览器支持redux-devtools扩展工具，那么就使用它，否则就用默认的compose函数

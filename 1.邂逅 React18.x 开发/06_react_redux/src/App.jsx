@@ -14,6 +14,11 @@ redux 和 react 结合使用
 12.下载axios，请求网络请求，并保存到store中
 13.将网络请求的代码写在redux中
 14.使用redux-thunk中间件，处理异步请求
+15.我们在store中放了很多数据，修改的人太多，不方便管理。重构store.,不同数据放在不同的reducer中
+16.创建多个reducer文件，分别管理不同的数据
+17.使用combineReducers函数，将多个reducer合并成一个reducer
+18.在store的index.js中引入combineReducers函数，将多个reducer合并成一个reducer
+19.combineReducers函数原理
 */
 import React, { PureComponent } from "react";
 import Home from "./pages/home";
@@ -31,13 +36,13 @@ export class App extends PureComponent {
     this.state = {
       // 订阅store，只有数据变化时才会更新state的值，
       // 第一次state的值要用下面方法取
-      counter: store.getState().counter,
+      counter: store.getState().counter.counter,
     };
   }
   componentDidMount() {
     // 订阅store的变化
     store.subscribe(() => {
-      const state = store.getState();
+      const state = store.getState().counter.counter;
       this.setState({ counter: state.counter });
     });
   }

@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 import store from "../store";
-import { addNumberAction } from "../store/counter";
+import { addNumberAction } from "../store/actionCreators";
 
 export class home extends PureComponent {
   constructor() {
@@ -9,13 +9,13 @@ export class home extends PureComponent {
     this.state = {
       // 订阅store，只有数据变化时才会更新state的值，
       // 第一次state的值要用下面方法取
-      counter: store.getState().counter.counter,
+      counter: store.getState().counter,
     };
   }
   componentDidMount() {
     // 订阅store的变化
     store.subscribe(() => {
-      const state = store.getState().counter;
+      const state = store.getState();
       this.setState({ counter: state.counter });
     });
   }
