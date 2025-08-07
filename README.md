@@ -1179,6 +1179,28 @@ combineReducers 函数原理
 
 # Redux 的使用详解(二)
 
+一.认识 ReduxToolkit
+■ Redux Toolkit 是官方推荐的编写 Redux 逻辑的方法。
+口 在前面我们学习 Redux 的时候应该已经发现，redux 的编写逻辑过于的繁琐和麻烦。
+口 并且代码通常分拆在多个文件中(虽然也可以放到一个文件管理，但是代码量过多，不利于管理)
+口 Redux Toolkit 包旨在成为编写 Redux 逻辑的标准方式，从而解决上面提到的问题;
+口 在很多地方为了称呼方便，也将之称为“RTK”
+
+■ 安装 Redux Toolkit
+.1.创建项目：create-react-app 07_learn_reduxtoolkit  
+.2.安装 redux-toolkit 和 react-redux: npm install @reduxjs/toolkit react-redux
+
+■ Redux Toolkit 的核心 API 主要是如下几个:
+口 confiqureStore:包装 createStore 以提供简化的配置选项和良好的默认值。它可以自动组合你的 slice reducer，添加你提供的任何 Redux 中间件，redux-thunk 默认包含，并启用 Redux DevTools Extension.
+口 createSlice:接受 reducer 函数的对象、切片名称和初始状态值，并自动生成切片 reducer，并带有相应的 actions.
+口 createAsyncThunk:接受一个动作类型字符串和一个返回承诺的函数，并生成一个 pending/fulfilled/rejected 基于该承诺分派动作类型的 thunk
+
+二.ReduxToolkit 重构
+三.ReduxToolkit 异步
+四.connect 高阶组件
+五.中间件的实现原理
+六.React 状态管理选择
+
 # 4.4.React Router6.x 路由
 
 # 4.5.React Hooks 的使用详解
