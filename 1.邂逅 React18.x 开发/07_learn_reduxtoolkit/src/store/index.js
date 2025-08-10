@@ -1,14 +1,16 @@
-import { configureStore } from "@reduxjs/toolkit"
+import { configureStore } from "@reduxjs/toolkit";
 
-import counterReducer from "./features/counter"
+import counterReducer from "./features/counter";
+import homeReducer from "./features/home";
 
 const store = configureStore({
-  reducer:{
-    counter: counterReducer
-  }
-})
+  reducer: {
+    counter: counterReducer,
+    home: homeReducer,
+  },
+});
 
-export default store
+export default store;
 
 /*
 
@@ -22,4 +24,4 @@ store的创建
 口reducer，将slice中的reducer可以组成一个对象传入此处
 口 middleware:可以使用参数，传入其他的中间件(自行了解)
 口 devTools:是否配置devTools工具，默认为true
-*/  
+*/

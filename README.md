@@ -1197,6 +1197,18 @@ combineReducers 函数原理
 
 二.ReduxToolkit 重构
 三.ReduxToolkit 异步
+
+Redux Toolkit 的异步操作
+■ 在之前的开发中，我们通过 redux-thunk 中间件让 dispatch 中可以进行异步操作。
+■ Redux Toolkit 默认已经给我们继承了 Thunk 相关的功能:createAsyncThunk
+
+■ 当 createAsyncThunk 创建出来的 action 被 dispatch 时，会存在三种状态
+口 pending:action 被发出，但是还没有最终的结果;
+口 fulfilled:获取到最终的结果(有返回值的结果)
+口 rejected:执行过程中有错误或者抛出了异常
+
+■ 我们可以在 createSlice 的 entraReducer 中监听这些结果:
+
 四.connect 高阶组件
 五.中间件的实现原理
 六.React 状态管理选择

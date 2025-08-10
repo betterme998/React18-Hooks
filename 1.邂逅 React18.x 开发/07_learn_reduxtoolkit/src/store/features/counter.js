@@ -25,8 +25,16 @@ const counterSlice = createSlice({
     counter: 888,
   },
   reducers: {
-    addNumber: (state, action) => {},
-    subNumber: (state, action) => {},
+    // 解构
+    addNumber: (state, { payload }) => {
+      state.counter += payload;
+    },
+    subNumber: (state, action) => {
+      // 传递的参数
+      const payload = action.payload;
+      state.counter -= payload;
+      console.log("counter reducer subNumber 执行了");
+    },
   },
 });
 export const { addNumber, subNumber } = counterSlice.actions;
