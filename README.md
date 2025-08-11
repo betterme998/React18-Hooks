@@ -1216,9 +1216,11 @@ extraReducer 的另外一种写法
 
 四.connect 高阶组件
 
-自定义connect函数
+自定义 connect 函数
 
 五.中间件的实现原理
+打印日志需求：在·dispatch 前打印日志，在 dispatch 后打印日志
+
 六.React 状态管理选择
 
 # 4.4.React Router6.x 路由
