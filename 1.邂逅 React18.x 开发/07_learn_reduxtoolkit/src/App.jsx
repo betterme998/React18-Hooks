@@ -1,14 +1,14 @@
 import React, { PureComponent } from "react";
 // 想使用store数据
-import { connect } from "react-redux"
+import { connect } from "react-redux";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import "./style.css";
+import About from "./pages/About";
 
 export class App extends PureComponent {
-
   render() {
-  const { counter }  = this.props
+    const { counter } = this.props;
 
     return (
       <div>
@@ -16,6 +16,8 @@ export class App extends PureComponent {
         <div className="pages">
           <Home />
           <Profile />
+          {/* 自定义connect函数 */}
+          <About />
         </div>
       </div>
     );
@@ -28,7 +30,7 @@ export class App extends PureComponent {
 // 就是这个组件需要哪些数据，就通过这个参数来告诉connect方法
 
 const mapStateToProps = (state) => ({
-  counter: state.counter.counter
-})
+  counter: state.counter.counter,
+});
 
 export default connect(mapStateToProps)(App);

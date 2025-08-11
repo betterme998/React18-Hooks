@@ -20,8 +20,24 @@ export default store;
 口 createAsyncThunk:接受一个动作类型字符串和一个返回承诺的函数，并生成一个 pending/fulfilled/rejected 基于该承诺分派动作类型的 thunk
 
 store的创建
-■configureStore用于创建store对象，常见参数如下:
+■ configureStore用于创建store对象，常见参数如下:
 口reducer，将slice中的reducer可以组成一个对象传入此处
 口 middleware:可以使用参数，传入其他的中间件(自行了解)
 口 devTools:是否配置devTools工具，默认为true
+
+Redux Toolkit的数据不可变性(了解)
+■ 在React开发中，我们总是会强调数据的不可变性:
+口 无论是类组件中的state，还是redux中管理的state;
+口 事实上在整个JavaScript编码过程中，数据的不可变性都是非常重要的，
+
+■ 所以在前面我们经常会进行浅拷贝来完成某些操作，但是浅拷贝事实上也是存在问题的:
+口 比如过大的对象，进行浅拷贝也会造成性能的浪费;
+口 比如浅拷贝后的对象，在深层改变时，依然会对之前的对象产生影响;
+
+■ 事实上Redux Toolkit底层使用了immerjs的一个库来保证数据的不可变性。
+ 
+■ 为了节约内存，又出现了一个新的算法:Persistent Datastructure(持久化数据结构或一致性数据结构);
+口 用一种数据结构来保存数据;
+口 当数据被修改时，会返回一个对象，但是新的对象会尽可能的利用之前的数据结构而不会对内存造成浪费，
+
 */

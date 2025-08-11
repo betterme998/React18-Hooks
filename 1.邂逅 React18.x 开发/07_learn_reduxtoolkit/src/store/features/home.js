@@ -7,9 +7,20 @@ import axios from "axios";
 // 发送异步网络请求
 export const fetchHomeMultidataAction = createAsyncThunk(
   "fetch/homemultidata",
-  async () => {
+  // 传递参数：extraInfo,state，是页面mapDispatchToProps传进来的参数，
+  // 解构一下，拿到dispatch和getState
+
+  async (extraInfo, { dispatch, getState }) => {
     const res = await axios.get("http://123.207.32.32:8000/home/multidata");
     // 怎么保存数据?
+    // 方法一：直接在action中dispatch，这种方式不推荐
+
+    // const banners = res.data.data.banner.list;
+    // const recommends = res.data.data.recommend.list;
+    // dispatch(changeBanners(banners));
+    // dispatch(changeRecommends(recommends));
+
+    // 方法二：通过createSlice的extraReducers监听异步请求回来的结果
     /*
     ■ 当 createAsyncThunk 创建出来的 action 被 dispatch 时，会存在三种状态
     口 pending:action 被发出，但是还没有最终的结果;
@@ -28,7 +39,14 @@ const homeSlice = createSlice({
     banners: [],
     recommends: [],
   },
-  reducers: {},
+  reducers: {
+    changeBanners(state, { payload }) {
+      state.banners = payload;
+    },
+    changeRecommends(state, action) {
+      state.recommends = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     // 这里是监听异步请求回来的结果：三种状态，1.pending,2.fulfilled,3.rejected
     // [obj.name]() 计算属性名，obj.name是动态的，这里就是动态函数名，执行这个函数

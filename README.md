@@ -1209,7 +1209,15 @@ Redux Toolkit 的异步操作
 
 ■ 我们可以在 createSlice 的 entraReducer 中监听这些结果:
 
+extraReducer 的另外一种写法
+
+■ extraReducer 还可以传入一个函数，函数接受一个 builder 参数:
+口 我们可以向 builder 中添加 case 来监听异步操作的结果:
+
 四.connect 高阶组件
+
+自定义connect函数
+
 五.中间件的实现原理
 六.React 状态管理选择
 
