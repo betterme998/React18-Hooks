@@ -3,6 +3,10 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 import store from "./store";
 
+// 自定义connect时，解耦store
+//  自定义connect函数，用于连接react和redux-toolkit的store
+import { StoreContext } from "./hoc";
+
 import { Provider } from "react-redux";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -10,7 +14,10 @@ root.render(
   <React.StrictMode>
     {/* 使用react-redux将 react和redux结合使用，两个步骤，一.使用Provider包裹<App/>并传递state数据 */}
     <Provider store={store}>
-      <App />
+      {/* 自定义connect时，解耦store,让用户自己传入store，而不需在connect中引入store */}
+      <StoreContext.Provider value={store}>
+        <App />
+      </StoreContext.Provider>
     </Provider>
   </React.StrictMode>
 );
