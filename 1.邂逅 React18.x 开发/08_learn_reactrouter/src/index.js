@@ -1,9 +1,19 @@
+import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
+import { HashRouter } from "react-router";
 
 const root = ReactDOM.createRoot(document.querySelector("#root"));
 
-root.render(<App />);
+root.render(
+  <StrictMode>
+    {/* 2.开启路由功能 */}
+    {/* hash的特点是路径前面加上#号：http://localhost:3000/#/home */}
+    <HashRouter>
+      <App />
+    </HashRouter>
+  </StrictMode>
+);
 
 /*
 .1.认识 React-Router
@@ -85,4 +95,20 @@ root.render(<App />);
 口 安装时，我们选择 react-router-dom
 口 react-router 会包含一些 react-native 的内容 web 开发并不需要:
 口 npm install react-router-dom
-*/ 
+
+■ react-router最主要的API是给我们提供的一些组件:
+■ BrowserRouter或HashRouter
+口 Router中包含了对路径改变的监听，并且会将相应的路径传递给子组件;
+口 BrowserRouter使用history模式;
+口 HashRouter使用hash模式:
+
+路由映射配置
+■ Routes:包裹所有的Route，在其中匹配一个路由
+口 Router5.x使用的是Switch组件
+
+路由配置和跳转
+■ Link和NavLink:
+口 通常路径的跳转是使用Link组件，最终会被渲染成a元素
+口 NavLink是在Link基础之上增加了一些样式属性(后续学习)
+口 to属性:Link中最重要的属性，用于设置跳转到的路径;
+*/
