@@ -2,9 +2,11 @@ import React, { PureComponent } from "react";
 import { Routes, Route, Link, NavLink, Navigate } from "react-router";
 import Home from "./pages/Home";
 import About from "./pages/About";
-import Login from "./pages/Login"
-import NotFound from "./pages/NotFound"
+import Login from "./pages/Login";
+import NotFound from "./pages/NotFound";
 import "./style.css";
+import HomeRecommend from "./pages/HomeRecommend";
+import HomeRanking from "./pages/HomeRanking";
 /*
 1.对路由进行安装
 2.对<App/>使用HashRouter包裹，或者BrowserRouter包裹
@@ -55,11 +57,16 @@ export class App extends PureComponent {
                 口 path属性:用于设置匹配到的路径
                 口 element属性:设置匹配到路径后，渲染的组件，
             */}
-            <Route path="/" element={<Navigate to="/home"/>} />
-            <Route path="/home" element={<Home />} />
+            <Route path="/" element={<Navigate to="/home" />} />
+            <Route path="/home" element={<Home />}>
+              {/* 嵌套路由 */}
+              <Route path="/home" element={<Navigate to="/home/recommend"/>} />
+              <Route path="/home/recommend" element={<HomeRecommend />} />
+              <Route path="/home/ranking" element={<HomeRanking />} />
+            </Route>
             <Route path="/about" element={<About />} />
             <Route path="/login" element={<Login />} />
-            <Route path="*" element={<NotFound/>}/>
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
         <div className="footer">
