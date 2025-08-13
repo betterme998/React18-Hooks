@@ -1324,6 +1324,15 @@ React 中的 state 如何管理
 口 react-router 会包含一些 react-native 的内容 web 开发并不需要:
 口 npm install react-router-dom
 
+口通常路径的跳转是使用Link组件，最终会被渲染成a元素
+口 NavLink是在Link基础之上增加了一些样式属性(后续学习) 一般不用
+口 to属性:Link中最重要的属性，用于设置跳转到的路径
+
+NavLink的使用
+■ 需求:路径选中时，对应的a元素变为红色■这个时候，我们要使用NavLink组件来替代Link组件:
+口 style:传入函数，函数接受一个对象，包含isActive属性
+口 className:传入函数，函数接受一个对象，包含isActive属性
+
 .3.Router 的路由嵌套
 
 .4.Router 的代码跳转

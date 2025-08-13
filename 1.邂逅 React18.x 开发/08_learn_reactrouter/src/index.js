@@ -111,4 +111,20 @@ root.render(
 口 通常路径的跳转是使用Link组件，最终会被渲染成a元素
 口 NavLink是在Link基础之上增加了一些样式属性(后续学习)
 口 to属性:Link中最重要的属性，用于设置跳转到的路径;
+
+NavLink的使用
+■ 需求:路径选中时，对应的a元素变为红色■这个时候，我们要使用NavLink组件来替代Link组件:
+口 style:传入函数，函数接受一个对象，包含isActive属性
+口 className:传入函数，函数接受一个对象，包含isActive属性
+
+Navigate导航
+■ Navigate用于路由的重定向，当这个组件出现时，就会执行跳转到对应的to路径中:
+
+■ 我们这里使用这个的一个案例:
+口 用户跳转到Profile界面
+口 但是在Profile界面有一个isLogin用于记录用户是否登录
+√ true:那么显示用户的名称;
+√ false:直接重定向到登录界面，
+
+Not Found页面配置
 */
