@@ -1,4 +1,3 @@
-import React, { PureComponent } from "react";
 import {
   Routes,
   Route,
@@ -11,11 +10,12 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
-import "./style.css";
 import HomeRecommend from "./pages/HomeRecommend";
 import HomeRanking from "./pages/HomeRanking";
 import Category from "./pages/Category";
 import Order from "./pages/Order";
+import HomeSongMenu from "./pages/HomeSongMenu";
+import "./style.css";
 
 /*
 1.对路由进行安装
@@ -87,6 +87,7 @@ export function App(props) {
             <Route path="/home" element={<Navigate to="/home/recommend" />} />
             <Route path="/home/recommend" element={<HomeRecommend />} />
             <Route path="/home/ranking" element={<HomeRanking />} />
+            <Route path="/home/songmenu" element={<HomeSongMenu />} />
           </Route>
           <Route path="/about" element={<About />} />
           <Route path="/login" element={<Login />} />
