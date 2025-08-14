@@ -1,4 +1,4 @@
-import { StrictMode } from "react";
+import { StrictMode,Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import { HashRouter } from "react-router";
@@ -10,7 +10,10 @@ root.render(
     {/* 2.开启路由功能 */}
     {/* hash的特点是路径前面加上#号：http://localhost:3000/#/home */}
     <HashRouter>
-      <App />
+      {/* 用于懒加载组件 */}
+      <Suspense fallback={<h3>Loading..</h3>}>
+        <App />
+      </Suspense>
     </HashRouter>
   </StrictMode>
 );
@@ -147,5 +150,10 @@ Not Found页面配置
 口 那么如果是一个函数式组件，我们可以直接调用，但是如果是一个类组件呢?
 
 路由参数传递
+// 方式一：
+使用useParams()hooks函数拿到路由跳转参数
+注意：这是类组件，需要使用高阶函数增强类组件
 
+<Link to="/user?name=why&age=18">用户</Link>
+拿到路由参数方式二：useSearchParams();hooks方法
 */

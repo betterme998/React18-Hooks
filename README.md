@@ -1334,10 +1334,31 @@ NavLink的使用
 口 className:传入函数，函数接受一个对象，包含isActive属性
 
 .3.Router 的路由嵌套
+■ 在开发中，路由之间是存在嵌套关系的。
+
+■ 这里我们假设Home页面中有两个页面内容
+口 推荐列表和排行榜列表;
+口 点击不同的链接可以跳转到不同的地方，显示不同的内容
+
+■ <Outlet>组件用于在父路由元素中作为子路由的占位元素，
+
 
 .4.Router 的代码跳转
+■ 目前我们实现的跳转主要是通过Link或者NavLink进行跳转的，实际上我们也可以通过JavaScript代码进行跳转。
+口 我们知道Navigate组件是可以进行路由的跳转的，但是依然是组件的方式。
+口 如果我们希望通过JavaScript代码逻辑进行跳转(比如点击了一个button)，那么就需要获取到navigate对象
+
+■ 在Router6.x版本之后，代码类的API都迁移到了hooks的写法:
+口 如果我们希望进行代码跳转，需要通过useNavigate的Hook获取到navigate对象进行操作;
+口 那么如果是一个函数式组件，我们可以直接调用，但是如果是一个类组件呢?
 
 .5.Router 的参数传递
+// 方式一：
+使用useParams()hooks函数拿到路由跳转参数
+注意：这是类组件，需要使用高阶函数增强类组件
+
+<Link to="/user?name=why&age=18">用户</Link>
+拿到路由参数方式二：useSearchParams();hooks方法
 
 .6.Router 的配置方式
 

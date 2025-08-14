@@ -5,18 +5,11 @@ import {
   NavLink,
   Navigate,
   useNavigate,
+  useRoutes,
 } from "react-router";
-import Home from "./pages/Home";
-import About from "./pages/About";
-import Login from "./pages/Login";
-import NotFound from "./pages/NotFound";
-import HomeRecommend from "./pages/HomeRecommend";
-import HomeRanking from "./pages/HomeRanking";
-import Category from "./pages/Category";
-import Order from "./pages/Order";
-import HomeSongMenu from "./pages/HomeSongMenu";
-import Detail from "./pages/Detail";
-import User from "./pages/User";
+
+// 导入路由配置
+import routes from "./router";
 
 import "./style.css";
 
@@ -81,15 +74,10 @@ export function App(props) {
       <div className="content">
         {/* 3.映射关系：path => Component */}
 
-        <Routes>
-          {/* 
-              Route:Route用于路径的匹配;
-                口 path属性:用于设置匹配到的路径
-                口 element属性:设置匹配到路径后，渲染的组件，
-            */}
+        {/* 抽离出去 */}
+        {/* <Routes>
           <Route path="/" element={<Navigate to="/home" />} />
           <Route path="/home" element={<Home />}>
-            {/* 嵌套路由 */}
             <Route path="/home" element={<Navigate to="/home/recommend" />} />
             <Route path="/home/recommend" element={<HomeRecommend />} />
             <Route path="/home/ranking" element={<HomeRanking />} />
@@ -99,11 +87,12 @@ export function App(props) {
           <Route path="/login" element={<Login />} />
           <Route path="/category" element={<Category />} />
           <Route path="/order" element={<Order />} />
-          {/* 传递参数方式一：动态路由 */}
           <Route path="/detail/:id" element={<Detail />} />
           <Route path="/user" element={<User />} />
           <Route path="*" element={<NotFound />} />
-        </Routes>
+        </Routes> */}
+        {/* 使用hooks函数 这这样写替换上面的路由映射关系 */}
+        {useRoutes(routes)}
       </div>
       <div className="footer">
         Footer
