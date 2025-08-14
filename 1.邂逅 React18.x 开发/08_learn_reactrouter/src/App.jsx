@@ -15,6 +15,9 @@ import HomeRanking from "./pages/HomeRanking";
 import Category from "./pages/Category";
 import Order from "./pages/Order";
 import HomeSongMenu from "./pages/HomeSongMenu";
+import Detail from "./pages/Detail";
+import User from "./pages/User";
+
 import "./style.css";
 
 /*
@@ -52,6 +55,9 @@ export function App(props) {
           {/* 手动跳转路由 */}
           <button onClick={(e) => navigateTo("/category")}>分类</button>
           <span onClick={(e) => navigateTo("/order")}>订单</span>
+
+          {/* 拿到路由参数：方式二 */}
+          <Link to="/user?name=why&age=18">用户</Link>
 
           {/* 点击后会自动添加active className属性 */}
           <NavLink to="/about">关于</NavLink>
@@ -93,6 +99,9 @@ export function App(props) {
           <Route path="/login" element={<Login />} />
           <Route path="/category" element={<Category />} />
           <Route path="/order" element={<Order />} />
+          {/* 传递参数方式一：动态路由 */}
+          <Route path="/detail/:id" element={<Detail />} />
+          <Route path="/user" element={<User />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>

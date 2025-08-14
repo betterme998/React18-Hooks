@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 // 子路由页面
 export class HomeRanking extends PureComponent {
+ 
   render() {
     return (
       <div>
