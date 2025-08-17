@@ -1324,37 +1324,36 @@ React 中的 state 如何管理
 口 react-router 会包含一些 react-native 的内容 web 开发并不需要:
 口 npm install react-router-dom
 
-口通常路径的跳转是使用Link组件，最终会被渲染成a元素
-口 NavLink是在Link基础之上增加了一些样式属性(后续学习) 一般不用
-口 to属性:Link中最重要的属性，用于设置跳转到的路径
+口通常路径的跳转是使用 Link 组件，最终会被渲染成 a 元素
+口 NavLink 是在 Link 基础之上增加了一些样式属性(后续学习) 一般不用
+口 to 属性:Link 中最重要的属性，用于设置跳转到的路径
 
-NavLink的使用
-■ 需求:路径选中时，对应的a元素变为红色■这个时候，我们要使用NavLink组件来替代Link组件:
-口 style:传入函数，函数接受一个对象，包含isActive属性
-口 className:传入函数，函数接受一个对象，包含isActive属性
+NavLink 的使用
+■ 需求:路径选中时，对应的 a 元素变为红色 ■ 这个时候，我们要使用 NavLink 组件来替代 Link 组件:
+口 style:传入函数，函数接受一个对象，包含 isActive 属性
+口 className:传入函数，函数接受一个对象，包含 isActive 属性
 
 .3.Router 的路由嵌套
 ■ 在开发中，路由之间是存在嵌套关系的。
 
-■ 这里我们假设Home页面中有两个页面内容
+■ 这里我们假设 Home 页面中有两个页面内容
 口 推荐列表和排行榜列表;
 口 点击不同的链接可以跳转到不同的地方，显示不同的内容
 
 ■ <Outlet>组件用于在父路由元素中作为子路由的占位元素，
 
-
 .4.Router 的代码跳转
-■ 目前我们实现的跳转主要是通过Link或者NavLink进行跳转的，实际上我们也可以通过JavaScript代码进行跳转。
-口 我们知道Navigate组件是可以进行路由的跳转的，但是依然是组件的方式。
-口 如果我们希望通过JavaScript代码逻辑进行跳转(比如点击了一个button)，那么就需要获取到navigate对象
+■ 目前我们实现的跳转主要是通过 Link 或者 NavLink 进行跳转的，实际上我们也可以通过 JavaScript 代码进行跳转。
+口 我们知道 Navigate 组件是可以进行路由的跳转的，但是依然是组件的方式。
+口 如果我们希望通过 JavaScript 代码逻辑进行跳转(比如点击了一个 button)，那么就需要获取到 navigate 对象
 
-■ 在Router6.x版本之后，代码类的API都迁移到了hooks的写法:
-口 如果我们希望进行代码跳转，需要通过useNavigate的Hook获取到navigate对象进行操作;
+■ 在 Router6.x 版本之后，代码类的 API 都迁移到了 hooks 的写法:
+口 如果我们希望进行代码跳转，需要通过 useNavigate 的 Hook 获取到 navigate 对象进行操作;
 口 那么如果是一个函数式组件，我们可以直接调用，但是如果是一个类组件呢?
 
 .5.Router 的参数传递
 // 方式一：
-使用useParams()hooks函数拿到路由跳转参数
+使用 useParams()hooks 函数拿到路由跳转参数
 注意：这是类组件，需要使用高阶函数增强类组件
 
 <Link to="/user?name=why&age=18">用户</Link>
@@ -1363,6 +1362,44 @@ NavLink的使用
 .6.Router 的配置方式
 
 # 4.5.React Hooks 的使用详解
+
+.1.认识和体验 Hooks
+
+为什么需要 Hook?
+
+■ Hook 是 React 16.8 的新增特性，它可以让我们在不编写 class 的情况下使用 state 以及其他的 React 特性(比如生命周期)
+
+.2.State/Effect
+.3.Context/Reducer
+.4.Callback/Memo
+.5.Ref/LayoutEffect
+.6.自定义 Hooks 使用
+
+// 1.计数器案例对比
+
+// useState 解析
+// 那么我们来研究一下核心的一段代码代表什么意思:
+// 口 useState 来自 react，需要从 react 中导入，它是一个 hook;
+// 参数:初始化值，如果不设置为 undefined;
+// 返回值:数组，包含两个元素
+// >元素一:当前状态的值(第一调用为初始化值);
+// >元素二:设置状态值的函数
+//口 点击 button 按钮后，会完成两件事情:
+// 调用 setCount，设置一个新的值，
+// 组件重新渲染，并且根据新的值返回 DOM 结构
+
+// 自定义 hooks
+// hooks 必须顶层调用
+// 但是使用它们会有两个额外的规则:
+//口 只能在函数最外层调用 Hook。不要在循环、条件判断或者子函数中调用.
+//口 只能在 React 的函数组件中调用 Hook。不要在其他 JavaScript 函数中调用
+
+//-------------------------------------------------------------------------
+// State Hook 的 API 就是 useState，我们在前面已经进行了学习:
+// 口 useState 会帮助我们定义一个 state 变量，useState 是一种新方法，它与 class 里面的 this.state 提供的功能完全相同。
+// √ 一般来说，在函数退出后变量就会”消失”，而 state 中的变量会被 React 保留。
+// 口 useState 接受唯-一个参数，在第一次组件被调用时使用来作为初始化值。(如果没有传递参数，那么初始化值为 undefined)。
+// 口 useState 的返回值是一个数组，我们可以通过数组的解构，来完成赋值会非常方便。
 
 # 4.6.今日头条或爱彼迎 PC 实战
 
