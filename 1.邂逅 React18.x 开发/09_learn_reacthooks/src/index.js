@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 // import App from "./01_不使用Hook/App";
 // import App from "./02_计算器实现对比/App";
 // import App from "./03_useState的使用/App";
-import App from "./04_useEffect的使用/App";
+import App from "./04_useEffect的使用/05_执行时机-控制回调执行";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
