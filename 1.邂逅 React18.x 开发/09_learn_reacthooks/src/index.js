@@ -1,14 +1,25 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { UserContext, ThemeContext } from "./05_useContext的使用/context";
 // import App from "./01_不使用Hook/App";
 // import App from "./02_计算器实现对比/App";
 // import App from "./03_useState的使用/App";
-import App from "./04_useEffect的使用/05_执行时机-控制回调执行";
+// import App from "./04_useEffect的使用/05_执行时机-控制回调执行";
+import App from "./05_useContext的使用/App";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
+    {/* 给app共享用户数据和主题数据 */}
+    {/* 
+     注意事项:
+     口 当组件上层最近的 <MyContext.Provider>更新时，该 Hook 会触发重新渲染，
+     并使用最新传递给 MyContext provider 的context value 值。 */}
+    <UserContext.Provider value={{ name: "why", level: 99 }}>
+      <ThemeContext.Provider value={{ color: "red", size: 30 }}>
+        <App />
+      </ThemeContext.Provider>
+    </UserContext.Provider>
   </React.StrictMode>
 );
 // 为什么要使用Hooks？
