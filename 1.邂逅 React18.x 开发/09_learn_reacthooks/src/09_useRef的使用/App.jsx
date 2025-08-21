@@ -1,20 +1,22 @@
-//
-import React, { memo, useRef } from "react";
+import React, { memo, useCallback, useRef, useState } from "react";
 
 const App = memo(() => {
-  const titleRef = useRef();
-  const inputRef = useRef();
+  const [count, setCount] = useState(0);
+  // 多次渲染时，不会重新创建
+  const nameRef = useRef();
 
-  function ShowTitleDom() {
-    console.log(titleRef.current); //获取h2的dom
-    inputRef.current.focus(); //获取焦点
-  }
+  // 通过useRef解决闭包陷阱
+  const countRef = useRef();
+  countRef.current = count;
+  const increment = useCallback(() => {
+    setCount(countRef.current + 1);
+  }, []);
 
   return (
     <div>
-      <h2 ref={titleRef}>hello World</h2>
-      <input type="text" ref={inputRef} />
-      <button onClick={ShowTitleDom}>查看title的dom</button>
+      <h2>Hello World: {count}</h2>
+      <button onClick={(e) => setCount(countRef.current + 1)}></button>
+      <button onClick={(e) => increment}></button>
     </div>
   );
 });
