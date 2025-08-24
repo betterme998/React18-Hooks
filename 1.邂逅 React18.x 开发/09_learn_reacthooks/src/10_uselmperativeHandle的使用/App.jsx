@@ -12,8 +12,12 @@ const HelloWorld =
       // 意味着，在父组件中拿到的ref.current就是这里返回的对象
       return {
         focus() {
+          //聚焦
           console.log("focus");
           inputRef.current.focus();
+        },
+        setValue(value) {
+          inputRef.current.value = value;
         },
       };
     });
@@ -30,6 +34,7 @@ const App = memo(() => {
     // 如果只希望父组件获取input焦点，不想它有其他操作
     // 保留某个权限，其他操作不允许在父组件完成
     inputRef.current.focus();
+    inputRef.current.setValue("123");
   }
 
   return (
