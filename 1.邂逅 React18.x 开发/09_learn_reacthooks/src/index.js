@@ -2,6 +2,9 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 // import { UserContext, ThemeContext } from "./05_useContext的使用/context";
 import { UserContext, TokenContext } from "./12_自定义Hooks/context";
+import { Provider } from "react-redux";
+import store from "./13_redux中的hooks/store";
+
 // import App from "./01_不使用Hook/App";
 // import App from "./02_计算器实现对比/App";
 // import App from "./03_useState的使用/App";
@@ -13,7 +16,8 @@ import { UserContext, TokenContext } from "./12_自定义Hooks/context";
 // import App from "./09_useRef的使用/App";
 // import App from "./10_uselmperativeHandle的使用/App";
 // import App from "./11_useLayoutEffect使用/App";
-import App from "./12_自定义Hooks/App";
+// import App from "./12_自定义Hooks/App";
+import App from "./13_redux中的hooks/App";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 // root.render(
@@ -39,7 +43,9 @@ root.render(
      并使用最新传递给 MyContext provider 的context value 值。 */}
     <UserContext.Provider value={{ name: "why", level: 99 }}>
       <TokenContext.Provider value={"coderwhy"}>
-        <App />
+        <Provider store={store}>
+          <App />
+        </Provider>
       </TokenContext.Provider>
     </UserContext.Provider>
   </React.StrictMode>
