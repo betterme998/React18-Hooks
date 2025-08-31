@@ -17,7 +17,9 @@ import store from "./13_redux中的hooks/store";
 // import App from "./10_uselmperativeHandle的使用/App";
 // import App from "./11_useLayoutEffect使用/App";
 // import App from "./12_自定义Hooks/App";
-import App from "./13_redux中的hooks/App";
+// import App from "./13_redux中的hooks/App";
+// import App from "./14_useId的使用/App";
+import App from "./15_useTransition使用/02_useDeferredValue的使用";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 // root.render(
