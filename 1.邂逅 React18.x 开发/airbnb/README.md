@@ -1,0 +1,40 @@
+### 项目规范
+
+项目规范:项目中有一些开发规范和代码风格  
+1.文件夹、文件名称统一小写、多个单词以连接符(-)连接;  
+2.JavaScript 变量名称采用小驼峰标识，常量全部使用大写字母，组件采用大驼峰;  
+3.CSS 采用普通 CSS 和 styled-component 结合来编写(全局采用普通 CSS、局部采用 styled-component)  
+4.整个项目不再使用 class 组件，统一使用函数式组件，并且全面拥抱 Hooks;  
+5.所有的函数式组件，为了避免不必要的渲染，全部使用 memo 进行包裹;  
+6.组件内部的状态，使用 useState、useReducer;业务数据全部放在 redux 中管理;  
+7.函数组件内部基本按照如下顺序编写代码:  
+ 口 组件内部 state 管理;  
+ 口 redux 的 hooks 代码;  
+ 口 其他 hooks 相关代码(比如自定义 hooks);  
+ 口 组件内部的其他逻辑代码;  
+ 口 返回 JSX 代码;  
+8.redux 代码规范如下:  
+ 口 redux 目前我们学习了两种模式，在项目实战中尽量两个都用起来，都需要掌握;  
+ 口 每个模块有自己独立的 reducer 或者 slice，之后合并在一起:  
+ 口 redux 中会存在共享的状态、从服务器获取到的数据状态;  
+9.网络请求采用 axios  
+ 口 对 axios 进行二次封装，  
+ 口 所有的模块请求会放到一个请求文件中单独管理  
+10.项目使用 AntDesign、MUl(Material Ul)  
+ 口 爱彼迎本身的设计风格更多偏向于 MaterialUl，但是课程中也会尽量讲到 AntDesiqn 的使用方法  
+ 口 项目中某些 AntDesign、MUl 中的组件会被拿过来使用;  
+ 口 但是多部分组件还是自己进行编写、封装、实现;
+
+### 创建 React 项目
+
+1.创建项目的方式:create-react-app
+
+### 项目配置
+
+口 配置项目的 icon  
+口 配置项目的标题
+
+<!-- jsconfig.json：智能提示 -->
+
+口 配置 jsconfig.json  
+口 通过 craco 配置别名和 less 文件:
