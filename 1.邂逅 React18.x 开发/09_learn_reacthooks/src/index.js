@@ -19,7 +19,11 @@ import store from "./13_redux中的hooks/store";
 // import App from "./12_自定义Hooks/App";
 // import App from "./13_redux中的hooks/App";
 // import App from "./14_useId的使用/App";
-import App from "./15_useTransition使用/02_useDeferredValue的使用";
+// import App from "./15_useTransition使用/App";
+// import App from "./16_useActionState的使用/02_form的action增强的使用";
+// import App from "./17_useOptimistic的使用/App";
+// import App from "./18_use_API的使用/App";
+import App from "./19_ref的更新/App";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 // root.render(
