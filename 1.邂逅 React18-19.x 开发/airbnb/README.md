@@ -38,3 +38,81 @@
 
 口 配置 jsconfig.json  
 口 通过 craco 配置别名和 less 文件:
+
+### 项目目录结构划分
+
+-src  
+--assets
+
+<!-- 多个项目都会用到的ui组件库 -->
+
+--base-ui  
+--components  
+--hooks  
+--router  
+--services  
+--store  
+--utils  
+--views  
+--App.js  
+--index.js  
+--.gitignore  
+--craco.config.js  
+--jsconfig.json  
+--package.json  
+--package-lock.json  
+--README.md
+
+### 配置别名
+
+为什么要配置别名？
+引入路径太长如：../../../，不方便维护
+@ => src ,在 webpack 中配置别名  
+问题：react 脚手架隐藏 webpack  
+解决一：npm run eject 暴漏 webpack 配置 （不推荐）  
+解决二：craco => create-react-app config
+
+1.安装依赖包  
+npm install @craco/craco -D
+
+2.创建 craco.config.js 配置文件  
+-2.1 这是通过 node 加载的配置文件，所以需要使用 module.exports 导出配置项  
+-2.2 这里的配置会和 webpack 的配置进行合并
+
+3.修改 package.json  
+-3.1 修改项目的启动命令  
+--"start":"craco start"  
+--"build": "craco build",  
+--"test": "craco test",  
+再次使用 npm run start 启动项目时，就会将 craco.config.js 配置合并到 webpack 配置中
+
+### 配置 less
+
+1.安装依赖包  
+npm install craco-less
+
+2.修改 craco.config.js 配置文件
+
+### CSS 样式的重置
+
+■ 1. 对默认 CSS 样式进行重置:  
+口 normalize.css ：这是引入的 css 文件
+口 reset.css ：这是自己编写的 css 文件
+
+1.安装依赖包
+npm install normalize.css
+
+2.在 index.js 中引入
+
+3.编写自己的 CSS 样式重置文件
+assets/css/reset.less
+
+### 全家桶-Router 配置
+
+1.安装依赖包
+npm istall react-router
+
+2.导入路由两种模式其中一种 HashRouter 或者 BrowserRouter
+在 index.js 中导入
+import { HashRouter } from "react-router"
+并包裹 App 组件
