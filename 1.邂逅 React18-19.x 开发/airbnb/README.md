@@ -89,30 +89,81 @@ npm install @craco/craco -D
 ### 配置 less
 
 1.安装依赖包  
-npm install craco-less
+npm install craco-less -D
 
 2.修改 craco.config.js 配置文件
 
 ### CSS 样式的重置
 
 ■ 1. 对默认 CSS 样式进行重置:  
-口 normalize.css ：这是引入的 css 文件
+口 normalize.css ：这是引入的 css 文件  
 口 reset.css ：这是自己编写的 css 文件
 
-1.安装依赖包
+1.安装依赖包  
 npm install normalize.css
 
 2.在 index.js 中引入
 
-3.编写自己的 CSS 样式重置文件
+3.编写自己的 CSS 样式重置文件  
 assets/css/reset.less
 
 ### 全家桶-Router 配置
 
-1.安装依赖包
+1.安装依赖包  
 npm istall react-router
 
-2.导入路由两种模式其中一种 HashRouter 或者 BrowserRouter
-在 index.js 中导入
-import { HashRouter } from "react-router"
+2.导入路由两种模式其中一种 HashRouter 或者 BrowserRouter  
+在 index.js 中导入  
+import { HashRouter } from "react-router"  
 并包裹 App 组件
+
+创建页面  
+home  
+entire  
+detail
+
+3.配置路由  
+3.1 在 router/index.js 中配置路由并导出  
+3.2 在 App.jsx 中导入并使用  
+3.3 使用异步加载组件  
+需要注意：异步加载可能在切换时没有加载组件会报错，所以需要在 index.js 中使用 Suspense 包裹 HashRouter
+
+### 全家桶-Redux 状态管理
+
+Redux 状态管理的选择:  
+口 普通方式:目前项目中依然使用率非常高:  
+口 @reduxjs/toolkit 方式:推荐方式, 未来的趋势,
+
+1.安装依赖包  
+npm install @reduxjs/toolkit react-redux
+
+2.配置 store  
+2.1 在 store/index.js 中配置 store,并导出  
+2.2 在 index.js 中导入 store，并使用 Provider 包裹 App 组件,并传入 store  
+2.3 在 store/modules 中创建 reducer  
+--这里使用两种方式进行状态管理：普通方式 和 @reduxjs/toolkit 方式 (确保掌握两种方式的使用方法)  
+--创建 home.js 首页状态管理 ：使用@reduxjs/toolkit 方式  
+--创建 entire 文件 ：使用普通方式  
+并导出 reducer
+
+：使用普通方式  
+-- entire 文件  
+----entire/index.js :入口文件  
+----entire/createActions.js :创建 action  
+----entire/constants.js :常量文件  
+----entire/reducer.js: reducer 文件 （最重要文件）
+
+注意我们普通方式创建的 reducer 文件，也可以合并@reduxjs/toolkit 方式创建的 reducer 中
+
+2.4 创建好 home reducer 后，需要在 store/index.js 中合并 reducer
+
+### 网络请求-axios
+
+1.安装 axios  
+npm install axios
+
+2.封装 axios  
+services/index.js ：统一出口文件  
+services/request/index.js 文件：封装 axios 请求
+services/request/config.js 配置文件
+services/modules 文件夹：每个模块都有自己的独立文件来管理网络请求
