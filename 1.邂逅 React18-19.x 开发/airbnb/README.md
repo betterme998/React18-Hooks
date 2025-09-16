@@ -164,6 +164,21 @@ npm install axios
 
 2.封装 axios  
 services/index.js ：统一出口文件  
-services/request/index.js 文件：封装 axios 请求
-services/request/config.js 配置文件
+services/request/index.js 文件：封装 axios 请求  
+services/request/config.js 配置文件  
 services/modules 文件夹：每个模块都有自己的独立文件来管理网络请求
+
+### Header 组件封装
+
+创建  
+components/app-header/index.jsx
+components/app-header/c-cpns
+
+### css in js 写法
+
+1.安装依赖包  
+npm install styled-components
+
+2.使用  
+创建  
+components/app-header/style.js
