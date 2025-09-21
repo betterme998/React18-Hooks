@@ -182,3 +182,8 @@ npm install styled-components
 2.使用  
 创建  
 components/app-header/style.js
+
+设置全局样式
+assets/theme/index.js
+
+1.使用 styled-components 的 ThemeProvider 包裹 App 组件，并传入 theme

@@ -3,8 +3,9 @@ import styled from "styled-components";
 export const LeftWrapper = styled.div`
   flex: 1;
   .iconLogo {
+    display: inline-flex;
+    align-items: center;
     cursor: pointer;
-    display: block;
     height: 80px;
   }
 `;
