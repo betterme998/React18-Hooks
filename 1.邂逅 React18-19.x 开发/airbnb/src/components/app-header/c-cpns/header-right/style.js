@@ -4,4 +4,5 @@ export const RightWrapper = styled.div`
   flex: 1;
   display: flex;
   justify-content: flex-end;
+  z-index: 1;
 `;
