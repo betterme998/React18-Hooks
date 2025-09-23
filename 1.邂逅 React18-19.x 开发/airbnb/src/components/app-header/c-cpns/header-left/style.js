@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 export const LeftWrapper = styled.div`
-  flex: 1;
   z-index: 1;
+  box-sizing: border-box;
 
   .iconLogo {
     display: inline-flex;
