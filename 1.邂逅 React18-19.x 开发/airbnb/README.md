@@ -187,3 +187,18 @@ components/app-header/style.js
 assets/theme/index.js
 
 1.使用 styled-components 的 ThemeProvider 包裹 App 组件，并传入 theme
+
+2.下载需要的 img
+
+3.创建 nav 视频组件
+assets/video/nav-icon/index.jxs :用于 header 导航栏的图标视频 icon
+3.1 nav 使用了第三方：Ant Design 的组件：带有图标的 Tabs 组件
+3.2.其中图标是我们自己封装的组件：assets/video/nav-icon/index.jxs
+.接收 props，传递照片和视频资源
+
+3.3 在 header-center 文件下创建 header-nav 组件。：这就是 nav 的 tabs 组件
+.header-nav/config/navIcon.config.js 配置文件用于管理传递给 nav-icon 组件的资源.这样就能避免重复代码
+
+遇到的问题：react 中使用图片视频资源时，需要使用 require() 函数来引入资源，因为静态资源需要打包后才能使用
+
+最后在 header-nav 组件中使用上面创建的组件，配置项，第三方组件.
