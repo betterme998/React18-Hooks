@@ -202,3 +202,5 @@ assets/video/nav-icon/index.jxs :用于 header 导航栏的图标视频 icon
 遇到的问题：react 中使用图片视频资源时，需要使用 require() 函数来引入资源，因为静态资源需要打包后才能使用
 
 最后在 header-nav 组件中使用上面创建的组件，配置项，第三方组件.
+
+编写 header-nav 组件 1.创建 header 的 store 片段，并把 nav 的 tabsKey 状态管理起来 2.合并配置多个 reducer 3.在 header-nav 组件使用 connect()高阶组件连接 store

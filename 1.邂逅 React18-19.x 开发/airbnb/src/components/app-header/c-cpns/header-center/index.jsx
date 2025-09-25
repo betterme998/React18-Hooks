@@ -6,10 +6,10 @@ import HeaderSearch from "./c-cpns/header-search";
 const HeaderCenter = memo(() => {
   return (
     <CenterWrapper>
-      <from className="search">
+      <form className="search">
         <HeaderNav />
         <HeaderSearch />
-      </from>
+      </form>
     </CenterWrapper>
   );
 });

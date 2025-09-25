@@ -43,6 +43,7 @@ const App = memo(() => {
   countRef.current = count;
   const increment = useCallback(function () {
     setCount(countRef.current + 1);
+    // setCount((prevCount) => prevCount + 1);
   }, []);
 
   //普通函数

@@ -12,6 +12,7 @@ const navIconConfig = [
         type: "video/webm",
       },
     ],
+    key: 1,
   },
   {
     poster: require("@/assets/img/balloon-selected.avif"),
@@ -25,6 +26,7 @@ const navIconConfig = [
         type: "video/webm",
       },
     ],
+    key: 2,
   },
   {
     poster: require("@/assets/img/consierge-selected.avif"),
@@ -38,6 +40,7 @@ const navIconConfig = [
         type: "video/webm",
       },
     ],
+    key: 3,
   },
 ];
 
