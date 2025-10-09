@@ -5,7 +5,9 @@ import { IconWrapper } from "./style";
 // header组件的导航栏图标组件--带状态的图标组件
 const NavIcon = memo(({ ref, poster, videoSrc }) => {
   const containerRef = useRef(null); //引用图标容器DOM元素
+  const typeRef = useRef(null); //图标状态
   const [lastAction, setLastAction] = useState(null); //记录最后一次操作
+  const [isMouseDown, setIsMouseDown] = useState(false); //跟踪鼠标按下状态
 
   // 记录交互信息的方法
   const recordInteraction = (action) => {
@@ -24,10 +26,11 @@ const NavIcon = memo(({ ref, poster, videoSrc }) => {
         containerRef.current.play().catch((error) => {
           console.error("自动播放失败:", error);
         });
-        containerRef.current.style.transform = "scale(1.1)";
-        setTimeout(() => {
-          containerRef.current.style.transform = "scale(1)";
-        }, 300);
+        typeRef.current = "activate";
+        // containerRef.current.style.transform = "scale(1.1)";
+        // setTimeout(() => {
+        //   containerRef.current.style.transform = "scale(1)";
+        // }, 300);
       }
     },
 
@@ -35,6 +38,8 @@ const NavIcon = memo(({ ref, poster, videoSrc }) => {
     deactivate: () => {
       if (containerRef.current) {
         recordInteraction("deactivate");
+        typeRef.current = "deactivate";
+        console.log("取消激活:", typeRef.current);
       }
     },
     // 通知效果
@@ -46,10 +51,14 @@ const NavIcon = memo(({ ref, poster, videoSrc }) => {
 
     // 状态查询方法
     getLastAction: () => lastAction,
-    getStatus: () => ({
-      lastAction,
-      isActive: containerRef.current?.style.transform === "scale(1.1)", //检测是否激活状态
-    }),
+    getStatus: () => {
+      console.log(typeRef.current === "activate");
+
+      return {
+        lastAction,
+        isActive: typeRef.current === "activate", //检测是否激活状态
+      };
+    },
   }));
 
   return (
@@ -58,7 +67,7 @@ const NavIcon = memo(({ ref, poster, videoSrc }) => {
         <video
           ref={containerRef}
           className="nav-video"
-          playsinline
+          playsInline
           poster={poster.default}
           preload="auto"
         >

@@ -33,44 +33,52 @@ const HeaderNav = memo(({ tabsKey, changeTabsKey }) => {
     if (activeKey && iconRefs.current[activeKey]) {
       iconRefs.current[activeKey].deactivate();
     }
+    // 触发 actions 来更新 Redux store 中的状态
+    changeTabsKey(key);
 
     // 设置新的action key
+    setActiveKey(key);
+
+    // 激活新图标
+    if (iconRefs.current[key]) {
+      currentIconRef.current = iconRefs.current[key];
+      currentIconRef.current.activate();
+
+      // 更新状态信息
+      updateIconStatus();
+      console.log(iconState);
+    }
   };
 
-  const videoRef = useRef(null);
-  const onChange = useCallback(
-    (newActiveKey) => {
-      // 触发 actions 来更新 Redux store 中的状态
-
-      changeTabsKey(newActiveKey);
-      console.log(videoRef);
-
-      videoRef.current?.play().catch((error) => {
-        console.error("自动播放失败:", error);
-      });
-      // console.log("tabs:", newActiveKey);
-    },
-    [changeTabsKey]
-  );
+  // 更新所有图标状态信息
+  const updateIconStatus = () => {
+    const status = {};
+    Object.keys(iconRefs.current).forEach((key) => {
+      if (iconRefs.current[key]) {
+        status[key] = iconRefs.current[key].getStatus();
+      }
+    });
+    setIconStatus(status);
+  };
 
   return (
     <NavWrapper>
       <Tabs
         defaultActiveKey="1"
         activeKey={tabsKey}
-        onChange={onChange}
+        onChange={handleTabChange}
         items={navIconConfig.map(({ poster, videoSrc, key }, i) => {
           const id = String(i + 1);
-          console.log(tabsKey === id);
 
           return {
             key: id,
             label: `Tab ${id}`,
             icon: (
               <NavIcon
-                ref={tabsKey === id ? videoRef : null}
+                ref={(ref) => registerRef(id, ref)}
                 poster={poster}
                 videoSrc={videoSrc}
+                keys={key}
               />
             ),
           };
