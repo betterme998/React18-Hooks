@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useRef, useState } from "react";
+import React, { memo, useCallback, useRef, useState, useEffect } from "react";
 
 // 将 Redux 的状态（State）和操作（Actions）映射到 React 组件的 Props
 import { connect } from "react-redux";
@@ -15,7 +15,16 @@ const HeaderNav = memo(({ tabsKey, changeTabsKey }) => {
   const [previousKey, setPreviousKey] = useState(null); //之前激活的标签页
   const iconRefs = useRef({}); //存储所有图标ref的对象
   const currentIconRef = useRef(null); //当前激活图标的ref
-  const [iconState, setIconStatus] = useState({}); //所有图标的状态
+  const [iconStatus, setIconStatus] = useState({}); //所有图标的状态
+
+  // 使用 ref 跟踪最新状态
+  const latestIconStatus = useRef({});
+
+  // 监听状态变化
+  useEffect(() => {
+    console.log("图标状态已更新:", iconStatus);
+    latestIconStatus.current = iconStatus;
+  }, [iconStatus]);
 
   // 注册ref - 将每个图标的ref存储到iconRefs中
   const registerRef = useCallback((key, ref) => {
@@ -46,12 +55,11 @@ const HeaderNav = memo(({ tabsKey, changeTabsKey }) => {
 
       // 更新状态信息
       updateIconStatus();
-      console.log(iconState);
     }
   };
 
   // 更新所有图标状态信息
-  const updateIconStatus = () => {
+  const updateIconStatus = useCallback(() => {
     const status = {};
     Object.keys(iconRefs.current).forEach((key) => {
       if (iconRefs.current[key]) {
@@ -59,6 +67,23 @@ const HeaderNav = memo(({ tabsKey, changeTabsKey }) => {
       }
     });
     setIconStatus(status);
+    latestIconStatus.current = status;
+  }, []);
+
+  // 重置所有图标状态
+  const resetAllIcons = () => {
+    // 重置所有图标的激活状态
+    Object.values(iconRefs.current).forEach((ref) => {
+      if (ref) {
+        ref.deactivate();
+      }
+    });
+    // 重置第一个标签为激活状态
+    if (iconRefs.current["1"]) {
+      iconRefs.current["1"].activate();
+      setActiveKey("1");
+    }
+    updateIconStatus();
   };
 
   return (
@@ -69,7 +94,6 @@ const HeaderNav = memo(({ tabsKey, changeTabsKey }) => {
         onChange={handleTabChange}
         items={navIconConfig.map(({ poster, videoSrc, key }, i) => {
           const id = String(i + 1);
-
           return {
             key: id,
             label: `Tab ${id}`,
@@ -78,7 +102,8 @@ const HeaderNav = memo(({ tabsKey, changeTabsKey }) => {
                 ref={(ref) => registerRef(id, ref)}
                 poster={poster}
                 videoSrc={videoSrc}
-                keys={key}
+                tabKey={key}
+                isActive={activeKey === String(key)}
               />
             ),
           };

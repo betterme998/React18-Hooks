@@ -1,13 +1,18 @@
-import React, { memo, useImperativeHandle, useRef, useState } from "react";
+import React, {
+  memo,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
 
 import { IconWrapper } from "./style";
 
 // header组件的导航栏图标组件--带状态的图标组件
-const NavIcon = memo(({ ref, poster, videoSrc }) => {
+const NavIcon = memo(({ ref, poster, videoSrc, tabKey, isActive }) => {
   const containerRef = useRef(null); //引用图标容器DOM元素
-  const typeRef = useRef(null); //图标状态
   const [lastAction, setLastAction] = useState(null); //记录最后一次操作
-  const [isMouseDown, setIsMouseDown] = useState(false); //跟踪鼠标按下状态
+  const [internalIsActive, setInternalIsActive] = useState(false); //内部激活状态
 
   // 记录交互信息的方法
   const recordInteraction = (action) => {
@@ -21,25 +26,21 @@ const NavIcon = memo(({ ref, poster, videoSrc }) => {
   useImperativeHandle(ref, () => ({
     // 激活图标 + 放大动画
     activate: () => {
+      setInternalIsActive(true);
+      recordInteraction("activate");
       if (containerRef.current) {
-        recordInteraction("activate");
         containerRef.current.play().catch((error) => {
           console.error("自动播放失败:", error);
         });
-        typeRef.current = "activate";
-        // containerRef.current.style.transform = "scale(1.1)";
-        // setTimeout(() => {
-        //   containerRef.current.style.transform = "scale(1)";
-        // }, 300);
       }
     },
 
     // 取消激活 - 缩小图标
     deactivate: () => {
+      setInternalIsActive(false);
+      recordInteraction("deactivate");
+
       if (containerRef.current) {
-        recordInteraction("deactivate");
-        typeRef.current = "deactivate";
-        console.log("取消激活:", typeRef.current);
       }
     },
     // 通知效果
@@ -52,11 +53,10 @@ const NavIcon = memo(({ ref, poster, videoSrc }) => {
     // 状态查询方法
     getLastAction: () => lastAction,
     getStatus: () => {
-      console.log(typeRef.current === "activate");
-
       return {
+        tabKey,
         lastAction,
-        isActive: typeRef.current === "activate", //检测是否激活状态
+        isActive, //使用内部状态判断激活状态
       };
     },
   }));
