@@ -9,38 +9,29 @@ import React, {
 import { IconWrapper } from "./style";
 
 // header组件的导航栏图标组件--带状态的图标组件
-const NavIcon = memo(({ ref, poster, videoSrc, tabKey, isActive }) => {
+const NavIcon = memo(({ ref, poster, videoSrc, onTwirl }) => {
   const containerRef = useRef(null); //引用图标容器DOM元素
-  const [lastAction, setLastAction] = useState(null); //记录最后一次操作
-  const [internalIsActive, setInternalIsActive] = useState(false); //内部激活状态
+  const twirlRef = useRef(true); //引用图标选择动画
+  console.log("子组件");
 
-  // 记录交互信息的方法
-  const recordInteraction = (action) => {
-    setLastAction({
-      type: action, //操作类型：'activate','deactivate','notify':激活,使无效,通知
-      timestamp: new Date().toLocaleTimeString(), //时间戳
-    });
-  };
+  useEffect(() => {
+    onTwirl();
+  }, [onTwirl]);
 
   // 使用useImperativeHandle 向父组件暴漏方法
   useImperativeHandle(ref, () => ({
     // 激活图标 + 放大动画
     activate: () => {
-      setInternalIsActive(true);
-      recordInteraction("activate");
       if (containerRef.current) {
-        containerRef.current.play().catch((error) => {
-          console.error("自动播放失败:", error);
-        });
+        containerRef.current.play();
       }
     },
 
     // 取消激活 - 缩小图标
     deactivate: () => {
-      setInternalIsActive(false);
-      recordInteraction("deactivate");
-
       if (containerRef.current) {
+        containerRef.current.pause();
+        containerRef.current.currentTime = 0;
       }
     },
     // 通知效果
@@ -48,16 +39,6 @@ const NavIcon = memo(({ ref, poster, videoSrc, tabKey, isActive }) => {
       if (containerRef.current) {
         console.log("通知");
       }
-    },
-
-    // 状态查询方法
-    getLastAction: () => lastAction,
-    getStatus: () => {
-      return {
-        tabKey,
-        lastAction,
-        isActive, //使用内部状态判断激活状态
-      };
     },
   }));
 
@@ -68,11 +49,18 @@ const NavIcon = memo(({ ref, poster, videoSrc, tabKey, isActive }) => {
           ref={containerRef}
           className="nav-video"
           playsInline
+          autoplay={twirlRef.current ? true : false}
+          muted
           poster={poster.default}
           preload="auto"
         >
           {videoSrc.map((item) => {
-            return <source src={item.src} type={item.type} />;
+            return (
+              <source
+                src={twirlRef.current ? item.srcTwirl : item.src}
+                type={item.type}
+              />
+            );
           })}
         </video>
       </span>

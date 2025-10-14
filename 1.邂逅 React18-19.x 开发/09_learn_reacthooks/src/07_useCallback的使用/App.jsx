@@ -19,6 +19,7 @@ const HYIncrement = memo(function (props) {
 const App = memo(() => {
   const [count, setCount] = useState(0);
   const [message, setMessage] = useState("hello world");
+  console.log("App");
 
   // 每次组件渲染都会重新创建函数
   // 思考一下：多次渲染导致函数重复创建，之前的函数会被销毁吗？

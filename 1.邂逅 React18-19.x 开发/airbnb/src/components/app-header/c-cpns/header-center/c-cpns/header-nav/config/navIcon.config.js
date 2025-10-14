@@ -5,10 +5,12 @@ const navIconConfig = [
     videoSrc: [
       {
         src: require("@/assets/video/static-resources/house-selected.mov"),
+        srcTwirl: require("@/assets/video/static-resources/house-twirl-selected.mov"),
         type: "video/mp4; codecs='hvc1'",
       },
       {
         src: require("@/assets/video/static-resources/house-selected.webm"),
+        srcTwirl: require("@/assets/video/static-resources/house-twirl-selected.webm"),
         type: "video/webm",
       },
     ],
@@ -19,10 +21,12 @@ const navIconConfig = [
     videoSrc: [
       {
         src: require("@/assets/video/static-resources/balloon-selected.mov"),
+        srcTwirl: require("@/assets/video/static-resources/balloon-twirl.mov"),
         type: "video/mp4; codecs='hvc1'",
       },
       {
         src: require("@/assets/video/static-resources/balloon-selected.webm"),
+        srcTwirl: require("@/assets/video/static-resources/balloon-twirl.webm"),
         type: "video/webm",
       },
     ],
@@ -33,10 +37,12 @@ const navIconConfig = [
     videoSrc: [
       {
         src: require("@/assets/video/static-resources/consierge-selected.mov"),
+        srcTwirl: require("@/assets/video/static-resources/consierge-twirl.mov"),
         type: "video/mp4; codecs='hvc1'",
       },
       {
         src: require("@/assets/video/static-resources/consierge-selected.webm"),
+        srcTwirl: require("@/assets/video/static-resources/consierge-twirl.webm"),
         type: "video/webm",
       },
     ],

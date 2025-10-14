@@ -1,4 +1,11 @@
-import React, { memo, useCallback, useRef, useState, useEffect } from "react";
+import React, {
+  memo,
+  useCallback,
+  useRef,
+  useState,
+  useEffect,
+  useMemo,
+} from "react";
 
 // 将 Redux 的状态（State）和操作（Actions）映射到 React 组件的 Props
 import { connect } from "react-redux";
@@ -12,110 +19,82 @@ import navIconConfig from "./config/navIcon.config"; //控制icon照片视频配
 
 const HeaderNav = memo(({ tabsKey, changeTabsKey }) => {
   const [activeKey, setActiveKey] = useState("1"); //当前激活的标签页
-  const [previousKey, setPreviousKey] = useState(null); //之前激活的标签页
   const iconRefs = useRef({}); //存储所有图标ref的对象
   const currentIconRef = useRef(null); //当前激活图标的ref
-  const [iconStatus, setIconStatus] = useState({}); //所有图标的状态
-
-  // 使用 ref 跟踪最新状态
-  const latestIconStatus = useRef({});
-
-  // 监听状态变化
-  useEffect(() => {
-    console.log("图标状态已更新:", iconStatus);
-    latestIconStatus.current = iconStatus;
-  }, [iconStatus]);
+  console.log("父组件");
 
   // 注册ref - 将每个图标的ref存储到iconRefs中
-  const registerRef = useCallback((key, ref) => {
-    if (ref) {
-      iconRefs.current[key] = ref;
-    }
-  }, []);
+  const registerRef = useCallback(
+    (key) => (ref) => {
+      if (ref) {
+        iconRefs.current[key] = ref;
+      }
+    },
+    []
+  );
+
+  // 渲染时动画效果
+  // 使用useCallback避免不必要的重渲染
+  const handleChildClick = useCallback(() => {
+    Object.keys(iconRefs.current).forEach((key) => {
+      iconRefs.current[key].activate();
+    });
+  }, []); // 空依赖数组表示这个方法不会改变
+
+  // 使用 useMemo 缓存配置,这是自定义的icon组件，因为使用了navIconConfig.map方法，为了避免多次创建，所以使用useMemo缓存
+  const tabItems = useMemo(() => {
+    return navIconConfig.map(({ poster, videoSrc }, i) => {
+      const id = String(i + 1);
+      return {
+        key: id,
+        label: `Tab ${id}`,
+        icon: (
+          <NavIcon
+            ref={registerRef(id)}
+            poster={poster}
+            videoSrc={videoSrc}
+            onTwirl={handleChildClick}
+          />
+        ),
+      };
+    });
+  }, [registerRef, handleChildClick]);
 
   // Tab切换处理函数
-  const handleTabChange = (key) => {
-    // 保存之前的active key
-    setPreviousKey(activeKey);
-
-    // 取消之前激活的图标状态
-    if (activeKey && iconRefs.current[activeKey]) {
-      iconRefs.current[activeKey].deactivate();
-    }
-    // 触发 actions 来更新 Redux store 中的状态
-    changeTabsKey(key);
-
-    // 设置新的action key
-    setActiveKey(key);
-
-    // 激活新图标
-    if (iconRefs.current[key]) {
-      currentIconRef.current = iconRefs.current[key];
-      currentIconRef.current.activate();
-
-      // 更新状态信息
-      updateIconStatus();
-    }
-  };
-
-  // 更新所有图标状态信息
-  const updateIconStatus = useCallback(() => {
-    const status = {};
-    Object.keys(iconRefs.current).forEach((key) => {
-      if (iconRefs.current[key]) {
-        status[key] = iconRefs.current[key].getStatus();
+  const handleTabChange = useCallback(
+    (key) => {
+      // // 取消之前激活的图标状态
+      if (activeKey && iconRefs.current[activeKey]) {
+        iconRefs.current[activeKey].deactivate();
       }
-    });
-    setIconStatus(status);
-    latestIconStatus.current = status;
-  }, []);
-
-  // 重置所有图标状态
-  const resetAllIcons = () => {
-    // 重置所有图标的激活状态
-    Object.values(iconRefs.current).forEach((ref) => {
-      if (ref) {
-        ref.deactivate();
+      // 设置新的action key
+      setActiveKey(key);
+      // 激活新图标
+      if (activeKey && iconRefs.current[key]) {
+        currentIconRef.current = iconRefs.current[key];
+        currentIconRef.current.activate();
       }
-    });
-    // 重置第一个标签为激活状态
-    if (iconRefs.current["1"]) {
-      iconRefs.current["1"].activate();
-      setActiveKey("1");
-    }
-    updateIconStatus();
-  };
+      // // 触发 actions 来更新 Redux store 中的状态来更新 Redux store 中的状态
+      changeTabsKey(key);
+    },
+    [activeKey, changeTabsKey]
+  );
 
   return (
     <NavWrapper>
       <Tabs
         defaultActiveKey="1"
-        activeKey={tabsKey}
+        // activeKey={tabsKey}
         onChange={handleTabChange}
-        items={navIconConfig.map(({ poster, videoSrc, key }, i) => {
-          const id = String(i + 1);
-          return {
-            key: id,
-            label: `Tab ${id}`,
-            icon: (
-              <NavIcon
-                ref={(ref) => registerRef(id, ref)}
-                poster={poster}
-                videoSrc={videoSrc}
-                tabKey={key}
-                isActive={activeKey === String(key)}
-              />
-            ),
-          };
-        })}
+        items={tabItems}
       />
     </NavWrapper>
   );
 });
 // 参数一
-const mapStateToProps = (state) => ({
-  tabsKey: state.header.tabsKey,
-});
+// const mapStateToProps = (state) => ({
+//   tabsKey: state.header.tabsKey,
+// });
 
 // 参数二
 const mapDispatchToProps = (dispatch) => ({
@@ -124,4 +103,4 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(HeaderNav);
+export default connect(null, mapDispatchToProps)(HeaderNav);

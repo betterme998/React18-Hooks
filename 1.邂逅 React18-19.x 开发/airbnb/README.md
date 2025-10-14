@@ -211,4 +211,16 @@ assets/video/nav-icon/index.jxs :用于 header 导航栏的图标视频 icon
 3.header-nav 点击 tabsKey 状态管理
 
 9/29:  
-问题：react 怎么给 video 动态添加 autoplay 属性？
+问题：react 怎么给 video 动态添加 autoplay 属性？  
+解决：直接通过 ref 拿到 video 标签，使用 play()方法播放视频  
+子组件通过 useImperativeHandle 暴漏方法给父组件  
+细节，给子组件创建一个配置项存放需要的数据，动态的绑定 ref，使用了 useCallback 缓存，因为传递给子组件的方法要进行处理，避免重复渲染
+
+10/14 问题  
+一.当父组件 useState 改变时，子组件也会从新渲染?  
+解决： 1.这是因为父组件中使用配置项数据的数组的.map 方法创建了函数，导致父组件渲染时函数从新创建。这里使用 useMemo 缓存函数，避免重复渲染  
+2.使用 useRef({})来保存所有图标 ref 对象  
+3.使用 useCallback 处理动态动态绑定函数，避免重复创建
+
+二.页面渲染时，图标视频自己播放选择视频
+解决： 1.父组件传递方法给子组件调用，并使用 useCallback 缓存，避免重复渲染。 2.子组使用 useEffect 监听父组件传递的方法，并执行方法
