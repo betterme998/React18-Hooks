@@ -223,4 +223,14 @@ assets/video/nav-icon/index.jxs :用于 header 导航栏的图标视频 icon
 3.使用 useCallback 处理动态动态绑定函数，避免重复创建
 
 二.页面渲染时，图标视频自己播放选择视频
-解决： 1.父组件传递方法给子组件调用，并使用 useCallback 缓存，避免重复渲染。 2.子组使用 useEffect 监听父组件传递的方法，并执行方法
+解决：  
+方法一：  
+1.父组件传递方法给子组件调用，并使用 useCallback 缓存，避免重复渲染。  
+2.子组使用 useEffect 监听父组件传递的方法，并执行方法  
+方法二：  
+1.可以在父组件的 useEffect 中直接调用传递给子组件的方法也可以实现同样效果
+方法三：  
+1.在子组件的 useEffect 直接使用 ref：containerRef.current.play();播放
+
+10/15 问题
+一：video 元素在 React 中不会自动响应 source 子元素的变化而重新加载视频。我切换地址时，video 元素不会重新加载

@@ -9,14 +9,14 @@ import React, {
 import { IconWrapper } from "./style";
 
 // header组件的导航栏图标组件--带状态的图标组件
-const NavIcon = memo(({ ref, poster, videoSrc, onTwirl }) => {
+const NavIcon = memo(({ ref, poster, videoSrc, twirl }) => {
   const containerRef = useRef(null); //引用图标容器DOM元素
-  const twirlRef = useRef(true); //引用图标选择动画
   console.log("子组件");
 
+  // 组件挂载时播放动画
   useEffect(() => {
-    onTwirl();
-  }, [onTwirl]);
+    containerRef.current.play();
+  }, []);
 
   // 使用useImperativeHandle 向父组件暴漏方法
   useImperativeHandle(ref, () => ({
@@ -30,8 +30,9 @@ const NavIcon = memo(({ ref, poster, videoSrc, onTwirl }) => {
     // 取消激活 - 缩小图标
     deactivate: () => {
       if (containerRef.current) {
-        containerRef.current.pause();
         containerRef.current.currentTime = 0;
+
+        containerRef.current.pause();
       }
     },
     // 通知效果
@@ -49,17 +50,14 @@ const NavIcon = memo(({ ref, poster, videoSrc, onTwirl }) => {
           ref={containerRef}
           className="nav-video"
           playsInline
-          autoplay={twirlRef.current ? true : false}
           muted
           poster={poster.default}
           preload="auto"
+          key={twirl ? "twirl" : "normal"}
         >
           {videoSrc.map((item) => {
             return (
-              <source
-                src={twirlRef.current ? item.srcTwirl : item.src}
-                type={item.type}
-              />
+              <source src={twirl ? item.srcTwirl : item.src} type={item.type} />
             );
           })}
         </video>
