@@ -6,6 +6,15 @@ export const IconWrapper = styled.div`
     height: 36px;
     display: block;
     box-sizing: border-box;
+    transform: none;
+
+    /* &:hover {
+      transform: scale(1.1);
+    }
+
+    &:active {
+      transform: scale(0.8);
+    } */
 
     .nav-video {
       width: 100%;

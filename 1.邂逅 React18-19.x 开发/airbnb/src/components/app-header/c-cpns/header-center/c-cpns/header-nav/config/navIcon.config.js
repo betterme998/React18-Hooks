@@ -1,7 +1,10 @@
 // header导航栏控制nav Icon 照片视频配置文件
 const navIconConfig = [
   {
-    poster: require("@/assets/img/house-selected.avif"),
+    posters: {
+      poster: require("@/assets/img/house-selected.avif"),
+      posterActive: require("@/assets/img/house-selected-active.avif"),
+    },
     videoSrc: [
       {
         src: require("@/assets/video/static-resources/house-selected.mov"),
@@ -17,7 +20,10 @@ const navIconConfig = [
     key: 1,
   },
   {
-    poster: require("@/assets/img/balloon-selected.avif"),
+    posters: {
+      poster: require("@/assets/img/balloon-selected.avif"),
+      posterActive: require("@/assets/img/balloon-selected-active.avif"),
+    },
     videoSrc: [
       {
         src: require("@/assets/video/static-resources/balloon-selected.mov"),
@@ -33,7 +39,10 @@ const navIconConfig = [
     key: 2,
   },
   {
-    poster: require("@/assets/img/consierge-selected.avif"),
+    posters: {
+      poster: require("@/assets/img/consierge-selected.avif"),
+      posterActive: require("@/assets/img/consierge-selected-active.avif"),
+    },
     videoSrc: [
       {
         src: require("@/assets/video/static-resources/consierge-selected.mov"),

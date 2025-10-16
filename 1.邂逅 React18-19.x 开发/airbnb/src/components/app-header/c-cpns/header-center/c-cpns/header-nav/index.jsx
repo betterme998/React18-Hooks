@@ -24,6 +24,11 @@ const HeaderNav = memo(({ tabsKey, changeTabsKey }) => {
   const [twirl, setTwirl] = useState(true); //是否为选择视频
   console.log("父组件");
 
+  // 组件挂载时播放动画
+  useEffect(() => {
+    currentIconRef.current?.activate();
+  }, [twirl]);
+
   // 注册ref - 将每个图标的ref存储到iconRefs中
   const registerRef = useCallback(
     (key) => (ref) => {
@@ -36,7 +41,7 @@ const HeaderNav = memo(({ tabsKey, changeTabsKey }) => {
 
   // 使用 useMemo 缓存配置,这是自定义的icon组件，因为使用了navIconConfig.map方法，为了避免多次创建，所以使用useMemo缓存
   const tabItems = useMemo(() => {
-    return navIconConfig.map(({ poster, videoSrc }, i) => {
+    return navIconConfig.map(({ posters, videoSrc, key }, i) => {
       const id = String(i + 1);
       return {
         key: id,
@@ -44,7 +49,7 @@ const HeaderNav = memo(({ tabsKey, changeTabsKey }) => {
         icon: (
           <NavIcon
             ref={registerRef(id)}
-            poster={poster}
+            poster={posters}
             videoSrc={videoSrc}
             twirl={twirl}
           />
@@ -56,9 +61,6 @@ const HeaderNav = memo(({ tabsKey, changeTabsKey }) => {
   // Tab切换处理函数
   const handleTabChange = useCallback(
     (key) => {
-      if (twirl) {
-        setTwirl(false);
-      }
       // 渲染初快速点击时取消所有图标动画
       if (!currentIconRef.current) {
         Object.keys(iconRefs.current).forEach((key) => {
@@ -76,7 +78,10 @@ const HeaderNav = memo(({ tabsKey, changeTabsKey }) => {
       // 激活新图标
       if (activeKey && iconRefs.current[key]) {
         currentIconRef.current = iconRefs.current[key];
-        currentIconRef.current.activate();
+        currentIconRef.current.activate(key);
+      }
+      if (twirl) {
+        setTwirl(false);
       }
 
       // // 触发 actions 来更新 Redux store 中的状态来更新 Redux store 中的状态

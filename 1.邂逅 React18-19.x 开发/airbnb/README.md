@@ -233,4 +233,11 @@ assets/video/nav-icon/index.jxs :用于 header 导航栏的图标视频 icon
 1.在子组件的 useEffect 直接使用 ref：containerRef.current.play();播放
 
 10/15 问题
-一：video 元素在 React 中不会自动响应 source 子元素的变化而重新加载视频。我切换地址时，video 元素不会重新加载
+一：video 元素在 React 中不会自动响应 source 子元素的变化而重新加载视频。我切换地址时，video 元素不会重新加载  
+解决：  
+原因：在子组件中 source 标签里使用了地址，地址虽然改变了，但是 video 标签不会重新加载 0 1.给 video 标签添加一个 key 属性，通过父组件传递的布尔值改变 key 值，从而达到重新加载视频的目的
+
+10/16 问题
+一：在完成渲染初所有视频标签以旋转视频播放后，点击其他 nav 标签时，视频标签不会以另外一个地址播放，再点后才会播放
+解决：
+1：在父自己当中，点击函数中，在激活新图标后修改 twirl 布尔值（就是传递给子组件的布尔值），然后使用 useEffect 监听 twirl，再调用子组件暴漏的方法，视频就会重新播放

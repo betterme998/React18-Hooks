@@ -11,6 +11,7 @@ import { IconWrapper } from "./style";
 // header组件的导航栏图标组件--带状态的图标组件
 const NavIcon = memo(({ ref, poster, videoSrc, twirl }) => {
   const containerRef = useRef(null); //引用图标容器DOM元素
+  const [isActive, setActive] = useState(false);
   console.log("子组件");
 
   // 组件挂载时播放动画
@@ -23,6 +24,8 @@ const NavIcon = memo(({ ref, poster, videoSrc, twirl }) => {
     // 激活图标 + 放大动画
     activate: () => {
       if (containerRef.current) {
+        setActive(true);
+
         containerRef.current.play();
       }
     },
@@ -30,6 +33,7 @@ const NavIcon = memo(({ ref, poster, videoSrc, twirl }) => {
     // 取消激活 - 缩小图标
     deactivate: () => {
       if (containerRef.current) {
+        setActive(false);
         containerRef.current.currentTime = 0;
 
         containerRef.current.pause();
@@ -49,9 +53,10 @@ const NavIcon = memo(({ ref, poster, videoSrc, twirl }) => {
         <video
           ref={containerRef}
           className="nav-video"
+          disablePictureInPicture
           playsInline
           muted
-          poster={poster.default}
+          poster={isActive ? poster.posterActive : poster.poster}
           preload="auto"
           key={twirl ? "twirl" : "normal"}
         >
