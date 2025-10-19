@@ -93,6 +93,7 @@ const HeaderNav = memo(({ tabsKey, changeTabsKey }) => {
   return (
     <NavWrapper>
       <Tabs
+        className="nav-tabs66"
         defaultActiveKey="1"
         // activeKey={tabsKey}
         onChange={handleTabChange}

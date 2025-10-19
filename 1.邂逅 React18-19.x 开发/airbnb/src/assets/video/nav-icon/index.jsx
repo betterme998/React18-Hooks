@@ -12,6 +12,8 @@ import { IconWrapper } from "./style";
 const NavIcon = memo(({ ref, poster, videoSrc, twirl }) => {
   const containerRef = useRef(null); //引用图标容器DOM元素
   const [isActive, setActive] = useState(false);
+  const [isHovered, setHovered] = useState(false);
+  const [isPressed, setPressed] = useState(false);
   console.log("子组件");
 
   // 组件挂载时播放动画
@@ -47,8 +49,43 @@ const NavIcon = memo(({ ref, poster, videoSrc, twirl }) => {
     },
   }));
 
+  // 鼠标事件处理
+  const handleMouseEnter = () => {
+    if (!isActive) {
+      setHovered(true);
+    }
+  };
+  const handleMouseLeave = () => {
+    setHovered(false);
+    setPressed(false);
+  };
+
+  const handleMouseDown = () => {
+    if (!isActive) {
+      setPressed(true);
+    }
+  };
+
+  const handleMouseUp = () => {
+    setPressed(false);
+  };
+
+  // 计算缩放比例
+  const getScale = () => {
+    if (isActive) return 1; //选中状态保持放大
+    if (isPressed) return 0.8; //按下时缩小
+    if (isHovered) return 1.1; //悬停时放大
+    return 1; //默认大小
+  };
+
   return (
-    <IconWrapper>
+    <IconWrapper
+      scale={getScale()}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onMouseDown={handleMouseDown}
+      onMouseUp={handleMouseUp}
+    >
       <span className="nav-container">
         <video
           ref={containerRef}

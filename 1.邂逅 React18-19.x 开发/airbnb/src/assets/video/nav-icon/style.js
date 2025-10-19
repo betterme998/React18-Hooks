@@ -1,6 +1,10 @@
 import styled from "styled-components";
 
 export const IconWrapper = styled.div`
+  display: inline-block;
+  cursor: pointer;
+  transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: scale(${(props) => props.scale});
   .nav-container {
     width: 36px;
     height: 36px;
@@ -10,11 +14,12 @@ export const IconWrapper = styled.div`
 
     /* &:hover {
       transform: scale(1.1);
-    }
-
-    &:active {
-      transform: scale(0.8);
     } */
+
+    /* 确保按下状态时过渡更快速 */
+    &:active {
+      transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+    }
 
     .nav-video {
       width: 100%;
