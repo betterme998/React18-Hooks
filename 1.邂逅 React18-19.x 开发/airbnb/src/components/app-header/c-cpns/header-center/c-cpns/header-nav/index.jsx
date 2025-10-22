@@ -12,7 +12,7 @@ import { connect } from "react-redux";
 import { changeTabsKey } from "@/store/modules/header";
 
 import { NavWrapper } from "./style";
-import { Tabs } from "antd";
+import { ConfigProvider, Tabs } from "antd";
 
 import NavIcon from "@/assets/video/nav-icon"; //自己写的icon组件
 import navIconConfig from "./config/navIcon.config"; //控制icon照片视频配置文件
@@ -41,11 +41,12 @@ const HeaderNav = memo(({ tabsKey, changeTabsKey }) => {
 
   // 使用 useMemo 缓存配置,这是自定义的icon组件，因为使用了navIconConfig.map方法，为了避免多次创建，所以使用useMemo缓存
   const tabItems = useMemo(() => {
+    const label = ["房源", "体验", "服务"];
     return navIconConfig.map(({ posters, videoSrc, key }, i) => {
       const id = String(i + 1);
       return {
         key: id,
-        label: `Tab ${id}`,
+        label: `${label[i]}`,
         icon: (
           <NavIcon
             ref={registerRef(id)}
@@ -92,13 +93,28 @@ const HeaderNav = memo(({ tabsKey, changeTabsKey }) => {
 
   return (
     <NavWrapper>
-      <Tabs
-        className="nav-tabs66"
-        defaultActiveKey="1"
-        // activeKey={tabsKey}
-        onChange={handleTabChange}
-        items={tabItems}
-      />
+      <ConfigProvider
+        theme={{
+          components: {
+            Tabs: {
+              itemActiveColor: "#222222",
+              itemSelectedColor: "#222222",
+              inkBarColor: "#222222",
+              horizontalItemGutter: 0,
+              cardGutter: 0,
+            },
+          },
+        }}
+      >
+        <Tabs
+          className="nav-tabs66"
+          defaultActiveKey="1"
+          // activeKey={tabsKey}
+          onChange={handleTabChange}
+          items={tabItems}
+          itemActiveColor="#222222"
+        />
+      </ConfigProvider>
     </NavWrapper>
   );
 });

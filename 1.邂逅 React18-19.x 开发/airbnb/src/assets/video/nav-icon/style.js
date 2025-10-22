@@ -5,6 +5,7 @@ export const IconWrapper = styled.div`
   cursor: pointer;
   transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1);
   transform: scale(${(props) => props.scale});
+  box-sizing: border-box;
   .nav-container {
     width: 36px;
     height: 36px;
