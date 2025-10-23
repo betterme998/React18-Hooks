@@ -53,6 +53,7 @@ const HeaderNav = memo(({ tabsKey, changeTabsKey }) => {
             poster={posters}
             videoSrc={videoSrc}
             twirl={twirl}
+            keys={key}
           />
         ),
       };
@@ -102,6 +103,8 @@ const HeaderNav = memo(({ tabsKey, changeTabsKey }) => {
               inkBarColor: "#222222",
               horizontalItemGutter: 0,
               cardGutter: 0,
+              horizontalItemPadding: "0px 0px 12px 0px",
+              cardHeight: 36,
             },
           },
         }}

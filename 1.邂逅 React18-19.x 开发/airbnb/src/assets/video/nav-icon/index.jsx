@@ -9,7 +9,7 @@ import React, {
 import { IconWrapper } from "./style";
 
 // header组件的导航栏图标组件--带状态的图标组件
-const NavIcon = memo(({ ref, poster, videoSrc, twirl }) => {
+const NavIcon = memo(({ ref, poster, videoSrc, twirl, keys }) => {
   const containerRef = useRef(null); //引用图标容器DOM元素
   const [isActive, setActive] = useState(false);
   const [isHovered, setHovered] = useState(false);
@@ -103,6 +103,9 @@ const NavIcon = memo(({ ref, poster, videoSrc, twirl }) => {
             );
           })}
         </video>
+      </span>
+      <span className="nav-dir" style={{ display: keys !== 1 ? "" : "none" }}>
+        <span className="nav-dir-text">全新</span>
       </span>
     </IconWrapper>
   );
