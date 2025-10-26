@@ -6,7 +6,7 @@ import HeaderRight from "./c-cpns/header-right";
 
 const AppHeader = memo(() => {
   return (
-    <HeaderWrapper>
+    <HeaderWrapper className="headerAll">
       <HeaderLeft />
       <HeaderCenter />
       <HeaderRight />

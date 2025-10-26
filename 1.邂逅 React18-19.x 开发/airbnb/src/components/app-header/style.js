@@ -10,4 +10,17 @@ export const HeaderWrapper = styled.div`
   padding: 0 48px;
   position: relative;
   box-sizing: border-box;
+
+  @media (min-width: 375px) {
+    padding: 0 24px;
+  }
+  @media (min-width: 744px) {
+    padding: 0 24px;
+  }
+  @media (min-width: 950px) {
+    padding: 0 32px;
+  }
+  @media (min-width: 1440px) {
+    padding: 0 48px;
+  }
 `;

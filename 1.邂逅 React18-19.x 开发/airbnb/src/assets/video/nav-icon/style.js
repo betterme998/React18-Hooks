@@ -61,7 +61,7 @@ export const IconWrapper = styled.div`
       background-clip: text;
       line-height: 0.7rem;
 
-      font-weight: 600;
+      font-weight: 700;
       font-size: 0.5rem;
       text-align: center;
       text-rendering: optimizeLegibility;

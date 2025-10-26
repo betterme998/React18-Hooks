@@ -61,6 +61,9 @@ export const NavWrapper = styled.div`
       color: #222222;
       font-weight: 600;
       text-shadow: none;
+      .ant-tabs-tab-btn {
+        text-shadow: none;
+      }
     }
     .ant-tabs-ink-bar {
       height: 3px;
