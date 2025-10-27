@@ -1,11 +1,18 @@
 import React, { memo } from "react";
 import { styleStrToObject } from "../utils";
 import { IconLanguageWrapper } from "./style";
+import { Grid } from "antd";
+const { useBreakpoint } = Grid;
 
 const IconLanguage = memo(() => {
+  const screens = useBreakpoint();
+
   return (
     <IconLanguageWrapper>
-      <button className="iconClick">
+      <button
+        className="iconClick"
+        style={{ display: screens.lg ? "block" : "none" }}
+      >
         <span className="iconLanguage">
           <svg
             xmlns="http://www.w3.org/2000/svg"
