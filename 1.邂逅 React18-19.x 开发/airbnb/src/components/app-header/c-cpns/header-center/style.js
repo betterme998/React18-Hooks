@@ -13,6 +13,7 @@ export const CenterWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   .search {
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;

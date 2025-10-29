@@ -59,8 +59,7 @@ export const IconWrapper = styled.div`
 
     .nav-dir-text {
       background-clip: text;
-      line-height: 0.7rem;
-
+      top: -1px;
       font-weight: 700;
       font-size: 0.5rem;
       text-align: center;

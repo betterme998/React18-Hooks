@@ -22,7 +22,6 @@ const HeaderNav = memo(({ tabsKey, changeTabsKey }) => {
   const iconRefs = useRef({}); //存储所有图标ref的对象
   const currentIconRef = useRef(null); //当前激活图标的ref
   const [twirl, setTwirl] = useState(true); //是否为选择视频
-  console.log("父组件");
 
   // 组件挂载时播放动画
   useEffect(() => {
@@ -115,7 +114,6 @@ const HeaderNav = memo(({ tabsKey, changeTabsKey }) => {
           // activeKey={tabsKey}
           onChange={handleTabChange}
           items={tabItems}
-          itemActiveColor="#222222"
         />
       </ConfigProvider>
     </NavWrapper>

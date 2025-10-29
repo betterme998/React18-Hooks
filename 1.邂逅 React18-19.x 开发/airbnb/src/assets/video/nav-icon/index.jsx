@@ -14,7 +14,6 @@ const NavIcon = memo(({ ref, poster, videoSrc, twirl, keys }) => {
   const [isActive, setActive] = useState(false);
   const [isHovered, setHovered] = useState(false);
   const [isPressed, setPressed] = useState(false);
-  console.log("子组件");
 
   // 组件挂载时播放动画
   useEffect(() => {
@@ -99,7 +98,11 @@ const NavIcon = memo(({ ref, poster, videoSrc, twirl, keys }) => {
         >
           {videoSrc.map((item) => {
             return (
-              <source src={twirl ? item.srcTwirl : item.src} type={item.type} />
+              <source
+                key={item.src}
+                src={twirl ? item.srcTwirl : item.src}
+                type={item.type}
+              />
             );
           })}
         </video>
