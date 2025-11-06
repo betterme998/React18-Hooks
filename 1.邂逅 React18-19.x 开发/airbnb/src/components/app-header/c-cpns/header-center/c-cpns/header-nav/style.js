@@ -45,10 +45,10 @@ export const NavWrapper = styled.div`
         height: 36px;
         .nav-tab-item {
           display: flex;
-          align-items: center
+          align-items: center;
           height: 36px;
           margin-inline-end: 0;
-          line-height: 36px
+          line-height: 36px;
         }
         .nav-tab-label-text-1 {
           margin-left: 16px !important;
