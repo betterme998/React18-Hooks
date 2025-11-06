@@ -14,11 +14,17 @@ const NavIcon = memo(({ ref, poster, videoSrc, twirl, keys }) => {
   const [isActive, setActive] = useState(false);
   const [isHovered, setHovered] = useState(false);
   const [isPressed, setPressed] = useState(false);
+  console.log("子组件", twirl);
 
   // 组件挂载时播放动画
   useEffect(() => {
-    containerRef.current.play();
-  }, []);
+    console.log("播放");
+
+    containerRef.current?.play();
+    if (keys === 1) {
+      setActive(true);
+    }
+  }, [keys]);
 
   // 使用useImperativeHandle 向父组件暴漏方法
   useImperativeHandle(ref, () => ({
@@ -91,10 +97,14 @@ const NavIcon = memo(({ ref, poster, videoSrc, twirl, keys }) => {
           className="nav-video"
           disablePictureInPicture
           playsInline
+          autoPlay={twirl}
           muted
           poster={isActive ? poster.posterActive : poster.poster}
           preload="auto"
           key={twirl ? "twirl" : "normal"}
+          // 针对某些特定环境的属性，如部分国产浏览器或WebView
+          webkit-playsinline="true"
+          x5-playsinline="true"
         >
           {videoSrc.map((item) => {
             return (

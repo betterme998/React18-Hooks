@@ -45,15 +45,19 @@ const HeaderNav = memo(({ tabsKey, changeTabsKey }) => {
       const id = String(i + 1);
       return {
         key: id,
-        label: `${label[i]}`,
-        icon: (
-          <NavIcon
-            ref={registerRef(id)}
-            poster={posters}
-            videoSrc={videoSrc}
-            twirl={twirl}
-            keys={key}
-          />
+        label: (
+          <div className={`nav-tab-item nav-tab-item-${id}`} data-key={id}>
+            <NavIcon
+              ref={registerRef(id)}
+              poster={posters}
+              videoSrc={videoSrc}
+              twirl={twirl}
+              keys={key}
+            />
+            <span className={`nav-tab-label-text nav-tab-label-text-${id}`}>
+              {label[i]}
+            </span>
+          </div>
         ),
       };
     });

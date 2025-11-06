@@ -13,7 +13,6 @@ export const NavWrapper = styled.div`
       overflow: visible;
     }
   }
-
   .ant-tabs-nav-list {
     width: 100%;
     overflow: visible;
@@ -44,17 +43,22 @@ export const NavWrapper = styled.div`
         align-items: center;
         box-sizing: border-box;
         height: 36px;
-        .ant-tabs-tab-icon {
+        .nav-tab-item {
+          display: flex;
+          align-items: center
           height: 36px;
+          margin-inline-end: 0;
+          line-height: 36px
         }
-      }
-      #rc-tabs-1-tab-1 {
-        .ant-tabs-tab-icon {
-          margin-right: 16px;
+        .nav-tab-label-text-1 {
+          margin-left: 16px !important;
         }
-      }
-      #rc-tabs-1-tab-2 .ant-tabs-tab-icon {
-        margin-right: 8px;
+        .nav-tab-label-text-2 {
+          margin-left: 8px !important;
+        }
+        .nav-tab-label-text-3 {
+          margin-left: 12px !important;
+        }
       }
     }
     .ant-tabs-tab-active {
