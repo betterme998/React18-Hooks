@@ -4,6 +4,8 @@ import React, {
   useImperativeHandle,
   useRef,
   useState,
+  useCallback,
+  useMemo,
 } from "react";
 
 import { IconWrapper } from "./style";
@@ -14,16 +16,26 @@ const NavIcon = memo(({ ref, poster, videoSrc, twirl, keys }) => {
   const [isActive, setActive] = useState(false);
   const [isHovered, setHovered] = useState(false);
   const [isPressed, setPressed] = useState(false);
-  console.log("子组件", twirl);
 
   // 组件挂载时播放动画
   useEffect(() => {
     console.log("播放");
 
-    containerRef.current?.play();
     if (keys === 1) {
       setActive(true);
     }
+
+    const v = containerRef.current;
+    if (!v) return;
+    // 确保以属性 + DOM property 的方式都设置好
+    v.muted = true;
+    v.setAttribute("muted", "");
+    v.setAttribute("playsinline", "");
+    v.setAttribute("webkit-playsinline", "true");
+    v.setAttribute("x5-playsinline", "true");
+    v.play().catch(() => {
+      console.log("");
+    });
   }, [keys]);
 
   // 使用useImperativeHandle 向父组件暴漏方法
@@ -55,37 +67,42 @@ const NavIcon = memo(({ ref, poster, videoSrc, twirl, keys }) => {
   }));
 
   // 鼠标事件处理
-  const handleMouseEnter = () => {
+  const handleMouseEnter = useCallback(() => {
     if (!isActive) {
       setHovered(true);
     }
-  };
-  const handleMouseLeave = () => {
+  }, [isActive]);
+  const handleMouseLeave = useCallback(() => {
     setHovered(false);
     setPressed(false);
-  };
+  }, []);
 
-  const handleMouseDown = () => {
+  const handleMouseDown = useCallback(() => {
     if (!isActive) {
       setPressed(true);
     }
-  };
+  }, [isActive]);
 
-  const handleMouseUp = () => {
+  const handleMouseUp = useCallback(() => {
     setPressed(false);
-  };
+  }, []);
 
   // 计算缩放比例
-  const getScale = () => {
+  const scale = useMemo(() => {
     if (isActive) return 1; //选中状态保持放大
     if (isPressed) return 0.8; //按下时缩小
     if (isHovered) return 1.1; //悬停时放大
     return 1; //默认大小
-  };
+  }, [isActive, isPressed, isHovered]);
+
+  const currentPoster = useMemo(
+    () => (isActive ? poster.posterActive : poster.poster),
+    [isActive, poster]
+  );
 
   return (
     <IconWrapper
-      scale={getScale()}
+      scale={scale}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onMouseDown={handleMouseDown}
@@ -99,7 +116,7 @@ const NavIcon = memo(({ ref, poster, videoSrc, twirl, keys }) => {
           playsInline
           autoPlay={twirl}
           muted
-          poster={isActive ? poster.posterActive : poster.poster}
+          poster={currentPoster}
           preload="auto"
           key={twirl ? "twirl" : "normal"}
           // 针对某些特定环境的属性，如部分国产浏览器或WebView
