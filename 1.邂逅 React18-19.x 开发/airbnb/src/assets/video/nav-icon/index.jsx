@@ -4,7 +4,6 @@ import React, {
   useImperativeHandle,
   useRef,
   useState,
-  useCallback,
   useMemo,
 } from "react";
 
@@ -14,12 +13,10 @@ import { IconWrapper } from "./style";
 const NavIcon = memo(({ ref, poster, videoSrc, twirl, keys }) => {
   const containerRef = useRef(null); //引用图标容器DOM元素
   const [isActive, setActive] = useState(false);
-  const [isHovered, setHovered] = useState(false);
-  const [isPressed, setPressed] = useState(false);
 
   // 组件挂载时播放动画
   useEffect(() => {
-    console.log("播放");
+    // console.log("播放");
 
     if (keys === 1) {
       setActive(true);
@@ -33,8 +30,8 @@ const NavIcon = memo(({ ref, poster, videoSrc, twirl, keys }) => {
     v.setAttribute("playsinline", "");
     v.setAttribute("webkit-playsinline", "true");
     v.setAttribute("x5-playsinline", "true");
-    v.play().catch(() => {
-      console.log("");
+    v.play().catch((e) => {
+      console.log(e);
     });
   }, [keys]);
 
@@ -66,48 +63,13 @@ const NavIcon = memo(({ ref, poster, videoSrc, twirl, keys }) => {
     },
   }));
 
-  // 鼠标事件处理
-  const handleMouseEnter = useCallback(() => {
-    if (!isActive) {
-      setHovered(true);
-    }
-  }, [isActive]);
-  const handleMouseLeave = useCallback(() => {
-    setHovered(false);
-    setPressed(false);
-  }, []);
-
-  const handleMouseDown = useCallback(() => {
-    if (!isActive) {
-      setPressed(true);
-    }
-  }, [isActive]);
-
-  const handleMouseUp = useCallback(() => {
-    setPressed(false);
-  }, []);
-
-  // 计算缩放比例
-  const scale = useMemo(() => {
-    if (isActive) return 1; //选中状态保持放大
-    if (isPressed) return 0.8; //按下时缩小
-    if (isHovered) return 1.1; //悬停时放大
-    return 1; //默认大小
-  }, [isActive, isPressed, isHovered]);
-
   const currentPoster = useMemo(
     () => (isActive ? poster.posterActive : poster.poster),
     [isActive, poster]
   );
 
   return (
-    <IconWrapper
-      scale={scale}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      onMouseDown={handleMouseDown}
-      onMouseUp={handleMouseUp}
-    >
+    <IconWrapper className="nav-icon-wrapper">
       <span className="nav-container">
         <video
           ref={containerRef}
