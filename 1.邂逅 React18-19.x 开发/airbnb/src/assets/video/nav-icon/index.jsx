@@ -41,8 +41,14 @@ const NavIcon = memo(({ ref, poster, videoSrc, twirl, keys }) => {
     activate: () => {
       if (containerRef.current) {
         setActive(true);
-
-        containerRef.current.play();
+        try {
+          containerRef.current.currentTime = 0;
+          containerRef.current.muted = true;
+          // 确保元素仍在文档中再播放
+          if (containerRef.current.isConnected) {
+            containerRef.current.play().catch(() => {});
+          }
+        } catch (e) {}
       }
     },
 
@@ -50,9 +56,12 @@ const NavIcon = memo(({ ref, poster, videoSrc, twirl, keys }) => {
     deactivate: () => {
       if (containerRef.current) {
         setActive(false);
-        containerRef.current.currentTime = 0;
-
-        containerRef.current.pause();
+        try {
+          containerRef.current.pause();
+          containerRef.current.currentTime = 0;
+          // 关键：调用 load() 强制恢复到 poster（避免显示最后一帧）
+          containerRef.current.load();
+        } catch (e) {}
       }
     },
     // 通知效果

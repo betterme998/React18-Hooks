@@ -77,17 +77,14 @@ export const NavWrapper = styled.div`
 
 export const NavIconWrapper = styled.div`
   position: relative;
-  margin-bottom: 10px;
-  bottom: -5px;
-
+  padding-bottom: 20px;
+  padding-left: 18px;
+  margin-left: -18px;
+  bottom: -10px;
   .nav-icon-wrapper {
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
-    transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     transform: scale(${(props) => props.scale || 1});
-  }
-  &:active .nav-icon-wrapper {
-    transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
-    transform: scale(${(props) => (props.scale === 1 ? 1 : 0.15)});
   }
 `;
