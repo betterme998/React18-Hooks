@@ -22,12 +22,10 @@ const HeaderNav = memo(({ tabsKey, changeTabsKey }) => {
   const iconRefs = useRef({}); //存储所有图标ref的对象
   const currentIconRef = useRef(null); //当前激活图标的ref
   const changeTimeoutRef = useRef(null);
+
+  const pendingKeyRef = useRef(null); // 记录当前 pending 的目标 key
   const [twirl, setTwirl] = useState(true); //是否为选择视频
 
-  // ========== 核心修改：点击队列和防抖机制 ==========
-  // 使用队列收集快速点击，确保只处理最后一次点击
-  const clickQueueRef = useRef([]); // 存储点击事件的队列
-  const processingRef = useRef(false); //标记是否正在处理点击，防止重复处理
   const TRANS_MS = 150;
 
   const [isTouchPressed, setTouchPressed] = useState(false); // 区分触摸按下（移动端）和鼠标按下（桌面端）
@@ -77,6 +75,13 @@ const HeaderNav = memo(({ tabsKey, changeTabsKey }) => {
 
   const handleMouseLeave = useCallback(() => {
     setHoveredKey(null);
+    // 立即清除按下状态并清理定时器（不要依赖后续 mouseup）
+    setPressedKey(null);
+    setTouchPressed(false);
+    if (touchTimeoutRef.current) {
+      clearTimeout(touchTimeoutRef.current);
+      touchTimeoutRef.current = null;
+    }
   }, []);
 
   const handleMouseDown = useCallback(
@@ -132,9 +137,8 @@ const HeaderNav = memo(({ tabsKey, changeTabsKey }) => {
   const scale = useCallback(
     (key) => {
       const k = String(key);
-      console.log(key);
 
-      if (pressedKey === k) return isTouchPressed ? 0.1 : 0.1; //按下时缩小,幅度更大
+      if (pressedKey === k) return isTouchPressed ? 0.7 : 0.8; //按下时缩小,幅度更大
       if (String(activeKey) === k) return 1; //选中状态保持放大
 
       // 如果当前是hover状态，则返回1.1
@@ -144,73 +148,6 @@ const HeaderNav = memo(({ tabsKey, changeTabsKey }) => {
     },
     // [activeKey, pressedKey, hoveredKey, isTouchPressed]
     [activeKey, pressedKey, isTouchPressed, hoveredKey]
-  );
-
-  // ========== 核心修改：处理点击队列 ==========
-  const processClickQueue = useCallback(() => {
-    // 如果正在处理中或队列为空，直接返回
-    if (processingRef.current || clickQueueRef.current.length === 0) return;
-
-    processingRef.current = true; //标记为处理中状态
-
-    // 获取队列中最后一个点击（实现只处理最后一次点击）
-    const lastClick = clickQueueRef.current[clickQueueRef.current.length - 1];
-    clickQueueRef.current = []; //清空队列，准备接收新的点击
-
-    const { key } = lastClick;
-
-    // 关键逻辑：如果最后点击的是当前已激活的标签，不进行任何切换
-    if (key === activeKey) {
-      processingRef.current = false; //释放处理锁
-      return;
-    }
-
-    // 执行切换动画：先停用当前激活的图标
-    if (iconRefs.current[activeKey]) {
-      iconRefs.current[activeKey].deactivate();
-    }
-
-    // 延迟执行新图标的激活和状态更新
-    setTimeout(() => {
-      // 激活新点击的图标
-      if (iconRefs.current[key]) {
-        currentIconRef.current = iconRefs.current[key];
-        currentIconRef.current.activate?.(key);
-      }
-
-      // 更新激活
-      setActiveKey(key);
-
-      // 触发 Redux action 更新全局状态
-      changeTabsKey(key);
-
-      // 释放处理锁
-      processingRef.current = false;
-
-      // 检查处理过程中是否有新的点击加入，如果有则继续处理
-      if (clickQueueRef.current.length > 0) {
-        processClickQueue();
-      }
-    }, TRANS_MS); // 等待动画完成
-    // 更新twirl状态
-    if (twirl) {
-      setTwirl(false);
-    }
-  }, [activeKey, changeTabsKey, twirl]);
-
-  // ========== 核心修改：简化的Tab切换处理函数 ==========
-  const handleTabChange2 = useCallback(
-    (key) => {
-      // 将当前点击加入队列
-      clickQueueRef.current.push({ key, timestamp: Date.now() });
-
-      // 延迟处理，收集快速连续点击
-      // 50ms d的收集窗口，在这个时间内所有快速点击都会被收集，但只处理最后一个
-      setTimeout(() => {
-        processClickQueue();
-      }, 500);
-    },
-    [processClickQueue]
   );
 
   // 使用 useMemo 缓存配置
@@ -231,6 +168,8 @@ const HeaderNav = memo(({ tabsKey, changeTabsKey }) => {
             onMouseUp={() => handleMouseUp()}
             onTouchStart={() => handleTouchStart(id)} // 手指按下对应 mouseDown
             onTouchEnd={() => handleTouchEnd()} // 手指抬起对应 mouseUp
+            onTouchCancel={() => handleTouchEnd()} // 触摸被取消时也恢复
+            onPointerCancel={() => handleMouseLeave()} // pointer 取消/离开也恢复
             className={`nav-tab-item ${
               isActive ? "ant-tabs-tab-active" : ""
             } nav-tab-item-${id}`}
@@ -267,61 +206,57 @@ const HeaderNav = memo(({ tabsKey, changeTabsKey }) => {
   // Tab切换处理函数 - 确保立即更新状态
   const handleTabChange = useCallback(
     (key) => {
-      (async () => {
-        // 如果正在切换中，直接返回
-        // if (isChanging) return;
+      // 统一用字符串比较
+      const k = String(key);
+      const cur = String(activeKey);
 
-        // 如果点击的是当前已激活的标签，直接返回
-        // if (key === activeKey) return;
-
-        // 设置切换锁
-        // setIsChanging(true);
-        // 渲染初快速点击时取消所有图标动画
-        if (!currentIconRef.current) {
-          Object.keys(iconRefs.current).forEach((key) => {
-            iconRefs.current[key].deactivate();
-          });
-        }
-
-        // 同时通过ref调用方法确保状态同步
-        if (iconRefs.current[activeKey]) {
-          iconRefs.current[activeKey].deactivate();
-        }
+      // 如果点击的是当前已激活项，什么都不做（仅记录点击可在这里加逻辑）
+      if (k === cur) {
         if (changeTimeoutRef.current) {
           clearTimeout(changeTimeoutRef.current);
           changeTimeoutRef.current = null;
+          pendingKeyRef.current = null;
         }
-        changeTimeoutRef.current = setTimeout(() => {
-          if (iconRefs.current[key]) {
-            currentIconRef.current = iconRefs.current[key];
-            currentIconRef.current.activate?.(key);
-          }
-          // 动画结束后释放切换锁
-          // setIsChanging(false);
+        // 可选：清除按下状态，保证视觉复位
+        setPressedKey(null);
+        setTouchPressed(false);
+        return;
+      }
+      // 如果已经有一个 pending，而且 pending 是相同的 key，则不重置定时器（第一次点击已生效）
+      if (changeTimeoutRef.current && pendingKeyRef.current === k) {
+        return;
+      }
+
+      // 否则覆盖/重置 pending：清理之前的定时器并设置新的 pending
+      if (changeTimeoutRef.current) {
+        clearTimeout(changeTimeoutRef.current);
+        changeTimeoutRef.current = null;
+      }
+      pendingKeyRef.current = k;
+
+      changeTimeoutRef.current = setTimeout(() => {
+        if (iconRefs.current[k]) {
+          currentIconRef.current = iconRefs.current[k];
+          currentIconRef.current.activate?.(k);
           // 立即更新激活状态 - 这会让子组件立即收到新的isActive props
-          setActiveKey(key);
-          changeTimeoutRef.current = null;
-        }, TRANS_MS * 2);
-
-        // 等待动画结束后再播放视频
-        // setTimeout(() => {
-        //   if (iconRefs.current[key]) {
-        //     currentIconRef.current = iconRefs.current[key];
-        //     currentIconRef.current.activate?.(key);
-        //   }
-        //   // 动画结束后释放切换锁
-        //   setIsChanging(false);
-        //   // 立即更新激活状态 - 这会让子组件立即收到新的isActive props
-        //   setActiveKey(key);
-        // }, TRANS_MS * 2);
-
-        if (twirl) {
-          setTwirl(false);
+          setActiveKey(k);
+          // 同时通过ref调用方法确保状态同步
+          if (iconRefs.current[cur]) {
+            iconRefs.current[cur].deactivate();
+          }
         }
 
-        // 触发 actions 来更新 Redux store 中的状态
-        changeTabsKey(key);
-      })();
+        // 清理 pending
+        pendingKeyRef.current = null;
+        changeTimeoutRef.current = null;
+      }, TRANS_MS * 2);
+
+      if (twirl) {
+        setTwirl(false);
+      }
+
+      // 触发 actions 来更新 Redux store 中的状态
+      changeTabsKey(key);
     },
     // [activeKey, changeTabsKey, twirl, isChanging]
     [activeKey, changeTabsKey, twirl]
@@ -347,7 +282,8 @@ const HeaderNav = memo(({ tabsKey, changeTabsKey }) => {
           className="nav-tabs66"
           defaultActiveKey="1"
           activeKey={activeKey}
-          onChange={handleTabChange2}
+          // onChange={handleTabChange}
+          onTabClick={handleTabChange}
           items={tabItems}
         />
       </ConfigProvider>

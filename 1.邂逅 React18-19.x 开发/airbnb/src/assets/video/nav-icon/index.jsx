@@ -10,9 +10,16 @@ import React, {
 import { IconWrapper } from "./style";
 
 // header组件的导航栏图标组件--带状态的图标组件
-const NavIcon = memo(({ ref, poster, videoSrc, twirl, keys }) => {
+const NavIcon = memo(({ ref, poster, videoSrc, twirl, keys, isActive2 }) => {
   const containerRef = useRef(null); //引用图标容器DOM元素
-  const [isActive, setActive] = useState(false);
+  // const [isActive, setActive] = useState(false);
+
+  const [isActive, setActive] = useState(Boolean(isActive2));
+  useEffect(() => {
+    if (typeof isActive2 !== "undefined") {
+      setActive(Boolean(isActive2));
+    }
+  }, [isActive2]);
 
   // 组件挂载时播放动画
   useEffect(() => {

@@ -49,6 +49,18 @@ export const NavWrapper = styled.div`
           height: 36px;
           margin-inline-end: 0;
           line-height: 36px;
+          /* 阻止文字被选中 */
+          user-select: none;
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+        }
+        .nav-tab-label-text {
+          /* 阻止文字被选中 */
+          user-select: none;
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
         }
         .nav-tab-label-text-1 {
           margin-left: 16px !important;
@@ -81,10 +93,25 @@ export const NavIconWrapper = styled.div`
   padding-left: 18px;
   margin-left: -18px;
   bottom: -10px;
+
+  /* 只对图标容器做缩放/合成，尽量不要把文字包含进同一层 */
   .nav-icon-wrapper {
+    will-change: transform; /* 提示浏览器只优化 transform */
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
+    transform: translateZ(0); /* 强制创建合成层，避免 layout repaint */
+    transform-origin: center center;
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     transform: scale(${(props) => props.scale || 1});
+  }
+
+  /* 把文字也放到独立合成层并开启字体平滑，避免被图标缩放时受影响 */
+  .nav-tab-label-text {
+    will-change: transform, opacity;
+    transform: translateZ(0); /* 单独合成层，避免与图标合成到同一层 */
+    -webkit-font-smoothing: antialiased; /* 字体平滑 */
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    transition: color 0.12s ease, opacity 0.12s ease;
   }
 `;
