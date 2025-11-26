@@ -12,6 +12,9 @@ import { IconWrapper } from "./style";
 // header组件的导航栏图标组件--带状态的图标组件
 const NavIcon = memo(({ ref, poster, videoSrc, twirl, keys, isActive2 }) => {
   const containerRef = useRef(null); //引用图标容器DOM元素
+  const canvasRef = useRef(null); //绘制用canvas
+  const rafRef = useRef(null); //requestAnimationFrame id
+  const drawLockRef = useRef(false); //防重启
   // const [isActive, setActive] = useState(false);
 
   const [isActive, setActive] = useState(Boolean(isActive2));
@@ -40,7 +43,28 @@ const NavIcon = memo(({ ref, poster, videoSrc, twirl, keys, isActive2 }) => {
     v.play().catch((e) => {
       console.log(e);
     });
+    startCanvasLoop();
   }, [keys]);
+
+  // 每帧绘制 video 到 canvas
+  const drawFrame = () => {
+    const c = canvasRef.current;
+    const v = containerRef.current;
+    if (!c) return;
+    const ctx = c.getContext("2d");
+    try {
+      ctx.clearRect(0, 0, c.width, c.height);
+      ctx.drawImage(v, 0, 0, c.width, c.height);
+    } catch (e) {}
+    rafRef.current = requestAnimationFrame(drawFrame);
+  };
+
+  const startCanvasLoop = () => {
+    if (drawLockRef.current) return;
+    drawLockRef.current = true;
+    if (rafRef.current) cancelAnimationFrame(rafRef.current); //方法取消一个先前通过调用 requestAnimationFrame() 方法添加到计划中的动画帧请求。
+    rafRef.current = requestAnimationFrame(drawFrame);
+  };
 
   // 使用useImperativeHandle 向父组件暴漏方法
   useImperativeHandle(ref, () => ({
@@ -54,6 +78,7 @@ const NavIcon = memo(({ ref, poster, videoSrc, twirl, keys, isActive2 }) => {
           // 确保元素仍在文档中再播放
           if (containerRef.current.isConnected) {
             containerRef.current.play().catch(() => {});
+            startCanvasLoop();
           }
         } catch (e) {}
       }
@@ -111,6 +136,7 @@ const NavIcon = memo(({ ref, poster, videoSrc, twirl, keys, isActive2 }) => {
             );
           })}
         </video>
+        <canvas ref={canvasRef} className="nav-video"></canvas>
       </span>
       <span className="nav-dir" style={{ display: keys !== 1 ? "" : "none" }}>
         <span className="nav-dir-text">全新</span>
