@@ -268,3 +268,7 @@ assets/video/nav-icon/index.jxs :用于 header 导航栏的图标视频 icon
 25 日
 优化 tabs 按钮点击逻辑
 使用 canvas 代替视频标签
+
+27 日
+优化 canvas 播放 tabs 视频，
+解决 canvas 尺寸大小不对 bug

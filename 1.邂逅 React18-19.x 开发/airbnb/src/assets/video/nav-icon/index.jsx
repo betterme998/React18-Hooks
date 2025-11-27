@@ -5,6 +5,7 @@ import React, {
   useRef,
   useState,
   useMemo,
+  useCallback,
 } from "react";
 
 import { IconWrapper } from "./style";
@@ -17,12 +18,48 @@ const NavIcon = memo(({ ref, poster, videoSrc, twirl, keys, isActive2 }) => {
   const drawLockRef = useRef(false); //防重启
   // const [isActive, setActive] = useState(false);
 
+  const sizeRef = useRef({ w: 0, h: 0, dpr: 1 }); //保存布局尺寸与dpr，共供绘制使用
+
   const [isActive, setActive] = useState(Boolean(isActive2));
+
   useEffect(() => {
     if (typeof isActive2 !== "undefined") {
       setActive(Boolean(isActive2));
     }
   }, [isActive2]);
+
+  // 同步canvas和video尺寸
+  useEffect(() => {
+    const video = containerRef.current;
+    const canvas = canvasRef.current;
+
+    if (video && canvas) {
+      const rect = video.getBoundingClientRect();
+      canvas.width = video.videoWidth || rect.width;
+      canvas.height = video.videoHeight || rect.height;
+    }
+  }, []);
+
+  // 每帧绘制 video 到 canvas
+  const drawFrame = useCallback(() => {
+    const c = canvasRef.current;
+    const v = containerRef.current;
+    if (!c || !v) return;
+
+    const ctx = c.getContext("2d");
+    try {
+      ctx.clearRect(0, 0, c.width, c.height);
+      ctx.drawImage(v, 0, 0, c.width, c.height);
+    } catch (e) {}
+    rafRef.current = requestAnimationFrame(drawFrame);
+  }, []); // 依赖只使用 refs，refs 在生命周期内稳定
+
+  const startCanvasLoop = useCallback(() => {
+    if (drawLockRef.current) return;
+    drawLockRef.current = true;
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    rafRef.current = requestAnimationFrame(drawFrame);
+  }, [drawFrame]); // 明确依赖 drawFrame
 
   // 组件挂载时播放动画
   useEffect(() => {
@@ -44,27 +81,7 @@ const NavIcon = memo(({ ref, poster, videoSrc, twirl, keys, isActive2 }) => {
       console.log(e);
     });
     startCanvasLoop();
-  }, [keys]);
-
-  // 每帧绘制 video 到 canvas
-  const drawFrame = () => {
-    const c = canvasRef.current;
-    const v = containerRef.current;
-    if (!c) return;
-    const ctx = c.getContext("2d");
-    try {
-      ctx.clearRect(0, 0, c.width, c.height);
-      ctx.drawImage(v, 0, 0, c.width, c.height);
-    } catch (e) {}
-    rafRef.current = requestAnimationFrame(drawFrame);
-  };
-
-  const startCanvasLoop = () => {
-    if (drawLockRef.current) return;
-    drawLockRef.current = true;
-    if (rafRef.current) cancelAnimationFrame(rafRef.current); //方法取消一个先前通过调用 requestAnimationFrame() 方法添加到计划中的动画帧请求。
-    rafRef.current = requestAnimationFrame(drawFrame);
-  };
+  }, [keys, startCanvasLoop]);
 
   // 使用useImperativeHandle 向父组件暴漏方法
   useImperativeHandle(ref, () => ({
@@ -125,6 +142,16 @@ const NavIcon = memo(({ ref, poster, videoSrc, twirl, keys, isActive2 }) => {
           // 针对某些特定环境的属性，如部分国产浏览器或WebView
           webkit-playsinline="true"
           x5-playsinline="true"
+          // 隐藏 video 的可视输出（canvas 负责显示），但保留布局尺寸与播放能力
+          style={{
+            position: "absolute",
+            left: 0,
+            top: 0,
+            width: "100%",
+            height: "100%",
+            opacity: 0,
+            pointerEvents: "none",
+          }}
         >
           {videoSrc.map((item) => {
             return (
@@ -136,7 +163,7 @@ const NavIcon = memo(({ ref, poster, videoSrc, twirl, keys, isActive2 }) => {
             );
           })}
         </video>
-        <canvas ref={canvasRef} className="nav-video"></canvas>
+        <canvas ref={canvasRef} className="nav-canvas"></canvas>
       </span>
       <span className="nav-dir" style={{ display: keys !== 1 ? "" : "none" }}>
         <span className="nav-dir-text">全新</span>

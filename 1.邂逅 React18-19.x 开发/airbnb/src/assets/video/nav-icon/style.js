@@ -10,7 +10,8 @@ export const IconWrapper = styled.div`
     display: block;
     box-sizing: border-box;
     transform: none;
-    .nav-video {
+    .nav-video,
+    .nav-canvas {
       width: 100%;
       height: 100%;
       object-fit: contain;
