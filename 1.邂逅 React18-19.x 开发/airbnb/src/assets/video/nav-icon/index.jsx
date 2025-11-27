@@ -32,12 +32,12 @@ const NavIcon = memo(({ ref, poster, videoSrc, twirl, keys, isActive2 }) => {
   useEffect(() => {
     const video = containerRef.current;
     const canvas = canvasRef.current;
+    if (!video || !canvas) return;
 
-    if (video && canvas) {
-      const rect = video.getBoundingClientRect();
-      canvas.width = video.videoWidth || rect.width;
-      canvas.height = video.videoHeight || rect.height;
-    }
+    const rect = video.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = video.videoWidth || rect.width;
+    canvas.height = video.videoHeight || rect.height;
   }, []);
 
   // 每帧绘制 video 到 canvas
