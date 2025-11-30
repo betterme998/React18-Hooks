@@ -18,8 +18,6 @@ const NavIcon = memo(({ ref, poster, videoSrc, twirl, keys, isActive2 }) => {
   const drawLockRef = useRef(false); //防重启
   // const [isActive, setActive] = useState(false);
 
-  const sizeRef = useRef({ w: 0, h: 0, dpr: 1 }); //保存布局尺寸与dpr，共供绘制使用
-
   const [isActive, setActive] = useState(Boolean(isActive2));
 
   useEffect(() => {
@@ -34,10 +32,37 @@ const NavIcon = memo(({ ref, poster, videoSrc, twirl, keys, isActive2 }) => {
     const canvas = canvasRef.current;
     if (!video || !canvas) return;
 
-    const rect = video.getBoundingClientRect();
-    const dpr = window.devicePixelRatio || 1;
-    canvas.width = video.videoWidth || rect.width;
-    canvas.height = video.videoHeight || rect.height;
+    const updateCanvasSize = () => {
+      // 如果 videoWidth 为 0，说明元数据还没准备好
+      if (video.videoWidth > 0) {
+        const dpr = window.devicePixelRatio || 1;
+
+        canvas.width = video.videoWidth * dpr;
+        canvas.height = video.videoHeight * dpr;
+        console.log("Canvas尺寸已更新:", canvas.width, canvas.height);
+      }
+    };
+
+    // 立即尝试一次
+    updateCanvasSize();
+
+    // 监听元数据加载完成事件
+    const handleLoadedMetadata = () => {
+      console.log("视频元数据已加载");
+      updateCanvasSize();
+    };
+
+    // 监听 canplay 事件作为备选
+    const handleCanPlay = () => {
+      console.log("视频可以播放");
+      updateCanvasSize();
+    };
+    video.addEventListener("loadedmetadata", handleLoadedMetadata);
+    video.addEventListener("canplay", handleCanPlay);
+    return () => {
+      video.removeEventListener("loadedmetadata", handleLoadedMetadata);
+      video.removeEventListener("canplay", handleCanPlay);
+    };
   }, []);
 
   // 每帧绘制 video 到 canvas

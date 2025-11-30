@@ -272,3 +272,8 @@ assets/video/nav-icon/index.jxs :用于 header 导航栏的图标视频 icon
 27 日
 优化 canvas 播放 tabs 视频，
 解决 canvas 尺寸大小不对 bug
+
+30 日
+解决移动端 canvas 初次加载画面不显示，
+原因是：移动端第一次打开时 video 的 metadata（videoWidth/videoHeight）可能还没准备好，原来代码在 mount 时直接用 video.videoWidth 导致 canvas 尺寸为 0 或过小，刷新后因缓存已就绪才正常。
+添加事件监听器，监听 video 元素的 loadedmetadata 事件，在加载完成后获取 video 元素的尺寸，并设置 canvas 的尺寸。
