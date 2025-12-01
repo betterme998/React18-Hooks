@@ -6,7 +6,6 @@ export const HeaderWrapper = styled.div`
   justify-content: space-between;
   height: 96px;
   box-sizing: border-box;
-  border-bottom: 1px solid #eee;
   padding: 0 48px;
   position: relative;
   box-sizing: border-box;

@@ -7,8 +7,11 @@ const HeaderCenter = memo(() => {
   return (
     <CenterWrapper>
       <form className="search">
-        <HeaderNav />
-        <HeaderSearch />
+        <div className="NSCont">
+          <HeaderNav />
+          <HeaderSearch />
+        </div>
+        <div className="backCont"></div>
       </form>
     </CenterWrapper>
   );

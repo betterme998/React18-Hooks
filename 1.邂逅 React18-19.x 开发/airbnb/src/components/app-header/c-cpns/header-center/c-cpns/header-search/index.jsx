@@ -19,7 +19,7 @@ const HeaderSearch = memo(() => {
         <div className="Shadow-white"></div>
         <div className="Shadow-black"></div>
       </div>
-      <Radio.Group
+      {/* <Radio.Group
         name="radiogroup"
         value={navIndex} //绑定到状态
         onChange={handleNavChange} //添加change事件
@@ -28,14 +28,11 @@ const HeaderSearch = memo(() => {
           { value: 1, label: "B" },
           { value: 2, label: "C" },
           { value: 3, label: "D" },
-          { value: 4, label: "B" },
-          { value: 5, label: "C" },
-          { value: 6, label: "D" },
         ]}
         optionType="button"
-      />
+      /> */}
 
-      {/* <nav>
+      <nav>
         <ul>
           {plainOptions.map((item, index) => {
             return (
@@ -45,7 +42,7 @@ const HeaderSearch = memo(() => {
             );
           })}
         </ul>
-      </nav> */}
+      </nav>
     </SearchWarpper>
   );
 });

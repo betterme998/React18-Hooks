@@ -17,5 +17,18 @@ export const CenterWrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    .NSCont {
+      position: relative;
+      /* background-color: red; */
+    }
+    .backCont {
+      /* position: absolute; */
+      left: 0;
+      /* top: 0; */
+      /* width: 100%;
+      height: 96px;
+      transform: scaleY(2.08); */
+      /* background-color: red; */
+    }
   }
 `;

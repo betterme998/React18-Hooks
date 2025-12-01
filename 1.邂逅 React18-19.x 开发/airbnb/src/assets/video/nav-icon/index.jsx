@@ -39,7 +39,6 @@ const NavIcon = memo(({ ref, poster, videoSrc, twirl, keys, isActive2 }) => {
 
         canvas.width = video.videoWidth * dpr;
         canvas.height = video.videoHeight * dpr;
-        console.log("Canvas尺寸已更新:", canvas.width, canvas.height);
       }
     };
 
