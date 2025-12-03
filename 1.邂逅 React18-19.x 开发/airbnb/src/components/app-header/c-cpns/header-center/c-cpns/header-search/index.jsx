@@ -13,15 +13,14 @@ const HeaderSearch = memo(() => {
       <ConfigProvider
         theme={{
           components: {
-            Segmented: {
-              block: true,
-            },
+            Segmented: {},
           },
         }}
       >
         <Segmented
-          options={["Daily", "Weekly", "Monthly", "Quarterly", "Yearly"]}
+          options={["Daily", "Weekly", "Monthly"]}
           size="large"
+          block
           shape="round"
           onChange={(value) => {
             console.log(value); // string
