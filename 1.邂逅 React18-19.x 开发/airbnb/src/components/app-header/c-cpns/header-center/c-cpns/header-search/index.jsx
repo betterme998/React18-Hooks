@@ -13,7 +13,9 @@ const HeaderSearch = memo(() => {
       <ConfigProvider
         theme={{
           components: {
-            Segmented: {},
+            Segmented: {
+              // trackPadding: 1,
+            },
           },
         }}
       >
