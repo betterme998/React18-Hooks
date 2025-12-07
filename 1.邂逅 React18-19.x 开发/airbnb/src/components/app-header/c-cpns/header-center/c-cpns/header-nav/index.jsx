@@ -36,7 +36,7 @@ const HeaderNav = memo(({ tabsKey, changeTabsKey }) => {
   // 组件挂载时播放动画
   useEffect(() => {
     currentIconRef.current?.activate();
-  }, [twirl]);
+  }, []);
 
   // 清除定时器
   useEffect(() => {

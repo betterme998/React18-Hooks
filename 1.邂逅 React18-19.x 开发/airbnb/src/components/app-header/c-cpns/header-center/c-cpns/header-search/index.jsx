@@ -14,7 +14,7 @@ const HeaderSearch = memo(() => {
         theme={{
           components: {
             Segmented: {
-              // trackPadding: 1,
+              trackPadding: 0,
             },
           },
         }}

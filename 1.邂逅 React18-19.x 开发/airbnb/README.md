@@ -280,3 +280,8 @@ assets/video/nav-icon/index.jxs :用于 header 导航栏的图标视频 icon
 
 4 日
 搜索框
+
+12 月 7 日
+通过 before 添加搜索滑块的分割线
+解决滑块尺寸大小不同 bug
+通过样式控制滑块分割线的显示隐藏

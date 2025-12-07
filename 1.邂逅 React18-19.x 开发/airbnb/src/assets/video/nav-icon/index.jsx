@@ -89,9 +89,9 @@ const NavIcon = memo(({ ref, poster, videoSrc, twirl, keys, isActive2 }) => {
   useEffect(() => {
     // console.log("播放");
 
-    if (keys === 1) {
-      setActive(true);
-    }
+    // if (keys === 1) {
+    //   setActive(true);
+    // }
 
     const v = containerRef.current;
     if (!v) return;
@@ -146,8 +146,8 @@ const NavIcon = memo(({ ref, poster, videoSrc, twirl, keys, isActive2 }) => {
   }));
 
   const currentPoster = useMemo(
-    () => (isActive ? poster.posterActive : poster.poster),
-    [isActive, poster]
+    () => (isActive && !twirl ? poster.posterActive : poster.poster),
+    [isActive, poster, twirl]
   );
 
   return (
