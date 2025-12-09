@@ -285,3 +285,6 @@ assets/video/nav-icon/index.jxs :用于 header 导航栏的图标视频 icon
 通过 before 添加搜索滑块的分割线
 解决滑块尺寸大小不同 bug
 通过样式控制滑块分割线的显示隐藏
+
+9 日
+思路：设置选中滑块上一块和下一下 after 宽度 100%+70px。下一块额外向右偏移 70px，再调整 z-index
