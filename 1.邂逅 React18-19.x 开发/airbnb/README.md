@@ -287,4 +287,8 @@ assets/video/nav-icon/index.jxs :用于 header 导航栏的图标视频 icon
 通过样式控制滑块分割线的显示隐藏
 
 9 日
+鼠标移入背景
 思路：设置选中滑块上一块和下一下 after 宽度 100%+70px。下一块额外向右偏移 70px，再调整 z-index
+
+11 日
+自定义气泡提示框
