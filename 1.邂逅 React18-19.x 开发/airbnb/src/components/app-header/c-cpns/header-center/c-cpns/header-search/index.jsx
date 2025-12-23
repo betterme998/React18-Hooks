@@ -1,9 +1,13 @@
 import React, { memo, useState, useMemo, useRef, useEffect } from "react";
 import { SearchWarpper } from "./style";
 import { Segmented, ConfigProvider } from "antd";
+// 将 Redux 的状态（State）和操作（Actions）映射到 React 组件的 Props
+import { connect } from "react-redux";
+import { changeSegmented } from "@/store/modules/header";
+
 import HeaderPopover from "@/components/app-header/c-cpns/header-center/c-cpns/header-popover";
 
-const HeaderSearch = memo(() => {
+const HeaderSearch = memo(({ triggerRef }) => {
   const [navIndex, setNavIndex] = useState(0); //状态控制导航指示器位置
   const [bubbleVisible, setBubbleVisible] = useState(false);
   const [bubbleStyle, setBubbleStyle] = useState({ left: 0, width: 0 });
@@ -77,7 +81,12 @@ const HeaderSearch = memo(() => {
   }, []);
 
   return (
-    <SearchWarpper className="headerSegmented" style={{ position: "relative" }}>
+    <SearchWarpper
+      // onClick={handleSliderClick}
+      className="headerSegmented"
+      style={{ position: "relative" }}
+      ref={triggerRef}
+    >
       <ConfigProvider
         theme={{
           components: {
@@ -99,14 +108,25 @@ const HeaderSearch = memo(() => {
           value={labels[navIndex]}
         />
         {/* 自定义气泡，不使用 antd Popover，以便做精确定位与动画 */}
-        <HeaderPopover
+        {/* <HeaderPopover
           navIndex={navIndex}
           bubbleVisible={bubbleVisible}
           bubbleStyle={bubbleStyle}
-        ></HeaderPopover>
+        ></HeaderPopover> */}
       </ConfigProvider>
     </SearchWarpper>
   );
 });
+// 参数一
+// const mapStateToProps = (state) => ({
+//   tabsKey: state.header.tabsKey,
+// });
 
-export default HeaderSearch;
+// 参数二
+const mapDispatchToProps = (dispatch) => ({
+  changeTabsKey: (key) => {
+    dispatch(changeSegmented(key));
+  },
+});
+
+export default connect(null, mapDispatchToProps)(HeaderSearch);

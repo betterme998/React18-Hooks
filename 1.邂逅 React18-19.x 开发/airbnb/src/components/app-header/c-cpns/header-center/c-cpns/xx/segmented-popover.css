@@ -1,0 +1,4 @@
+.segmented-popover-overlay .ant-popover-inner {
+  transition: width 300ms ease;
+  /* 可根据需要添加 transform 过渡 */
+}
