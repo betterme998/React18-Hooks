@@ -105,11 +105,10 @@ const HeaderPopover = memo(
               <div>点击外部区域关闭</div>
             </div>
           }
-        >
-          <Button ref={triggerRef} onClick={handleTriggerClick}>
-            点击我打开气泡
-          </Button>
-        </Popover>
+        ></Popover>
+        <Button ref={triggerRef} onClick={handleTriggerClick}>
+          点击我打开气泡
+        </Button>
       </PopoverWarpper>
     );
   }

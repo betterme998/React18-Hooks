@@ -21,7 +21,7 @@ const HeaderCenter = memo(() => {
       <form className="search">
         <div className="NSCont">
           <HeaderNav />
-          <HeaderSearch />
+          <HeaderSearch ref={triggerRef} />
           <HeaderPopover />
           <Xx></Xx>
         </div>
