@@ -2,8 +2,9 @@ import React, { memo, useState, useRef, useMemo, useEffect } from "react";
 import { Popover, Button } from "antd";
 import { PopoverWarpper } from "./style";
 
-const HeaderPopover = memo(({ ref }) => {
+const HeaderPopover = memo(({ children }) => {
   const labels = useMemo(() => ["Daily", "Weekly", "Monthly"], []);
+  const [componentBData, setComponentBData] = useState(null);
 
   // const options = useMemo(
   //   () => labels.map((v) => ({ labels: v, value: v })),
@@ -25,6 +26,8 @@ const HeaderPopover = memo(({ ref }) => {
   );
   // --------------------------------------------
   const [open, setOpen] = useState(false);
+  const [childWidth, setChildWidth] = useState(false);
+
   const popoverRef = useRef(null);
   const triggerRef = useRef(null);
 
@@ -46,6 +49,17 @@ const HeaderPopover = memo(({ ref }) => {
     };
   }, []);
 
+  useEffect(() => {
+    if (triggerRef.current) {
+      // 获取子组件的宽度
+      const width = triggerRef.current.offsetWidth;
+      setChildWidth(width);
+    }
+  }, []);
+  useEffect(() => {
+    console.log(componentBData);
+  }, [componentBData]);
+
   const handleTriggerClick = () => {
     // 点击触发元素时只打开，不关闭
     if (!open) {
@@ -55,6 +69,7 @@ const HeaderPopover = memo(({ ref }) => {
 
   return (
     <PopoverWarpper>
+      {/* {children} */}
       {/* 自定义气泡，不使用 antd Popover，以便做精确定位与动画 */}
       {/* <div
           style={{
@@ -99,15 +114,27 @@ const HeaderPopover = memo(({ ref }) => {
         }}
         trigger="click"
         content={
-          <div ref={ref}>
+          <div ref={popoverRef}>
             气泡内容
             <div>点击外部区域关闭</div>
           </div>
         }
-      ></Popover>
+      >
+        {typeof children === "function" ? (
+          // 如果是函数传入setComponentBData,triggerRef,handleTriggerClick参数
+          children({ setComponentBData, triggerRef, handleTriggerClick })
+        ) : (
+          <div ref={triggerRef} onClick={handleTriggerClick}>
+            {children}
+          </div>
+        )}
+      </Popover>
+      {/* <div ref={triggerRef} onClick={handleTriggerClick}>
+        {children}
+      </div> */}
       {/* <Button ref={triggerRef} onClick={handleTriggerClick}>
-          点击我打开气泡
-        </Button> */}
+        点击我打开气泡
+      </Button> */}
     </PopoverWarpper>
   );
 });

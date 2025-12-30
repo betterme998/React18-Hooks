@@ -29,6 +29,8 @@ const HeaderCenter = memo(() => {
   }, []);
   const handleTriggerClick = () => {
     // 点击触发元素时只打开，不关闭
+    console.log(123123);
+
     if (!open) {
       setOpen(true);
     }
@@ -37,9 +39,21 @@ const HeaderCenter = memo(() => {
     <CenterWrapper>
       <form className="search">
         <div className="NSCont">
-          <HeaderNav />
-          <HeaderSearch ref={triggerRef} onClick={handleTriggerClick} />
-          <HeaderPopover ref={popoverRef} />
+          <HeaderPopover>
+            {({ setComponentBData, triggerRef, handleTriggerClick }) => (
+              <div ref={triggerRef}>
+                <HeaderNav />
+
+                <div onClick={handleTriggerClick}>
+                  <HeaderSearch setComponentBData={setComponentBData} />
+                </div>
+              </div>
+            )}
+            {/* <HeaderSearch /> */}
+            {/* <div>
+              <HeaderSearch />
+            </div> */}
+          </HeaderPopover>
           {/* <Xx></Xx> */}
         </div>
         <div className="backCont"></div>

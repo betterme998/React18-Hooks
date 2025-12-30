@@ -7,11 +7,12 @@ import { changeSegmented } from "@/store/modules/header";
 
 import HeaderPopover from "@/components/app-header/c-cpns/header-center/c-cpns/header-popover";
 
-const HeaderSearch = memo(({ triggerRef }) => {
+const HeaderSearch = memo(({ setComponentBData }) => {
   const [navIndex, setNavIndex] = useState(0); //状态控制导航指示器位置
   const [bubbleVisible, setBubbleVisible] = useState(false);
   const [bubbleStyle, setBubbleStyle] = useState({ left: 0, width: 0 });
   const containerRef = useRef(null);
+  const [state, setState] = useState({});
 
   const labels = useMemo(() => ["Daily", "Weekly", "Monthly"], []);
   // const options = useMemo(
@@ -33,7 +34,6 @@ const HeaderSearch = memo(({ triggerRef }) => {
     if (index === 0) {
       const width = Math.round(itemRect.width * 0.9);
       const left = Math.round(itemRect.left - containerRect.left);
-      console.log(left);
 
       setBubbleStyle({ left, width });
     } else if (index === 1) {
@@ -43,7 +43,6 @@ const HeaderSearch = memo(({ triggerRef }) => {
     } else {
       const width = Math.round(itemRect.width * 0.8);
       const left = Math.round(containerRect.width - width);
-      console.log(left);
 
       setBubbleStyle({ left, width });
     }
@@ -52,6 +51,7 @@ const HeaderSearch = memo(({ triggerRef }) => {
   // 点击segmented后显示/隐藏计算气泡位置
   const handleChange = (value) => {
     const index = labels.indexOf(value);
+
     if (index === -1) return;
     if (navIndex === index && bubbleVisible) {
       setBubbleVisible(false);
@@ -61,6 +61,7 @@ const HeaderSearch = memo(({ triggerRef }) => {
       // 等待 DOM 更新，确保 .ant-segmented-item 已渲染/布局完毕
       requestAnimationFrame(() => computeBubble(index));
     }
+    setState({ index, bubbleVisible, bubbleStyle });
   };
 
   // 在ant的分段控制器SearchWarpper组件中使用ant的气泡提示组件Popover
@@ -79,13 +80,20 @@ const HeaderSearch = memo(({ triggerRef }) => {
       };
     });
   }, []);
+  // ------------------------------------------------------气泡组件数据-----------
+
+  // 当state变化时，通知ComponentA
+  useEffect(() => {
+    if (setComponentBData) {
+      setComponentBData(state);
+    }
+  }, [state, setComponentBData]);
 
   return (
     <SearchWarpper
       // onClick={handleSliderClick}
       className="headerSegmented"
       style={{ position: "relative" }}
-      ref={triggerRef}
     >
       <ConfigProvider
         theme={{
