@@ -6,6 +6,8 @@ const HeaderPopover = memo(({ children }) => {
   const labels = useMemo(() => ["Daily", "Weekly", "Monthly"], []);
   const [componentBData, setComponentBData] = useState(null);
 
+  const [bubbleStyle, setBubbleStyle] = useState({ left: 0, width: 0 });
+
   // const options = useMemo(
   //   () => labels.map((v) => ({ labels: v, value: v })),
   //   [labels]
@@ -30,6 +32,34 @@ const HeaderPopover = memo(({ children }) => {
 
   const popoverRef = useRef(null);
   const triggerRef = useRef(null);
+
+  const computeBubble = (index) => {
+    const wrap = triggerRef.current;
+    if (!wrap) return;
+    // 找到segmented  渲染的item
+    const items = wrap.querySelectorAll(".ant-segmented-item");
+    const containerRect = wrap.getBoundingClientRect();
+    const item = items[index] || items[0];
+    if (!item) return;
+
+    const itemRect = item.getBoundingClientRect();
+    // 三种行为：左靠小、居中全宽、右靠小
+    if (index === 0) {
+      const width = Math.round(itemRect.width * 0.9);
+      const left = Math.round(itemRect.left - containerRect.left);
+
+      setBubbleStyle({ left, width });
+    } else if (index === 1) {
+      const width = Math.round(containerRect.width);
+      const left = 0;
+      setBubbleStyle({ left, width });
+    } else {
+      const width = Math.round(itemRect.width * 0.8);
+      const left = Math.round(containerRect.width - width);
+
+      setBubbleStyle({ left, width });
+    }
+  };
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -58,6 +88,8 @@ const HeaderPopover = memo(({ children }) => {
   }, []);
   useEffect(() => {
     console.log(componentBData);
+    // 等待 DOM 更新，确保 .ant-segmented-item 已渲染/布局完毕
+    requestAnimationFrame(() => computeBubble(componentBData));
   }, [componentBData]);
 
   const handleTriggerClick = () => {

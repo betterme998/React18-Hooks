@@ -41,9 +41,8 @@ const HeaderCenter = memo(() => {
         <div className="NSCont">
           <HeaderPopover>
             {({ setComponentBData, triggerRef, handleTriggerClick }) => (
-              <div ref={triggerRef}>
+              <div className="popoverSolt" ref={triggerRef}>
                 <HeaderNav />
-
                 <div onClick={handleTriggerClick}>
                   <HeaderSearch setComponentBData={setComponentBData} />
                 </div>
