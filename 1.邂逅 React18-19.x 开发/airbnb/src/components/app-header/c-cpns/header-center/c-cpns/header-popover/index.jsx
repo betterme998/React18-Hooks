@@ -59,6 +59,7 @@ const HeaderPopover = memo(({ children }) => {
 
       setBubbleStyle({ left, width });
     }
+    console.log(index, bubbleStyle);
   };
 
   useEffect(() => {
