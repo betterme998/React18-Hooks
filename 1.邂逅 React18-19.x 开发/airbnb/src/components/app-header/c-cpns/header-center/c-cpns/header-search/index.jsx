@@ -7,7 +7,7 @@ import { changeSegmented } from "@/store/modules/header";
 
 import HeaderPopover from "@/components/app-header/c-cpns/header-center/c-cpns/header-popover";
 
-const HeaderSearch = memo(({ setComponentBData }) => {
+const HeaderSearch = memo(({ setComponentBData, changeSegmented }) => {
   const [navIndex, setNavIndex] = useState(0); //状态控制导航指示器位置
   const containerRef = useRef(null);
   const [state, setState] = useState(null);
@@ -29,6 +29,7 @@ const HeaderSearch = memo(({ setComponentBData }) => {
     // requestAnimationFrame(() => computeBubble(index));
 
     setState(index);
+    changeSegmented(index);
   };
 
   // 在ant的分段控制器SearchWarpper组件中使用ant的气泡提示组件Popover
@@ -99,7 +100,7 @@ const HeaderSearch = memo(({ setComponentBData }) => {
 
 // 参数二
 const mapDispatchToProps = (dispatch) => ({
-  changeTabsKey: (key) => {
+  changeSegmented: (key) => {
     dispatch(changeSegmented(key));
   },
 });

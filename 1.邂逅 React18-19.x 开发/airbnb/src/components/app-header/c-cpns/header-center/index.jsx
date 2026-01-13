@@ -3,10 +3,13 @@ import { CenterWrapper } from "./style";
 import HeaderNav from "./c-cpns/header-nav";
 import HeaderSearch from "./c-cpns/header-search";
 import HeaderPopover from "./c-cpns/header-popover";
+import HeaderPopover2 from "./c-cpns/header-popover2";
+
 import Xx from "./c-cpns/xx";
 
 const HeaderCenter = memo(() => {
   const [open, setOpen] = useState(false);
+  const [] = useState();
   const popoverRef = useRef(null);
   const triggerRef = useRef(null);
 
@@ -48,11 +51,17 @@ const HeaderCenter = memo(() => {
                 </div>
               </div>
             )}
-            {/* <HeaderSearch /> */}
-            {/* <div>
-              <HeaderSearch />
-            </div> */}
           </HeaderPopover>
+          {/* <div ref={triggerRef}>
+            <HeaderNav />
+            <div onClick={handleTriggerClick}>
+              <HeaderSearch />
+            </div>
+          </div>
+          <div ref={popoverRef}>
+            <HeaderPopover2 open1={open} />
+          </div> */}
+
           {/* <Xx></Xx> */}
         </div>
         <div className="backCont"></div>

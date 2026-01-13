@@ -42,10 +42,11 @@ const HeaderPopover = memo(({ children }) => {
     const item = items[index] || items[0];
     if (!item) return;
 
+    // Element.getBoundingClientRect() 方法返回一个 DOMRect 对象，其提供了元素的大小及其相对于视口的位置。
     const itemRect = item.getBoundingClientRect();
     // 三种行为：左靠小、居中全宽、右靠小
     if (index === 0) {
-      const width = Math.round(itemRect.width * 0.9);
+      const width = Math.round(containerRect.width * 0.5);
       const left = Math.round(itemRect.left - containerRect.left);
 
       setBubbleStyle({ left, width });
@@ -54,7 +55,7 @@ const HeaderPopover = memo(({ children }) => {
       const left = 0;
       setBubbleStyle({ left, width });
     } else {
-      const width = Math.round(itemRect.width * 0.8);
+      const width = Math.round(containerRect.width * 0.5);
       const left = Math.round(containerRect.width - width);
 
       setBubbleStyle({ left, width });
@@ -88,7 +89,6 @@ const HeaderPopover = memo(({ children }) => {
     }
   }, []);
   useEffect(() => {
-    console.log(componentBData);
     // 等待 DOM 更新，确保 .ant-segmented-item 已渲染/布局完毕
     requestAnimationFrame(() => computeBubble(componentBData));
   }, [componentBData]);
@@ -101,7 +101,7 @@ const HeaderPopover = memo(({ children }) => {
   };
 
   return (
-    <PopoverWarpper>
+    <PopoverWarpper className="aaaaaaaaaaaaaaaaaaaaaaaaaas12">
       {/* {children} */}
       {/* 自定义气泡，不使用 antd Popover，以便做精确定位与动画 */}
       {/* <div
@@ -136,9 +136,18 @@ const HeaderPopover = memo(({ children }) => {
             {renderBubbleContent(navIndex)}
           </div>
         </div> */}
+      {typeof children === "function" ? (
+        // 如果是函数传入setComponentBData,triggerRef,handleTriggerClick参数
+        children({ setComponentBData, triggerRef, handleTriggerClick })
+      ) : (
+        <div ref={triggerRef} onClick={handleTriggerClick}>
+          {children}
+        </div>
+      )}
 
-      <Popover
+      {/* <Popover
         open={open}
+        arrow={false}
         onOpenChange={(visible) => {
           // 阻止点击触发元素时的自动关闭
           if (visible) {
@@ -147,7 +156,7 @@ const HeaderPopover = memo(({ children }) => {
         }}
         trigger="click"
         content={
-          <div ref={popoverRef}>
+          <div className="aaaaaaaaa" ref={popoverRef}>
             气泡内容
             <div>点击外部区域关闭</div>
           </div>
@@ -161,13 +170,7 @@ const HeaderPopover = memo(({ children }) => {
             {children}
           </div>
         )}
-      </Popover>
-      {/* <div ref={triggerRef} onClick={handleTriggerClick}>
-        {children}
-      </div> */}
-      {/* <Button ref={triggerRef} onClick={handleTriggerClick}>
-        点击我打开气泡
-      </Button> */}
+      </Popover> */}
     </PopoverWarpper>
   );
 });

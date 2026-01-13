@@ -240,6 +240,7 @@ const HeaderNav = memo(({ tabsKey, changeTabsKey }) => {
           currentIconRef.current.activate?.(k);
           // 立即更新激活状态 - 这会让子组件立即收到新的isActive props
           setActiveKey(k);
+
           // 同时通过ref调用方法确保状态同步
           if (iconRefs.current[cur]) {
             iconRefs.current[cur].deactivate();
