@@ -12,6 +12,8 @@ import { IconWrapper } from "./style";
 
 // header组件的导航栏图标组件--带状态的图标组件
 const NavIcon = memo(({ ref, poster, videoSrc, twirl, keys, isActive2 }) => {
+  console.log("视频子组件");
+
   const containerRef = useRef(null); //引用图标容器DOM元素
   const canvasRef = useRef(null); //绘制用canvas
   const rafRef = useRef(null); //requestAnimationFrame id

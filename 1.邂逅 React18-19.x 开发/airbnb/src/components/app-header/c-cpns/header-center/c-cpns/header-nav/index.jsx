@@ -33,6 +33,17 @@ const HeaderNav = memo(({ tabsKey, changeTabsKey }) => {
   const [pressedKey, setPressedKey] = useState(null); // 鼠标/按下状态按 key 存储，避免全局冲突
   const [hoveredKey, setHoveredKey] = useState(null); // 添加鼠标悬停状态
 
+  // 性能优化解决闭包
+  // 通过useRef解决闭包陷阱
+  const activeKeyRef = useRef();
+  const twirlRef = useRef();
+  const changeTabsKeyRef = useRef();
+  const isTouchPressedRef = useRef();
+  activeKeyRef.current = activeKey;
+  twirlRef.current = twirl;
+  changeTabsKeyRef.current = changeTabsKey;
+  isTouchPressedRef.current = isTouchPressed;
+
   // 组件挂载时播放动画
   useEffect(() => {
     currentIconRef.current?.activate();
@@ -64,14 +75,11 @@ const HeaderNav = memo(({ tabsKey, changeTabsKey }) => {
 
   // 鼠标事件处理
 
-  const handleMouseEnter = useCallback(
-    (key) => {
-      if (String(activeKey) !== String(key)) {
-        setHoveredKey(String(key));
-      }
-    },
-    [activeKey]
-  );
+  const handleMouseEnter = useCallback((key) => {
+    if (String(activeKeyRef.current) !== String(key)) {
+      setHoveredKey(String(key));
+    }
+  }, []);
 
   const handleMouseLeave = useCallback(() => {
     setHoveredKey(null);
@@ -84,14 +92,11 @@ const HeaderNav = memo(({ tabsKey, changeTabsKey }) => {
     }
   }, []);
 
-  const handleMouseDown = useCallback(
-    (key) => {
-      if (String(activeKey) !== String(key)) {
-        setPressedKey(String(key));
-      }
-    },
-    [activeKey]
-  );
+  const handleMouseDown = useCallback((key) => {
+    if (String(activeKeyRef.current) !== String(key)) {
+      setPressedKey(String(key));
+    }
+  }, []);
 
   const handleMouseUp = useCallback(() => {
     // 延迟清除，保证缩小动画能完整展示
@@ -109,19 +114,16 @@ const HeaderNav = memo(({ tabsKey, changeTabsKey }) => {
 
   // // 专门的触摸处理：触摸按下时放大/缩小幅度更大
 
-  const handleTouchStart = useCallback(
-    (key) => {
-      if (String(activeKey) !== String(key)) {
-        if (touchTimeoutRef.current) {
-          clearTimeout(touchTimeoutRef.current);
-          touchTimeoutRef.current = null;
-        }
-        setPressedKey(String(key));
-        setTouchPressed(true);
+  const handleTouchStart = useCallback((key) => {
+    if (String(activeKeyRef.current) !== String(key)) {
+      if (touchTimeoutRef.current) {
+        clearTimeout(touchTimeoutRef.current);
+        touchTimeoutRef.current = null;
       }
-    },
-    [activeKey]
-  );
+      setPressedKey(String(key));
+      setTouchPressed(true);
+    }
+  }, []);
 
   const handleTouchEnd = useCallback(() => {
     //延迟恢复，保证缩放动画可见(可根据体验调整)
@@ -138,8 +140,8 @@ const HeaderNav = memo(({ tabsKey, changeTabsKey }) => {
     (key) => {
       const k = String(key);
 
-      if (pressedKey === k) return isTouchPressed ? 0.7 : 0.8; //按下时缩小,幅度更大
-      if (String(activeKey) === k) return 1; //选中状态保持放大
+      if (pressedKey === k) return isTouchPressedRef.current ? 0.1 : 0.8; //按下时缩小,幅度更大
+      if (String(activeKeyRef.current) === k) return 1; //选中状态保持放大
 
       // 如果当前是hover状态，则返回1.1
       if (hoveredKey === k) return 1.1;
@@ -147,7 +149,7 @@ const HeaderNav = memo(({ tabsKey, changeTabsKey }) => {
       return 1; //默认大小
     },
     // [activeKey, pressedKey, hoveredKey, isTouchPressed]
-    [activeKey, pressedKey, isTouchPressed, hoveredKey]
+    [pressedKey, hoveredKey]
   );
 
   // 使用 useMemo 缓存配置
@@ -208,10 +210,10 @@ const HeaderNav = memo(({ tabsKey, changeTabsKey }) => {
     (key) => {
       // 统一用字符串比较
       const k = String(key);
-      const cur = String(activeKey);
+      // const cur = String(activeKey);
 
       // 如果点击的是当前已激活项，什么都不做（仅记录点击可在这里加逻辑）
-      if (k === cur) {
+      if (k === activeKeyRef.current) {
         if (changeTimeoutRef.current) {
           clearTimeout(changeTimeoutRef.current);
           changeTimeoutRef.current = null;
@@ -242,8 +244,8 @@ const HeaderNav = memo(({ tabsKey, changeTabsKey }) => {
           setActiveKey(k);
 
           // 同时通过ref调用方法确保状态同步
-          if (iconRefs.current[cur]) {
-            iconRefs.current[cur].deactivate();
+          if (iconRefs.current[activeKeyRef.current]) {
+            iconRefs.current[activeKeyRef.current].deactivate();
           }
         }
 
@@ -252,15 +254,16 @@ const HeaderNav = memo(({ tabsKey, changeTabsKey }) => {
         changeTimeoutRef.current = null;
       }, TRANS_MS * 2);
 
-      if (twirl) {
+      if (twirlRef.current) {
         setTwirl(false);
       }
 
       // 触发 actions 来更新 Redux store 中的状态
-      changeTabsKey(key);
+      changeTabsKeyRef.current(key);
+      // changeTabsKey(key);
     },
     // [activeKey, changeTabsKey, twirl, isChanging]
-    [activeKey, changeTabsKey, twirl]
+    []
   );
   return (
     <NavWrapper>

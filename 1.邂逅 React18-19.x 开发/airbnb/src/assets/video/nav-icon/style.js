@@ -45,6 +45,16 @@ export const IconWrapper = styled.div`
     cursor: pointer;
     font-family: inherit;
 
+    /* 提示浏览器创建独立合成层，通常能避免模糊 */
+    will-change: transform, opacity;
+    transform: translateZ(0); /* 或 translate3d(0,0,0) */
+    backface-visibility: hidden;
+
+    /* 字体渲染调整 */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+
     .nav-dir-text {
       background-clip: text;
       top: -1px;
@@ -58,6 +68,10 @@ export const IconWrapper = styled.div`
       position: relative;
       box-sizing: border-box;
       cursor: pointer;
+
+      /* 小额调整可提高清晰度 */
+      display: inline-block;
+      transform: translateZ(0);
     }
   }
 `;
