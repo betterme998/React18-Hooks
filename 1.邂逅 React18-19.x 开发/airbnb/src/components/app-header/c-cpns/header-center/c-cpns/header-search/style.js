@@ -28,9 +28,10 @@ export const SearchWarpper = styled.div`
       .ant-segmented-item-selected.ant-segmented-item::before {
         opacity: 0;
       }
-      /* 当任意非选中项被 hover 时，整组的所有分隔线都隐藏（需要浏览器支持 :has） */
+      /* 当任意非选中项被 hover 时，前后分隔线都隐藏（需要浏览器支持 :has） */
       &:has(.ant-segmented-item:not(.ant-segmented-item-selected):hover) {
-        .ant-segmented-item:not(:last-child)::before {
+        .ant-segmented-item:has(+ .ant-segmented-item:hover)::before,
+        .ant-segmented-item-selected.ant-segmented-item::before {
           opacity: 0;
         }
       }

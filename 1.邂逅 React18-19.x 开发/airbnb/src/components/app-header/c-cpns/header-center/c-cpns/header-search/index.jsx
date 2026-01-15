@@ -8,7 +8,7 @@ import { changeSegmented } from "@/store/modules/header";
 import HeaderPopover from "@/components/app-header/c-cpns/header-center/c-cpns/header-popover";
 
 const HeaderSearch = memo(({ setComponentBData, changeSegmented }) => {
-  const [navIndex, setNavIndex] = useState(0); //状态控制导航指示器位置
+  const [navIndex, setNavIndex] = useState(""); //状态控制导航指示器位置
   const containerRef = useRef(null);
   const [state, setState] = useState(null);
 
@@ -81,7 +81,7 @@ const HeaderSearch = memo(({ setComponentBData, changeSegmented }) => {
           shape="round"
           onChange={handleChange}
           // 保持 value，使选中项样式正确
-          value={labels[navIndex]}
+          value={navIndex === "" ? "" : labels[navIndex]}
         />
         {/* 自定义气泡，不使用 antd Popover，以便做精确定位与动画 */}
         {/* <HeaderPopover
