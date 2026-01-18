@@ -140,7 +140,7 @@ const HeaderNav = memo(({ tabsKey, changeTabsKey }) => {
     (key) => {
       const k = String(key);
 
-      if (pressedKey === k) return isTouchPressedRef.current ? 0.1 : 0.8; //按下时缩小,幅度更大
+      if (pressedKey === k) return isTouchPressedRef.current ? 0.7 : 0.8; //按下时缩小,幅度更大
       if (String(activeKeyRef.current) === k) return 1; //选中状态保持放大
 
       // 如果当前是hover状态，则返回1.1

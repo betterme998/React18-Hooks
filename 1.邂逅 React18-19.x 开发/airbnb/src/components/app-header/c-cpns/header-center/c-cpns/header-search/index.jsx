@@ -8,6 +8,10 @@ import { changeSegmented } from "@/store/modules/header";
 import HeaderPopover from "@/components/app-header/c-cpns/header-center/c-cpns/header-popover";
 
 const HeaderSearch = memo(({ setComponentBData, changeSegmented }) => {
+  console.log(
+    525555555555555555555555555555555555555555555555555555555555555555
+  );
+
   const [navIndex, setNavIndex] = useState(""); //状态控制导航指示器位置
   const containerRef = useRef(null);
   const [state, setState] = useState(null);

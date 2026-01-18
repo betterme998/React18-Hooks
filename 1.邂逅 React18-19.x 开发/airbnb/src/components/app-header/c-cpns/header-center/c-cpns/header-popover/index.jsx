@@ -3,6 +3,8 @@ import { PopoverWarpper } from "./style";
 import { createPortal } from "react-dom";
 
 const HeaderPopover = memo(({ children }) => {
+  console.log(123123);
+
   const [componentBData, setComponentBData] = useState(null);
 
   const [bubbleStyle, setBubbleStyle] = useState(null);
@@ -10,12 +12,18 @@ const HeaderPopover = memo(({ children }) => {
   // --------------------------------------------
   const [open, setOpen] = useState(false);
   const [childWidth, setChildWidth] = useState(null);
+  const [width, setWidth] = useState(null);
+  const [left, setLeft] = useState(null);
 
   const popoverRef = useRef(null);
   const triggerRef = useRef(null);
 
+  const widthRef = useRef(null);
+  const leftRef = useRef(null);
+
   const computeBubble = (index) => {
     const wrap = triggerRef.current;
+
     if (!wrap) return;
     // 找到segmented  渲染的item
     const containerRect = wrap.getBoundingClientRect();
@@ -25,23 +33,24 @@ const HeaderPopover = memo(({ children }) => {
     const top = Math.round(containerRect.top + containerRect.height);
 
     if (index === 0) {
-      const width = Math.round(containerRect.width * 0.5);
-      const left = Math.round(containerRect.left);
+      widthRef.current = Math.round(containerRect.width * 0.5);
+      leftRef.current = Math.round(containerRect.left);
 
-      setBubbleStyle({ left, top, width });
-      console.log(index, left, width, top);
+      setBubbleStyle({ left: leftRef.current, top, width: widthRef.current });
     } else if (index === 1) {
-      const width = Math.round(containerRect.width);
-      const left = Math.round(containerRect.left);
-      setBubbleStyle({ left, top, width });
+      widthRef.current = Math.round(containerRect.width * 0.8);
+      leftRef.current = Math.round(
+        containerRect.left + (containerRect.width - widthRef.current) / 2
+      );
+      setBubbleStyle({ left: leftRef.current, top, width: widthRef.current });
 
       console.log(index, left, width, top);
     } else if (index === 2) {
-      const width = Math.round(containerRect.width * 0.5);
-      const left = Math.round(containerRect.width * 0.5 + containerRect.left);
-      setBubbleStyle({ left, top, width });
-
-      console.log(index, left, width, top);
+      widthRef.current = Math.round(containerRect.width * 0.6);
+      leftRef.current = Math.round(
+        containerRect.width - widthRef.current + containerRect.left
+      );
+      setBubbleStyle({ left: leftRef.current, top, width: widthRef.current });
     }
   };
 
@@ -78,34 +87,33 @@ const HeaderPopover = memo(({ children }) => {
   }, [componentBData]);
 
   const handleTriggerClick = () => {
-    // 点击触发元素时只打开，不关闭
-    if (!open) {
+    // 先计算位置，再打开，保证有初始 left/width，能触发过渡
+    computeBubble(componentBData);
+    requestAnimationFrame(() => {
       setOpen(true);
-    }
+    });
   };
 
   // 使用 useMemo 缓存配置
   const popoverItems = useMemo(() => {
     return (
       <div
+        ref={popoverRef}
         style={{
           position: "absolute",
-          display: open ? "block" : "none",
+          display: open ? "visible" : "hidden",
+          opacity: open ? 1 : 0,
+          pointerEvents: open ? "auto" : "none",
           top: bubbleStyle?.top,
           left: bubbleStyle?.left,
           width: bubbleStyle?.width,
           marginTop: 8,
           zIndex: 50,
-          // pointerEvents: bubbleVisible ? "auto" : "none",
-          // opacity: bubbleVisible ? 1 : 0,
+          transform: open ? "scale(1)" : "scale(0)",
+          /* 关键设置：从中心变换 */
+          transformOrigin: "center",
           transition:
-            "left 280ms cubic-bezier(.4,0,.2,1), width 280ms cubic-bezier(.4,0,.2,1), opacity 180ms linear",
-          // transformOrigin:
-          //   componentBData === 0
-          //     ? "left center"
-          //     : componentBData === 2
-          //     ? "right center"
-          //     : "center center",
+            "left 280ms cubic-bezier(.4,0,.2,1), width 280ms cubic-bezier(.4,0,.2,1), opacity 180ms linear, transform 280ms cubic-bezier(.4,0,.2,1)",
         }}
       >
         <div
@@ -127,38 +135,6 @@ const HeaderPopover = memo(({ children }) => {
     <PopoverWarpper className="aaaaaaaaaaaaaaaaaaaaaaaaaas12">
       {/* {children} */}
       {/* 自定义气泡，不使用 antd Popover，以便做精确定位与动画 */}
-      {/* <div
-          style={{
-            position: "absolute",
-            top: "100%",
-            left: bubbleStyle.left,
-            width: bubbleStyle.width,
-            marginTop: 8,
-            zIndex: 50,
-            pointerEvents: bubbleVisible ? "auto" : "none",
-            opacity: bubbleVisible ? 1 : 0,
-            transition:
-              "left 280ms cubic-bezier(.4,0,.2,1), width 280ms cubic-bezier(.4,0,.2,1), opacity 180ms linear",
-            transformOrigin:
-              navIndex === 0
-                ? "left center"
-                : navIndex === 2
-                ? "right center"
-                : "center center",
-          }}
-        >
-          <div
-            style={{
-              background: "#fff",
-              borderRadius: 8,
-              boxShadow: "0 6px 16px rgba(0,0,0,0.12)",
-              overflow: "hidden",
-              border: "1px solid rgba(0,0,0,0.06)",
-            }}
-          >
-            {renderBubbleContent(navIndex)}
-          </div>
-        </div> */}
 
       {typeof children === "function" ? (
         // 如果是函数传入setComponentBData,triggerRef,handleTriggerClick参数
@@ -168,6 +144,7 @@ const HeaderPopover = memo(({ children }) => {
           {children}
         </div>
       )}
+
       {createPortal(popoverItems, document.querySelector("#popoverPortals"))}
 
       {/* <Popover
