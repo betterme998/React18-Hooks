@@ -29,8 +29,10 @@ export const IconWrapper = styled.div`
     left: 100%;
     padding: 3px 6px;
     font-size: 0.5rem;
-    box-shadow: 0 0.953955px 1.90791px rgba(60, 77, 107, 0.25),
-      0 3.81582px 5.72373px rgba(60, 77, 107, 0.25), inset 0 0 2px 0.5px #001c40,
+    box-shadow:
+      0 0.953955px 1.90791px rgba(60, 77, 107, 0.25),
+      0 3.81582px 5.72373px rgba(60, 77, 107, 0.25),
+      inset 0 0 2px 0.5px #001c40,
       inset 0 -1px 3px #d7ebff;
     background: linear-gradient(
       357.5deg,
@@ -59,7 +61,7 @@ export const IconWrapper = styled.div`
       background-clip: text;
       top: -1px;
       font-weight: 700;
-      font-size: 0.5rem;
+      font-size: 8px;
       text-align: center;
       text-rendering: optimizeLegibility;
       letter-spacing: 0.04em;

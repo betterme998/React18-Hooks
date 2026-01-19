@@ -1,19 +1,23 @@
-import React, { memo, useState, useRef, useMemo, useEffect } from "react";
+import React, {
+  memo,
+  useState,
+  useRef,
+  useMemo,
+  useEffect,
+  useCallback,
+} from "react";
 import { PopoverWarpper } from "./style";
 import { createPortal } from "react-dom";
 
 const HeaderPopover = memo(({ children }) => {
-  console.log(123123);
-
   const [componentBData, setComponentBData] = useState(null);
-
   const [bubbleStyle, setBubbleStyle] = useState(null);
 
   // --------------------------------------------
   const [open, setOpen] = useState(false);
-  const [childWidth, setChildWidth] = useState(null);
-  const [width, setWidth] = useState(null);
-  const [left, setLeft] = useState(null);
+
+  // 打开时用于临时禁用 left/width 的过渡（保证从当前点击位置‘从中间展开’）
+  const [skipPosTransition, setSkipPosTransition] = useState(false);
 
   const popoverRef = useRef(null);
   const triggerRef = useRef(null);
@@ -21,7 +25,7 @@ const HeaderPopover = memo(({ children }) => {
   const widthRef = useRef(null);
   const leftRef = useRef(null);
 
-  const computeBubble = (index) => {
+  const computeBubble = useCallback((index) => {
     const wrap = triggerRef.current;
 
     if (!wrap) return;
@@ -40,19 +44,17 @@ const HeaderPopover = memo(({ children }) => {
     } else if (index === 1) {
       widthRef.current = Math.round(containerRect.width * 0.8);
       leftRef.current = Math.round(
-        containerRect.left + (containerRect.width - widthRef.current) / 2
+        containerRect.left + (containerRect.width - widthRef.current) / 2,
       );
       setBubbleStyle({ left: leftRef.current, top, width: widthRef.current });
-
-      console.log(index, left, width, top);
     } else if (index === 2) {
       widthRef.current = Math.round(containerRect.width * 0.6);
       leftRef.current = Math.round(
-        containerRect.width - widthRef.current + containerRect.left
+        containerRect.width - widthRef.current + containerRect.left,
       );
       setBubbleStyle({ left: leftRef.current, top, width: widthRef.current });
     }
-  };
+  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -63,7 +65,10 @@ const HeaderPopover = memo(({ children }) => {
       // 如果点击不在触发元素也不在Popover内部，则关闭Popover
       if (!isClickOnTrigger && !isClickInsidePopover) {
         setOpen(false);
+
         setBubbleStyle(null);
+        // 关闭时确保恢复位置过渡，下次打开会重新临时禁用再恢复
+        setSkipPosTransition(false);
       }
     };
 
@@ -74,34 +79,42 @@ const HeaderPopover = memo(({ children }) => {
   }, []);
 
   useEffect(() => {
-    if (triggerRef.current) {
-      // 获取子组件的宽度
-      const width = triggerRef.current.offsetWidth;
-
-      setChildWidth(width);
-    }
-  }, []);
-  useEffect(() => {
     // 等待 DOM 更新，确保 .ant-segmented-item 已渲染/布局完毕
     requestAnimationFrame(() => computeBubble(componentBData));
-  }, [componentBData]);
+  }, [componentBData, computeBubble]);
 
   const handleTriggerClick = () => {
-    // 先计算位置，再打开，保证有初始 left/width，能触发过渡
+    // 点击触发器
+    // -如果当前是关闭状态：先临时禁用位置过渡，计算目标位置并立即设置，再打开（只做scale/opacity过渡），下一帧恢复位置过渡。
+    // 如果当前已经打开：直接计算位置（保持位置过渡开启），实现上上一个位置平滑移动到新位置
+    if (!open) {
+      // 先禁用位置过渡，避免从上一次位置平滑移动过来
+      setSkipPosTransition(true);
+      // 计算并同步设置新的位置（立即生效）
+      computeBubble(componentBData);
+      // 打开并在下一帧恢复位置过渡（用于后续在不同滑块之间平滑移动）
+      requestAnimationFrame(() => {
+        setOpen(true);
+        requestAnimationFrame(() => {
+          setSkipPosTransition(false);
+        });
+      });
+      return;
+    }
+    // 已打开时切换滑块,启动位置过渡使从上一个位置平滑移动到新位置
     computeBubble(componentBData);
-    requestAnimationFrame(() => {
-      setOpen(true);
-    });
   };
 
   // 使用 useMemo 缓存配置
+
   const popoverItems = useMemo(() => {
     return (
       <div
         ref={popoverRef}
         style={{
           position: "absolute",
-          display: open ? "visible" : "hidden",
+          visibility: open ? "visible" : "hidden",
+          // display: open ? "block" : "none",
           opacity: open ? 1 : 0,
           pointerEvents: open ? "auto" : "none",
           top: bubbleStyle?.top,
@@ -112,8 +125,10 @@ const HeaderPopover = memo(({ children }) => {
           transform: open ? "scale(1)" : "scale(0)",
           /* 关键设置：从中心变换 */
           transformOrigin: "center",
-          transition:
-            "left 280ms cubic-bezier(.4,0,.2,1), width 280ms cubic-bezier(.4,0,.2,1), opacity 180ms linear, transform 280ms cubic-bezier(.4,0,.2,1)",
+
+          transition: skipPosTransition
+            ? "opacity 360ms linear, transform 360ms cubic-bezier(.4,0,.2,1)"
+            : "left 360ms cubic-bezier(.4,0,.2,1), width 360ms cubic-bezier(.4,0,.2,1), opacity 360ms linear, transform 360ms cubic-bezier(.4,0,.2,1)",
         }}
       >
         <div
@@ -129,10 +144,10 @@ const HeaderPopover = memo(({ children }) => {
         </div>
       </div>
     );
-  }, [bubbleStyle, open]);
+  }, [bubbleStyle, open, skipPosTransition]);
 
   return (
-    <PopoverWarpper className="aaaaaaaaaaaaaaaaaaaaaaaaaas12">
+    <PopoverWarpper>
       {/* {children} */}
       {/* 自定义气泡，不使用 antd Popover，以便做精确定位与动画 */}
 

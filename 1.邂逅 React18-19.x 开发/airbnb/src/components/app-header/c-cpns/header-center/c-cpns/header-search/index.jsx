@@ -5,11 +5,9 @@ import { Segmented, ConfigProvider } from "antd";
 import { connect } from "react-redux";
 import { changeSegmented } from "@/store/modules/header";
 
-import HeaderPopover from "@/components/app-header/c-cpns/header-center/c-cpns/header-popover";
-
 const HeaderSearch = memo(({ setComponentBData, changeSegmented }) => {
   console.log(
-    525555555555555555555555555555555555555555555555555555555555555555
+    525555555555555555555555555555555555555555555555555555555555555555,
   );
 
   const [navIndex, setNavIndex] = useState(""); //状态控制导航指示器位置
@@ -87,12 +85,6 @@ const HeaderSearch = memo(({ setComponentBData, changeSegmented }) => {
           // 保持 value，使选中项样式正确
           value={navIndex === "" ? "" : labels[navIndex]}
         />
-        {/* 自定义气泡，不使用 antd Popover，以便做精确定位与动画 */}
-        {/* <HeaderPopover
-          navIndex={navIndex}
-          bubbleVisible={bubbleVisible}
-          bubbleStyle={bubbleStyle}
-        ></HeaderPopover> */}
       </ConfigProvider>
     </SearchWarpper>
   );

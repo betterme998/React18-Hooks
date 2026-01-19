@@ -9,6 +9,7 @@ export const SearchWarpper = styled.div`
     border-radius: 32px;
     height: 100%;
     align-items: center;
+
     .ant-segmented-group {
       height: 100%;
       align-items: center;
@@ -21,25 +22,6 @@ export const SearchWarpper = styled.div`
       gap: 2px;
 
       /* ------------------------------------------------------------- */
-
-      /* 在滑块被选中中时，隐藏选中滑块左右两边的分割线：思路：选中的上一个滑块隐藏分割线，选中的滑块隐藏分割线 */
-      //选中上一个滑块，和选中的滑块
-      .ant-segmented-item:has(+ .ant-segmented-item-selected)::before,
-      .ant-segmented-item-selected.ant-segmented-item::before {
-        opacity: 0;
-      }
-      /* 当任意非选中项被 hover 时，前后分隔线都隐藏（需要浏览器支持 :has） */
-      &:has(.ant-segmented-item:not(.ant-segmented-item-selected):hover) {
-        .ant-segmented-item:has(+ .ant-segmented-item:hover)::before,
-        .ant-segmented-item-selected.ant-segmented-item::before {
-          opacity: 0;
-        }
-      }
-      /* 兼容：若浏览器不支持 :has，仍至少隐藏当前 hover 的那条分隔线 */
-      .ant-segmented-item:not(.ant-segmented-item-selected):hover::before {
-        opacity: 0;
-      }
-
       .ant-segmented-item {
         height: 100%;
         width: 100%;
@@ -49,20 +31,30 @@ export const SearchWarpper = styled.div`
         z-index: 1;
       }
       /* 设置滑块分割线 */
-      .ant-segmented-item:not(:last-child)::before {
+      .ant-segmented-item:not(:first-child)::before {
         content: "";
         position: absolute;
-        right: 0;
+        left: 0;
         top: 50%;
         transform: translateY(-50%);
         width: 1px;
-        /* margin: 0 1px; */
         height: 32px;
         background: #ddd;
-
-        z-index: 4; //保证在指示器之上
+        z-index: 4; /* 保证在指示器之上 */
         pointer-events: none;
       }
+      /* 鼠标移入时：隐藏当前项左侧分隔线（即与上一个的边界），并隐藏与下一个的分界线（通过选中下一个的 left ::before） */
+      .ant-segmented-item:hover::before,
+      .ant-segmented-item:hover + .ant-segmented-item::before {
+        opacity: 0;
+      }
+
+      /*  */
+      .ant-segmented-item-selected::before,
+      .ant-segmented-item-selected + .ant-segmented-item::before {
+        opacity: 0;
+      }
+
       /* 将指示器放在分割线下方，避免动画时分割线错位或被覆盖 */
       .ant-segmented-indicator {
         z-index: 5;
@@ -119,5 +111,8 @@ export const SearchWarpper = styled.div`
         z-index: 3;
       }
     }
+  }
+  .ant-segmented:focus {
+    outline: none;
   }
 `;
