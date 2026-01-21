@@ -43,15 +43,29 @@ export const SearchWarpper = styled.div`
         z-index: 4; /* 保证在指示器之上 */
         pointer-events: none;
       }
+      /* 隐藏第一个项的左侧分割线 */
+      .ant-segmented-item:first-of-type::before {
+        opacity: 0;
+      }
       /* 鼠标移入时：隐藏当前项左侧分隔线（即与上一个的边界），并隐藏与下一个的分界线（通过选中下一个的 left ::before） */
       .ant-segmented-item:hover::before,
       .ant-segmented-item:hover + .ant-segmented-item::before {
         opacity: 0;
       }
+      &:has(.ant-segmented-indicator[style*="translate"]) {
+        .ant-segmented-item::before {
+          opacity: 0;
+        }
+      }
 
       /*  */
       .ant-segmented-item-selected::before,
       .ant-segmented-item-selected + .ant-segmented-item::before {
+        opacity: 0;
+      }
+
+      /* 当滑动的时候隐藏所有分割线 */
+      .ant-segmented-thumb ~ .ant-segmented-item::before {
         opacity: 0;
       }
 

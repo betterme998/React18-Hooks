@@ -1,10 +1,8 @@
-import React, { memo, useState, useRef, useEffect } from "react";
+import React, { memo } from "react";
 import { CenterWrapper } from "./style";
 import HeaderNav from "./c-cpns/header-nav";
 import HeaderSearch from "./c-cpns/header-search";
 import HeaderPopover from "./c-cpns/header-popover";
-
-import Xx from "./c-cpns/xx";
 
 const HeaderCenter = memo(() => {
   return (
@@ -12,17 +10,18 @@ const HeaderCenter = memo(() => {
       <form className="search">
         <div className="NSCont">
           <HeaderPopover>
-            {({ setComponentBData, triggerRef, handleTriggerClick }) => (
+            {({ setComponentBData, triggerRef, handleTriggerClick, open }) => (
               <div className="popoverSolt" ref={triggerRef}>
                 <HeaderNav />
                 <div onClick={handleTriggerClick}>
-                  <HeaderSearch setComponentBData={setComponentBData} />
+                  <HeaderSearch
+                    setComponentBData={setComponentBData}
+                    open={open}
+                  />
                 </div>
               </div>
             )}
           </HeaderPopover>
-
-          {/* <Xx></Xx> */}
         </div>
         <div className="backCont"></div>
       </form>

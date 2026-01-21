@@ -5,11 +5,7 @@ import { Segmented, ConfigProvider } from "antd";
 import { connect } from "react-redux";
 import { changeSegmented } from "@/store/modules/header";
 
-const HeaderSearch = memo(({ setComponentBData, changeSegmented }) => {
-  console.log(
-    525555555555555555555555555555555555555555555555555555555555555555,
-  );
-
+const HeaderSearch = memo(({ setComponentBData, changeSegmented, open }) => {
   const [navIndex, setNavIndex] = useState(""); //状态控制导航指示器位置
   const containerRef = useRef(null);
   const [state, setState] = useState(null);
@@ -19,6 +15,12 @@ const HeaderSearch = memo(({ setComponentBData, changeSegmented }) => {
   //   () => labels.map((v) => ({ labels: v, value: v })),
   //   [labels]
   // );
+
+  useEffect(() => {
+    if (!open) {
+      setNavIndex("");
+    }
+  }, [open]);
 
   // 点击segmented后显示/隐藏计算气泡位置
   const handleChange = (value) => {

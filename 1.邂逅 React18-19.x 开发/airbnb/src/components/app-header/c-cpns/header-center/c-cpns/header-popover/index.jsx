@@ -153,7 +153,7 @@ const HeaderPopover = memo(({ children }) => {
 
       {typeof children === "function" ? (
         // 如果是函数传入setComponentBData,triggerRef,handleTriggerClick参数
-        children({ setComponentBData, triggerRef, handleTriggerClick })
+        children({ setComponentBData, triggerRef, handleTriggerClick, open })
       ) : (
         <div ref={triggerRef} onClick={handleTriggerClick}>
           {children}
