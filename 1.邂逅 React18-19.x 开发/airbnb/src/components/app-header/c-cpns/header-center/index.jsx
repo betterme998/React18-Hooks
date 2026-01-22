@@ -13,12 +13,11 @@ const HeaderCenter = memo(() => {
             {({ setComponentBData, triggerRef, handleTriggerClick, open }) => (
               <div className="popoverSolt" ref={triggerRef}>
                 <HeaderNav />
-                <div onClick={handleTriggerClick}>
-                  <HeaderSearch
-                    setComponentBData={setComponentBData}
-                    open={open}
-                  />
-                </div>
+                <HeaderSearch
+                  setComponentBData={setComponentBData}
+                  open={open}
+                  handleTriggerClick={handleTriggerClick}
+                />
               </div>
             )}
           </HeaderPopover>

@@ -5,92 +5,96 @@ import { Segmented, ConfigProvider } from "antd";
 import { connect } from "react-redux";
 import { changeSegmented } from "@/store/modules/header";
 
-const HeaderSearch = memo(({ setComponentBData, changeSegmented, open }) => {
-  const [navIndex, setNavIndex] = useState(""); //状态控制导航指示器位置
-  const containerRef = useRef(null);
-  const [state, setState] = useState(null);
+const HeaderSearch = memo(
+  ({ setComponentBData, changeSegmented, open, handleTriggerClick }) => {
+    const [navIndex, setNavIndex] = useState(""); //状态控制导航指示器位置
+    const containerRef = useRef(null);
+    const [state, setState] = useState(null);
 
-  const labels = useMemo(() => ["Daily", "Weekly", "Monthly"], []);
-  // const options = useMemo(
-  //   () => labels.map((v) => ({ labels: v, value: v })),
-  //   [labels]
-  // );
+    const labels = useMemo(() => ["Daily", "Weekly", "Monthly"], []);
+    // const options = useMemo(
+    //   () => labels.map((v) => ({ labels: v, value: v })),
+    //   [labels]
+    // );
 
-  useEffect(() => {
-    if (!open) {
-      setNavIndex("");
-    }
-  }, [open]);
+    useEffect(() => {
+      if (!open) {
+        setNavIndex("");
+      }
+    }, [open]);
 
-  // 点击segmented后显示/隐藏计算气泡位置
-  const handleChange = (value) => {
-    const index = labels.indexOf(value);
+    // 点击segmented后显示/隐藏计算气泡位置
+    const handleChange = (value) => {
+      const index = labels.indexOf(value);
 
-    if (index === -1) return;
+      if (index === -1) return;
 
-    setNavIndex(index);
-    // 等待 DOM 更新，确保 .ant-segmented-item 已渲染/布局完毕
-    // requestAnimationFrame(() => computeBubble(index));
+      setNavIndex(index);
+      // 等待 DOM 更新，确保 .ant-segmented-item 已渲染/布局完毕
+      // requestAnimationFrame(() => computeBubble(index));
 
-    setState(index);
-    changeSegmented(index);
-  };
+      setState(index);
+      handleTriggerClick();
 
-  // 在ant的分段控制器SearchWarpper组件中使用ant的气泡提示组件Popover
-  const options = useMemo(() => {
-    const label = ["Daily", "Weekly", "Monthly"];
-    return label.map((item) => {
-      return {
-        label: (
-          <div
-            style={{ width: "100%", textAlign: "center", userSelect: "none" }}
-          >
-            {item}
-          </div>
-        ),
-        value: item,
-      };
-    });
-  }, []);
-  // ------------------------------------------------------气泡组件数据-----------
+      changeSegmented(index);
+    };
 
-  // 当state变化时，通知ComponentA
-  useEffect(() => {
-    if (setComponentBData) {
-      setComponentBData(state);
-    }
-  }, [state, setComponentBData]);
+    // 在ant的分段控制器SearchWarpper组件中使用ant的气泡提示组件Popover
+    const options = useMemo(() => {
+      const label = ["Daily", "Weekly", "Monthly"];
+      return label.map((item) => {
+        return {
+          label: (
+            <div
+              style={{ width: "100%", textAlign: "center", userSelect: "none" }}
+            >
+              {item}
+            </div>
+          ),
+          value: item,
+        };
+      });
+    }, []);
+    // ------------------------------------------------------气泡组件数据-----------
 
-  return (
-    <SearchWarpper
-      // onClick={handleSliderClick}
-      className="headerSegmented"
-      style={{ position: "relative" }}
-    >
-      <ConfigProvider
-        theme={{
-          components: {
-            Segmented: {
-              trackPadding: 0,
-            },
-          },
-        }}
+    // 当state变化时，通知ComponentA
+    useEffect(() => {
+      if (setComponentBData) {
+        setComponentBData(state);
+      }
+    }, [state, setComponentBData]);
+
+    return (
+      <SearchWarpper
+        open={open}
+        className="headerSegmented"
+        style={{ position: "relative" }}
       >
-        <Segmented
-          ref={containerRef}
-          // options={["Daily", "Weekly", "Monthly"]}
-          options={options}
-          size="large"
-          block
-          shape="round"
-          onChange={handleChange}
-          // 保持 value，使选中项样式正确
-          value={navIndex === "" ? "" : labels[navIndex]}
-        />
-      </ConfigProvider>
-    </SearchWarpper>
-  );
-});
+        <ConfigProvider
+          theme={{
+            components: {
+              Segmented: {
+                trackPadding: 0,
+              },
+            },
+          }}
+        >
+          <Segmented
+            ref={containerRef}
+            // options={["Daily", "Weekly", "Monthly"]}
+            options={options}
+            size="large"
+            block
+            shape="round"
+            onChange={handleChange}
+            // 保持 value，使选中项样式正确
+            value={navIndex === "" ? "" : labels[navIndex]}
+          />
+        </ConfigProvider>
+      </SearchWarpper>
+    );
+  },
+);
 // 参数一
 // const mapStateToProps = (state) => ({
 //   tabsKey: state.header.tabsKey,

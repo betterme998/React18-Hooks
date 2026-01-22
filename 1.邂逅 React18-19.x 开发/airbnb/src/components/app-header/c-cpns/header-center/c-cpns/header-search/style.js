@@ -30,6 +30,12 @@ export const SearchWarpper = styled.div`
         position: relative;
         z-index: 1;
       }
+      .ant-segmented-item::after {
+        transition:
+          opacity 0.2s,
+          width 0.2s;
+      }
+
       /* 设置滑块分割线 */
       .ant-segmented-item:not(:first-child)::before {
         content: "";
