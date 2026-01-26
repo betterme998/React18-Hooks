@@ -1,5 +1,5 @@
 import React, { memo, useState, useMemo, useRef, useEffect } from "react";
-import { SearchWarpper } from "./style";
+import { SearchWarpper, OptionsWarpper } from "./style";
 import { Segmented, ConfigProvider } from "antd";
 // 将 Redux 的状态（State）和操作（Actions）映射到 React 组件的 Props
 import { connect } from "react-redux";
@@ -10,16 +10,14 @@ const HeaderSearch = memo(
     const [navIndex, setNavIndex] = useState(""); //状态控制导航指示器位置
     const containerRef = useRef(null);
     const [state, setState] = useState(null);
+    const [playedEntry, setPlayedEntry] = useState(false); // 新增：是否播放首次选中动画
 
     const labels = useMemo(() => ["Daily", "Weekly", "Monthly"], []);
-    // const options = useMemo(
-    //   () => labels.map((v) => ({ labels: v, value: v })),
-    //   [labels]
-    // );
 
     useEffect(() => {
       if (!open) {
         setNavIndex("");
+        setPlayedEntry(false);
       }
     }, [open]);
 
@@ -29,7 +27,21 @@ const HeaderSearch = memo(
 
       if (index === -1) return;
 
+      // 如果之前没有选中（navIndex === ''）,则播放首次选中缩放动画
+      const wasEmpty = navIndex === "";
+      // 先把navIndex设置为选中项（scale（0.8）渲染）
       setNavIndex(index);
+      if (wasEmpty) {
+        // 下一针触发放大动画
+        requestAnimationFrame(() => {
+          setPlayedEntry(true);
+          // 动画时长与样式中一致，动画完成后清楚标志，防止后续点击再次播放
+          setTimeout(() => {
+            setPlayedEntry(false);
+          }, 220);
+        });
+      }
+
       // 等待 DOM 更新，确保 .ant-segmented-item 已渲染/布局完毕
       // requestAnimationFrame(() => computeBubble(index));
 
@@ -45,11 +57,18 @@ const HeaderSearch = memo(
       return label.map((item) => {
         return {
           label: (
-            <div
-              style={{ width: "100%", textAlign: "center", userSelect: "none" }}
-            >
-              {item}
-            </div>
+            <OptionsWarpper>
+              <div
+                className="a1222"
+                style={{
+                  width: "100%",
+                  textAlign: "center",
+                  userSelect: "none",
+                }}
+              >
+                {item}
+              </div>
+            </OptionsWarpper>
           ),
           value: item,
         };
@@ -67,6 +86,7 @@ const HeaderSearch = memo(
     return (
       <SearchWarpper
         open={open}
+        playedEntry={playedEntry}
         className="headerSegmented"
         style={{ position: "relative" }}
       >

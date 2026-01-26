@@ -109,16 +109,6 @@ export const SearchWarpper = styled.div`
       .ant-segmented-item-selected {
         z-index: 2;
       }
-
-      .ant-segmented-item-selected::after {
-        content: "";
-        position: absolute;
-        left: 0;
-        top: 0;
-        border-radius: 0px;
-        z-index: 2;
-        opacity: 1;
-      }
       /* 新增：确保选中滑块的文字在背景之上 */
       .ant-segmented-item-selected .ant-segmented-item-label {
         position: relative;
@@ -136,3 +126,5 @@ export const SearchWarpper = styled.div`
     outline: none;
   }
 `;
+
+export const OptionsWarpper = styled.div``;
