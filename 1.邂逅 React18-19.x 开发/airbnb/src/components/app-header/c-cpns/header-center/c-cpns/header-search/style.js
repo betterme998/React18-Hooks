@@ -108,17 +108,37 @@ export const SearchWarpper = styled.div`
       }
       .ant-segmented-item-selected {
         z-index: 2;
+        background: none;
       }
       /* 新增：确保选中滑块的文字在背景之上 */
       .ant-segmented-item-selected .ant-segmented-item-label {
-        position: relative;
         z-index: 3;
+      }
+      .ant-segmented-item.ant-segmented-item-selected
+        .ant-segmented-item-label::after {
+        transform: scale(1);
+        transition: ${(props) =>
+          props.playedEntry ? "transform 200ms ease" : "none"};
       }
 
       /* 新增：确保未选中滑块的文字也在背景之上 */
       .ant-segmented-item .ant-segmented-item-label {
-        position: relative;
         z-index: 3;
+      }
+      .ant-segmented-item .ant-segmented-item-label::after {
+        content: "";
+        top: 0;
+        left: 0;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: #fff;
+        border-radius: 999px;
+        transform-origin: center;
+        transform: scale(0);
+        transition: none;
+        z-index: -1;
+        opacity: 1;
       }
     }
   }
@@ -126,5 +146,3 @@ export const SearchWarpper = styled.div`
     outline: none;
   }
 `;
-
-export const OptionsWarpper = styled.div``;
