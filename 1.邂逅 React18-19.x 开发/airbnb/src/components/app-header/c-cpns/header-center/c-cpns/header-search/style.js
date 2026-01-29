@@ -16,7 +16,11 @@ export const SearchWarpper = styled.div`
       display: grid;
       /* grid-template-columns: repeat(3, minmax(0, 1fr)); */
       grid-template-columns: repeat(3, calc((100% - 4px) / 3));
-
+      border: 1px solid #ddd;
+      border-radius: 999px;
+      box-shadow:
+        rgba(0, 0, 0, 0.1) 0 8px 24px 0,
+        rgba(0, 0, 0, 0.02) 0 0 0 1px;
       box-sizing: border-box;
       grid-auto-flow: column;
       gap: 2px;
@@ -117,8 +121,10 @@ export const SearchWarpper = styled.div`
       .ant-segmented-item.ant-segmented-item-selected
         .ant-segmented-item-label::after {
         transform: scale(1);
+        opacity: 1;
+
         transition: ${(props) =>
-          props.playedEntry ? "transform 200ms ease" : "none"};
+          props.playedEntry ? "transform 0.4s ease" : "none"};
       }
 
       /* 新增：确保未选中滑块的文字也在背景之上 */
@@ -130,15 +136,16 @@ export const SearchWarpper = styled.div`
         top: 0;
         left: 0;
         position: absolute;
+        box-sizing: border-box;
         width: 100%;
         height: 100%;
         background-color: #fff;
         border-radius: 999px;
         transform-origin: center;
-        transform: scale(0);
+        transform: scale(0.5);
         transition: none;
         z-index: -1;
-        opacity: 1;
+        opacity: 0;
       }
     }
   }

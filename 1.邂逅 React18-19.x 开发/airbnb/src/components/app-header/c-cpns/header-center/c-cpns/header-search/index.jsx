@@ -20,11 +20,6 @@ const HeaderSearch = memo(
         setPlayedEntry(false);
       }
     }, [open]);
-    // useEffect(() => {
-    //   if (navIndex !== null) {
-    //     setPlayedEntry(false);
-    //   }
-    // }, [navIndex]);
 
     // 点击segmented后显示/隐藏计算气泡位置
     const handleChange = (value) => {
@@ -51,7 +46,7 @@ const HeaderSearch = memo(
           // 动画时长与样式中一致，动画完成后清楚标志，防止后续点击再次播放
           setTimeout(() => {
             setPlayedEntry(false);
-          }, 200);
+          }, 400);
         });
         return;
       }
@@ -59,6 +54,7 @@ const HeaderSearch = memo(
       // 等待 DOM 更新，确保 .ant-segmented-item 已渲染/布局完毕
       // requestAnimationFrame(() => computeBubble(index));
       // 普通切换，直接更新
+      setPlayedEntry(false);
       setNavIndex(index);
 
       setState(index);
@@ -74,7 +70,7 @@ const HeaderSearch = memo(
         return {
           label: (
             <div
-              className="ant-segmented-item-Animation"
+              className="ant-segmented-item-Content"
               style={{
                 width: "100%",
                 textAlign: "center",
@@ -109,6 +105,8 @@ const HeaderSearch = memo(
             components: {
               Segmented: {
                 trackPadding: 0,
+                itemHoverBg: open ? "#DDDDDD" : "#EBEBEB",
+                trackBg: open ? "#EBEBEB" : "#fff",
               },
             },
           }}
