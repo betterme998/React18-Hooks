@@ -12,7 +12,14 @@ const HeaderSearch = memo(
     const [state, setState] = useState(null);
     const [playedEntry, setPlayedEntry] = useState(false); // 新增：是否播放首次选中动画
 
-    const labels = useMemo(() => ["Daily", "Weekly", "Monthly"], []);
+    const labels = useMemo(
+      () => [
+        { title: "地点", description: "搜索目的地" },
+        { title: "时间", description: "搜索目的地" },
+        { title: "人员", description: "搜索目的地" },
+      ],
+      [],
+    );
 
     useEffect(() => {
       if (!open) {
@@ -23,7 +30,7 @@ const HeaderSearch = memo(
 
     // 点击segmented后显示/隐藏计算气泡位置
     const handleChange = (value) => {
-      const index = labels.indexOf(value);
+      const index = labels.findIndex((item) => item.title === value);
 
       if (index === -1) return;
 
@@ -65,7 +72,11 @@ const HeaderSearch = memo(
 
     // 在ant的分段控制器SearchWarpper组件中使用ant的气泡提示组件Popover
     const options = useMemo(() => {
-      const label = ["Daily", "Weekly", "Monthly"];
+      const label = [
+        { title: "地点", description: "搜索目的地" },
+        { title: "时间", description: "搜索目的地" },
+        { title: "人员", description: "搜索目的地" },
+      ];
       return label.map((item) => {
         return {
           label: (
@@ -73,14 +84,15 @@ const HeaderSearch = memo(
               className="ant-segmented-item-Content"
               style={{
                 width: "100%",
+                height: "100%",
                 textAlign: "center",
                 userSelect: "none",
               }}
             >
-              {item}
+              {item.title}
             </div>
           ),
-          value: item,
+          value: item.title,
         };
       });
     }, []);
@@ -96,7 +108,7 @@ const HeaderSearch = memo(
     return (
       <SearchWarpper
         open={open}
-        playedEntry={playedEntry}
+        $playedEntry={playedEntry}
         className="headerSegmented"
         style={{ position: "relative" }}
       >
@@ -120,7 +132,7 @@ const HeaderSearch = memo(
             shape="round"
             onChange={handleChange}
             // 保持 value，使选中项样式正确
-            value={navIndex === null ? "" : labels[navIndex]}
+            value={navIndex === null ? "" : labels[navIndex].title}
           />
         </ConfigProvider>
       </SearchWarpper>

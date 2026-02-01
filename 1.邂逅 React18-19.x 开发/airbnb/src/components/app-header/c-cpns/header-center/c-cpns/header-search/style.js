@@ -14,8 +14,8 @@ export const SearchWarpper = styled.div`
       height: 100%;
       align-items: center;
       display: grid;
-      /* grid-template-columns: repeat(3, minmax(0, 1fr)); */
-      grid-template-columns: repeat(3, calc((100% - 4px) / 3));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      /* grid-template-columns: repeat(3, calc((100% - 4px) / 3)); */
       border: 1px solid #ddd;
       border-radius: 999px;
       box-shadow:
@@ -124,7 +124,7 @@ export const SearchWarpper = styled.div`
         opacity: 1;
 
         transition: ${(props) =>
-          props.playedEntry ? "transform 0.4s ease" : "none"};
+          props.$playedEntry ? "transform 0.4s ease" : "none"};
       }
 
       /* 新增：确保未选中滑块的文字也在背景之上 */
