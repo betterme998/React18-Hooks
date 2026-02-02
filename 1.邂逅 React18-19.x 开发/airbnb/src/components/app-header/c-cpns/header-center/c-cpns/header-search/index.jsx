@@ -1,25 +1,22 @@
 import React, { memo, useState, useMemo, useRef, useEffect } from "react";
 import { SearchWarpper } from "./style";
-import { Segmented, ConfigProvider } from "antd";
+import { Segmented, ConfigProvider, Input } from "antd";
 // 将 Redux 的状态（State）和操作（Actions）映射到 React 组件的 Props
 import { connect } from "react-redux";
 import { changeSegmented } from "@/store/modules/header";
 
 const HeaderSearch = memo(
-  ({ setComponentBData, changeSegmented, open, handleTriggerClick }) => {
+  ({
+    setComponentBData,
+    changeSegmented,
+    open,
+    handleTriggerClick,
+    labels,
+  }) => {
     const [navIndex, setNavIndex] = useState(null); //状态控制导航指示器位置
     const containerRef = useRef(null);
     const [state, setState] = useState(null);
     const [playedEntry, setPlayedEntry] = useState(false); // 新增：是否播放首次选中动画
-
-    const labels = useMemo(
-      () => [
-        { title: "地点", description: "搜索目的地" },
-        { title: "时间", description: "搜索目的地" },
-        { title: "人员", description: "搜索目的地" },
-      ],
-      [],
-    );
 
     useEffect(() => {
       if (!open) {
@@ -70,32 +67,29 @@ const HeaderSearch = memo(
       changeSegmented(index);
     };
 
-    // 在ant的分段控制器SearchWarpper组件中使用ant的气泡提示组件Popover
+    // 滑块内容
     const options = useMemo(() => {
-      const label = [
-        { title: "地点", description: "搜索目的地" },
-        { title: "时间", description: "搜索目的地" },
-        { title: "人员", description: "搜索目的地" },
-      ];
-      return label.map((item) => {
+      return labels.map((item) => {
         return {
           label: (
-            <div
-              className="ant-segmented-item-Content"
-              style={{
-                width: "100%",
-                height: "100%",
-                textAlign: "center",
-                userSelect: "none",
-              }}
-            >
-              {item.title}
+            <div className="ant-segmented-item-Content">
+              <div className="ant-options-item-title">{item.title}</div>
+              <div className="ant-options-input">
+                <Input
+                  classNames={{
+                    root: "ant-options-item-input",
+                  }}
+                  size="small"
+                  variant="borderless"
+                  placeholder={item.description}
+                />
+              </div>
             </div>
           ),
           value: item.title,
         };
       });
-    }, []);
+    }, [labels]);
     // ------------------------------------------------------气泡组件数据-----------
 
     // 当state变化时，通知ComponentA
@@ -140,9 +134,9 @@ const HeaderSearch = memo(
   },
 );
 // 参数一
-// const mapStateToProps = (state) => ({
-//   tabsKey: state.header.tabsKey,
-// });
+const mapStateToProps = (state) => ({
+  labels: state.header.label,
+});
 
 // 参数二
 const mapDispatchToProps = (dispatch) => ({
@@ -151,4 +145,4 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-export default connect(null, mapDispatchToProps)(HeaderSearch);
+export default connect(mapStateToProps, mapDispatchToProps)(HeaderSearch);

@@ -129,7 +129,28 @@ export const SearchWarpper = styled.div`
 
       /* 新增：确保未选中滑块的文字也在背景之上 */
       .ant-segmented-item .ant-segmented-item-label {
+        position: absolute;
         z-index: 3;
+        height: 66px;
+        box-sizing: border-box;
+        padding: 15px 32px;
+        width: 100%;
+        line-height: 66px;
+        .ant-segmented-item-Content {
+          .ant-options-item-title {
+            height: 18px;
+            line-height: 18px;
+          }
+          .ant-options-input {
+            height: 18px;
+            line-height: 18px;
+            .ant-options-item-input {
+              height: 18px;
+              border: none;
+              background: rgba(0, 0, 0, 0);
+            }
+          }
+        }
       }
       .ant-segmented-item .ant-segmented-item-label::after {
         content: "";
