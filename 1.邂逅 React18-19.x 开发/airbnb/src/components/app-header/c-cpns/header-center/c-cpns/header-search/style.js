@@ -148,6 +148,7 @@ export const SearchWarpper = styled.div`
               height: 18px;
               border: none;
               background: rgba(0, 0, 0, 0);
+              /* pointer-events: none; */
             }
           }
         }

@@ -1,4 +1,11 @@
-import React, { memo, useState, useMemo, useRef, useEffect } from "react";
+import React, {
+  memo,
+  useState,
+  useMemo,
+  useRef,
+  useEffect,
+  useCallback,
+} from "react";
 import { SearchWarpper } from "./style";
 import { Segmented, ConfigProvider, Input } from "antd";
 // 将 Redux 的状态（State）和操作（Actions）映射到 React 组件的 Props
@@ -26,46 +33,49 @@ const HeaderSearch = memo(
     }, [open]);
 
     // 点击segmented后显示/隐藏计算气泡位置
-    const handleChange = (value) => {
-      const index = labels.findIndex((item) => item.title === value);
+    const handleChange = useCallback(
+      (value) => {
+        const index = labels.findIndex((item) => item.title === value);
 
-      if (index === -1) return;
+        if (index === -1) return;
 
-      // 如果之前没有选中（navIndex === ''）,则播放首次选中缩放动画
-      const wasEmpty = navIndex === null;
+        // 如果之前没有选中（navIndex === ''）,则播放首次选中缩放动画
+        const wasEmpty = navIndex === null;
 
-      if (wasEmpty) {
-        // 下一针触发放大动画
-        requestAnimationFrame(() => {
-          setPlayedEntry(true);
+        if (wasEmpty) {
+          // 下一针触发放大动画
           requestAnimationFrame(() => {
-            setNavIndex(index);
+            setPlayedEntry(true);
+            requestAnimationFrame(() => {
+              setNavIndex(index);
 
-            setState(index);
-            handleTriggerClick();
+              setState(index);
+              handleTriggerClick();
 
-            changeSegmented(index);
+              changeSegmented(index);
+            });
+
+            // 动画时长与样式中一致，动画完成后清楚标志，防止后续点击再次播放
+            setTimeout(() => {
+              setPlayedEntry(false);
+            }, 400);
           });
+          return;
+        }
 
-          // 动画时长与样式中一致，动画完成后清楚标志，防止后续点击再次播放
-          setTimeout(() => {
-            setPlayedEntry(false);
-          }, 400);
-        });
-        return;
-      }
+        // 等待 DOM 更新，确保 .ant-segmented-item 已渲染/布局完毕
+        // requestAnimationFrame(() => computeBubble(index));
+        // 普通切换，直接更新
+        setPlayedEntry(false);
+        setNavIndex(index);
 
-      // 等待 DOM 更新，确保 .ant-segmented-item 已渲染/布局完毕
-      // requestAnimationFrame(() => computeBubble(index));
-      // 普通切换，直接更新
-      setPlayedEntry(false);
-      setNavIndex(index);
+        setState(index);
+        handleTriggerClick();
 
-      setState(index);
-      handleTriggerClick();
-
-      changeSegmented(index);
-    };
+        changeSegmented(index);
+      },
+      [labels, handleTriggerClick, changeSegmented, navIndex],
+    );
 
     // 滑块内容
     const options = useMemo(() => {
@@ -82,6 +92,7 @@ const HeaderSearch = memo(
                   size="small"
                   variant="borderless"
                   placeholder={item.description}
+                  onFocus={() => handleChange(item.title)}
                 />
               </div>
             </div>
@@ -89,7 +100,7 @@ const HeaderSearch = memo(
           value: item.title,
         };
       });
-    }, [labels]);
+    }, [labels, handleChange]);
     // ------------------------------------------------------气泡组件数据-----------
 
     // 当state变化时，通知ComponentA
