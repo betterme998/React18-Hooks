@@ -11,6 +11,7 @@ import { Segmented, ConfigProvider, Input } from "antd";
 // 将 Redux 的状态（State）和操作（Actions）映射到 React 组件的 Props
 import { connect } from "react-redux";
 import { changeSegmented } from "@/store/modules/header";
+import IconShutDown from "@/assets/svg/icon_shutDown";
 
 const HeaderSearch = memo(
   ({
@@ -83,17 +84,22 @@ const HeaderSearch = memo(
         return {
           label: (
             <div className="ant-segmented-item-Content">
-              <div className="ant-options-item-title">{item.title}</div>
-              <div className="ant-options-input">
-                <Input
-                  classNames={{
-                    root: "ant-options-item-input",
-                  }}
-                  size="small"
-                  variant="borderless"
-                  placeholder={item.description}
-                  onFocus={() => handleChange(item.title)}
-                />
+              <div>
+                <div className="ant-options-item-title">{item.title}</div>
+                <div className="ant-options-input">
+                  <Input
+                    classNames={{
+                      root: "ant-options-item-input",
+                    }}
+                    size="small"
+                    variant="borderless"
+                    placeholder={item.description}
+                    onFocus={() => handleChange(item.title)}
+                  />
+                </div>
+              </div>
+              <div className="ant-options-shutDown">
+                <IconShutDown />
               </div>
             </div>
           ),

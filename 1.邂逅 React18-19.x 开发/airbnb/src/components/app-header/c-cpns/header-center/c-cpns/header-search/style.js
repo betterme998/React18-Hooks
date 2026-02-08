@@ -133,10 +133,24 @@ export const SearchWarpper = styled.div`
         z-index: 3;
         height: 66px;
         box-sizing: border-box;
-        padding: 15px 32px;
         width: 100%;
+        padding: 0;
         line-height: 66px;
         .ant-segmented-item-Content {
+          position: absolute;
+          height: 66px;
+          box-sizing: border-box;
+          padding: 15px 32px;
+          width: 100%;
+          line-height: 66px;
+          .ant-options-shutDown {
+            position: absolute;
+            right: 16px;
+            align-items: center;
+            display: flex;
+            top: 0px;
+            box-sizing: border-box;
+          }
           .ant-options-item-title {
             height: 18px;
             line-height: 18px;
