@@ -14,7 +14,10 @@ export const SearchWarpper = styled.div`
       height: 100%;
       align-items: center;
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      /* grid-template-columns: repeat(3, minmax(0, 1fr)); */
+      grid-template-columns:
+        minmax(0, 32.823%) minmax(0, 1fr)
+        minmax(0, 32.823%);
       /* grid-template-columns: repeat(3, calc((100% - 4px) / 3)); */
       border: 1px solid #ddd;
       border-radius: 999px;
@@ -23,7 +26,7 @@ export const SearchWarpper = styled.div`
         rgba(0, 0, 0, 0.02) 0 0 0 1px;
       box-sizing: border-box;
       grid-auto-flow: column;
-      gap: 2px;
+      gap: 4px;
 
       /* ------------------------------------------------------------- */
       .ant-segmented-item {
@@ -122,7 +125,9 @@ export const SearchWarpper = styled.div`
         .ant-segmented-item-label::after {
         transform: scale(1);
         opacity: 1;
-
+        box-shadow:
+          rgba(0, 0, 0, 0.1) 0px 3px 12px 0px,
+          rgba(0, 0, 0, 0.08) 0px 1px 2px 0px;
         transition: ${(props) =>
           props.$playedEntry ? "transform 0.4s ease" : "none"};
       }
@@ -131,6 +136,7 @@ export const SearchWarpper = styled.div`
       .ant-segmented-item .ant-segmented-item-label {
         position: absolute;
         z-index: 3;
+        overflow: visible;
         height: 66px;
         box-sizing: border-box;
         width: 100%;
@@ -142,6 +148,7 @@ export const SearchWarpper = styled.div`
           box-sizing: border-box;
           padding: 15px 32px;
           width: 100%;
+          z-index: 1;
           line-height: 66px;
           .ant-options-shutDown {
             position: absolute;
@@ -178,8 +185,10 @@ export const SearchWarpper = styled.div`
         background-color: #fff;
         border-radius: 999px;
         transform-origin: center;
+
         transform: scale(0.5);
         transition: none;
+        border: 1px solid #ddd;
         z-index: -1;
         opacity: 0;
       }

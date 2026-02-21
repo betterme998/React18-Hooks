@@ -5,6 +5,10 @@ export const IconShutDownWrapper = styled.div`
     border: none;
     background: rgba(0, 0, 0, 0);
     position: relative; // 添加相对定位以确保::before定位正确
+    border-radius: 50%;
+  }
+  button:hover::before {
+    background-color: #f7f7f7;
   }
   button::before {
     content: "";
@@ -12,10 +16,10 @@ export const IconShutDownWrapper = styled.div`
     height: 32px;
     display: block;
     position: absolute;
+    z-index: -1;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     border-radius: 50%;
-    background-color: #f7f7f7;
   }
 `;
