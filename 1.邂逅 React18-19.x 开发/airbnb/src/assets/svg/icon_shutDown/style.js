@@ -6,6 +6,7 @@ export const IconShutDownWrapper = styled.div`
     background: rgba(0, 0, 0, 0);
     position: relative; // 添加相对定位以确保::before定位正确
     border-radius: 50%;
+    padding: 10px;
   }
   button:hover::before {
     background-color: #f7f7f7;

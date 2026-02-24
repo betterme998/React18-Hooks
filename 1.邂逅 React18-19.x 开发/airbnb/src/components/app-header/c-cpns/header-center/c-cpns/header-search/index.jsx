@@ -87,15 +87,25 @@ const HeaderSearch = memo(
               <div>
                 <div className="ant-options-item-title">{item.title}</div>
                 <div className="ant-options-input">
-                  <Input
-                    classNames={{
-                      root: "ant-options-item-input",
+                  <ConfigProvider
+                    theme={{
+                      components: {
+                        Input: {
+                          paddingInlineSM: 0,
+                        },
+                      },
                     }}
-                    size="small"
-                    variant="borderless"
-                    placeholder={item.description}
-                    onFocus={() => handleChange(item.title)}
-                  />
+                  >
+                    <Input
+                      classNames={{
+                        root: "ant-options-item-input",
+                      }}
+                      size="small"
+                      variant="borderless"
+                      placeholder={item.description}
+                      onFocus={() => handleChange(item.title)}
+                    />
+                  </ConfigProvider>
                 </div>
               </div>
               <div className="ant-options-shutDown">

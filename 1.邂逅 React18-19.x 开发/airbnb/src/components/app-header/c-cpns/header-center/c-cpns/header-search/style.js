@@ -47,7 +47,7 @@ export const SearchWarpper = styled.div`
       .ant-segmented-item:not(:first-child)::before {
         content: "";
         position: absolute;
-        left: 0;
+        left: -3px;
         top: 50%;
         transform: translateY(-50%);
         width: 1px;
@@ -55,6 +55,9 @@ export const SearchWarpper = styled.div`
         background: #ddd;
         z-index: 4; /* 保证在指示器之上 */
         pointer-events: none;
+      }
+      .ant-segmented-item:last-child::before {
+        left: -2px;
       }
       /* 隐藏第一个项的左侧分割线 */
       .ant-segmented-item:first-of-type::before {
@@ -121,15 +124,22 @@ export const SearchWarpper = styled.div`
       .ant-segmented-item-selected .ant-segmented-item-label {
         z-index: 3;
       }
-      .ant-segmented-item.ant-segmented-item-selected
+      .ant-segmented-item.ant-segmented-item-selected {
         .ant-segmented-item-label::after {
-        transform: scale(1);
-        opacity: 1;
-        box-shadow:
-          rgba(0, 0, 0, 0.1) 0px 3px 12px 0px,
-          rgba(0, 0, 0, 0.08) 0px 1px 2px 0px;
-        transition: ${(props) =>
-          props.$playedEntry ? "transform 0.4s ease" : "none"};
+          transform: scale(1);
+          opacity: 1;
+          box-shadow:
+            rgba(0, 0, 0, 0.1) 0px 3px 12px 0px,
+            rgba(0, 0, 0, 0.08) 0px 1px 2px 0px;
+          transition: ${(props) =>
+            props.$playedEntry ? "transform 0.4s ease" : "none"};
+        }
+        .ant-segmented-item-label
+          .ant-segmented-item-Content
+          .ant-options-shutDown {
+          //选中关闭按钮
+          display: flex;
+        }
       }
 
       /* 新增：确保未选中滑块的文字也在背景之上 */
@@ -151,16 +161,23 @@ export const SearchWarpper = styled.div`
           z-index: 1;
           line-height: 66px;
           .ant-options-shutDown {
+            display: none;
             position: absolute;
-            right: 16px;
+            right: 6px;
             align-items: center;
-            display: flex;
             top: 0px;
             box-sizing: border-box;
           }
           .ant-options-item-title {
             height: 18px;
-            line-height: 18px;
+            padding-bottom: 2px;
+            line-height: 1rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-align: left;
+            color: #222;
+            text-overflow: ellipsis;
+            box-sizing: border-box;
           }
           .ant-options-input {
             height: 18px;
