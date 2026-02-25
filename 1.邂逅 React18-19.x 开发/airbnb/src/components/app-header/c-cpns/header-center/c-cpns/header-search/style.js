@@ -151,6 +151,7 @@ export const SearchWarpper = styled.div`
         box-sizing: border-box;
         width: 100%;
         padding: 0;
+        /* left: -1px;  */
         line-height: 66px;
         .ant-segmented-item-Content {
           position: absolute;
@@ -169,27 +170,61 @@ export const SearchWarpper = styled.div`
             box-sizing: border-box;
           }
           .ant-options-item-title {
+            font-family: Airbnb Cereal VF, Circular, -apple-system, BlinkMacSystemFont, Roboto, Helvetica Neue, sans-serif;
             height: 18px;
             padding-bottom: 2px;
             line-height: 1rem;
             font-size: 0.75rem;
             font-weight: 500;
             text-align: left;
+            /* left: -2px; */
             color: #222;
             text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: clip;
             box-sizing: border-box;
           }
           .ant-options-input {
             height: 18px;
+            box-sizing: border-box;
             line-height: 18px;
             .ant-options-item-input {
               height: 18px;
+              font-size: 0.875rem;
+              
+              /* font-weight: 500; */
+              color: #222;
               border: none;
+              padding: 0;
+              box-sizing: border-box;
+              position: relative;
+              top: -1px;
+              margin: 0;
+              text-overflow: ellipsis;
+              letter-spacing: normal;
+              white-space: nowrap;
+              font-family: inherit;
+              font-family: 'Airbnb Cereal VF';
               background: rgba(0, 0, 0, 0);
               /* pointer-events: none; */
+              /* background-color: red; */
             }
+            .ant-options-item-input::placeholder {
+              color: #6a6a6a;
+            }
+            
           }
         }
+        .ant-segmented-item-Content1{
+        padding: 15px 24px;
+        }
+        .ant-segmented-item-Content2{
+        padding:15px 96.968px 15px 24px;
+        }
+      }
+      .ant-segmented-item:last-child .ant-segmented-item-label {
+        right: -1px;
+        /* left: 0; */
       }
       .ant-segmented-item .ant-segmented-item-label::after {
         content: "";

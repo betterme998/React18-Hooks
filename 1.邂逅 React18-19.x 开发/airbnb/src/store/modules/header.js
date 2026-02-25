@@ -8,7 +8,7 @@ const headerSlice = createSlice({
     tabsKey: "1",
     segmented: "",
     label: [
-      { title: "地点1", description: "搜索目的地" },
+      { title: "地点", description: "搜索目的地", input:true },
       { title: "时间", description: "添加日期" },
       { title: "人员", description: "添加人数" },
     ],

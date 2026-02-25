@@ -63,6 +63,7 @@ export const NavWrapper = styled.div`
         }
         .nav-tab-label-text {
           /* 阻止文字被选中 */
+          font-weight: 500;
           user-select: none;
           -webkit-user-select: none;
           -moz-user-select: none;
@@ -81,7 +82,7 @@ export const NavWrapper = styled.div`
     }
     .ant-tabs-tab-active {
       color: #222222;
-      font-weight: 600;
+      font-weight: 500;
       text-shadow: none;
       .ant-tabs-tab-btn {
         text-shadow: none;
@@ -113,6 +114,7 @@ export const NavIconWrapper = styled.div`
 
   /* 把文字也放到独立合成层并开启字体平滑，避免被图标缩放时受影响 */
   .nav-tab-label-text {
+    
     will-change: transform, opacity;
     transform: translateZ(0); /* 单独合成层，避免与图标合成到同一层 */
     -webkit-font-smoothing: antialiased; /* 字体平滑 */
