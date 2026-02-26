@@ -12,6 +12,7 @@ import { Segmented, ConfigProvider, Input } from "antd";
 import { connect } from "react-redux";
 import { changeSegmented } from "@/store/modules/header";
 import IconShutDown from "@/assets/svg/icon_shutDown";
+import IconSearch from "@/assets/svg/icon_search";
 
 const HeaderSearch = memo(
   ({
@@ -80,10 +81,12 @@ const HeaderSearch = memo(
 
     // 滑块内容
     const options = useMemo(() => {
-      return labels.map((item,index) => {
+      return labels.map((item, index) => {
         return {
           label: (
-            <div className={`ant-segmented-item-Content ant-segmented-item-Content${index}`}>
+            <div
+              className={`ant-segmented-item-Content ant-segmented-item-Content${index}`}
+            >
               <div>
                 <div className="ant-options-item-title">{item.title}</div>
                 <div className="ant-options-input">
@@ -100,14 +103,25 @@ const HeaderSearch = memo(
                       classNames={{
                         root: "ant-options-item-input",
                       }}
-                      styles={{input:{display: item.input ?  "block":"none"}}}
+                      styles={{
+                        input: { display: item.input ? "block" : "none" },
+                      }}
                       size="small"
                       variant="borderless"
                       placeholder={item.description}
                       onFocus={() => handleChange(item.title)}
                     />
                   </ConfigProvider>
-                  <div className="ant-options-item-input" style={{display: item.input ?  "none":"block",color:"#6a6a6a",textAlign:"left"}}>{item.description}</div>
+                  <div
+                    className="ant-options-item-input"
+                    style={{
+                      display: item.input ? "none" : "block",
+                      color: "#6a6a6a",
+                      textAlign: "left",
+                    }}
+                  >
+                    {item.description}
+                  </div>
                 </div>
               </div>
               <div className="ant-options-shutDown">
@@ -158,6 +172,7 @@ const HeaderSearch = memo(
             value={navIndex === null ? "" : labels[navIndex].title}
           />
         </ConfigProvider>
+        <IconSearch></IconSearch>
       </SearchWarpper>
     );
   },

@@ -151,7 +151,6 @@ export const SearchWarpper = styled.div`
         box-sizing: border-box;
         width: 100%;
         padding: 0;
-        /* left: -1px;  */
         line-height: 66px;
         .ant-segmented-item-Content {
           position: absolute;
@@ -170,7 +169,14 @@ export const SearchWarpper = styled.div`
             box-sizing: border-box;
           }
           .ant-options-item-title {
-            font-family: Airbnb Cereal VF, Circular, -apple-system, BlinkMacSystemFont, Roboto, Helvetica Neue, sans-serif;
+            font-family:
+              Airbnb Cereal VF,
+              Circular,
+              -apple-system,
+              BlinkMacSystemFont,
+              Roboto,
+              Helvetica Neue,
+              sans-serif;
             height: 18px;
             padding-bottom: 2px;
             line-height: 1rem;
@@ -191,7 +197,7 @@ export const SearchWarpper = styled.div`
             .ant-options-item-input {
               height: 18px;
               font-size: 0.875rem;
-              
+
               /* font-weight: 500; */
               color: #222;
               border: none;
@@ -204,7 +210,7 @@ export const SearchWarpper = styled.div`
               letter-spacing: normal;
               white-space: nowrap;
               font-family: inherit;
-              font-family: 'Airbnb Cereal VF';
+              font-family: "Airbnb Cereal VF";
               background: rgba(0, 0, 0, 0);
               /* pointer-events: none; */
               /* background-color: red; */
@@ -212,20 +218,20 @@ export const SearchWarpper = styled.div`
             .ant-options-item-input::placeholder {
               color: #6a6a6a;
             }
-            
           }
         }
-        .ant-segmented-item-Content1{
-        padding: 15px 24px;
+        .ant-segmented-item-Content0 {
+          left: -1px;
         }
-        .ant-segmented-item-Content2{
-        padding:15px 96.968px 15px 24px;
+        .ant-segmented-item-Content1 {
+          padding: 15px 24px;
+        }
+        .ant-segmented-item-Content2 {
+          padding: 15px 96.968px 15px 24px;
+          right: -1px;
         }
       }
-      .ant-segmented-item:last-child .ant-segmented-item-label {
-        right: -1px;
-        /* left: 0; */
-      }
+
       .ant-segmented-item .ant-segmented-item-label::after {
         content: "";
         top: 0;
@@ -241,6 +247,8 @@ export const SearchWarpper = styled.div`
         transform: scale(0.5);
         transition: none;
         border: 1px solid #ddd;
+        border-left: none;
+        border-right: none;
         z-index: -1;
         opacity: 0;
       }
