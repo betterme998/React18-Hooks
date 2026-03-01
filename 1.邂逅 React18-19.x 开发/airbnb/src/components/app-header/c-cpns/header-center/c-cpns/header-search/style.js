@@ -3,9 +3,10 @@ import styled from "styled-components";
 export const SearchWarpper = styled.div`
   width: 850px;
   height: 66px;
+
   .ant-segmented {
     width: 100%;
-
+    position: relative;
     border-radius: 32px;
     height: 100%;
     align-items: center;
@@ -256,5 +257,17 @@ export const SearchWarpper = styled.div`
   }
   .ant-segmented:focus {
     outline: none;
+  }
+
+  .rightSearch {
+    position: absolute;
+    cursor: pointer;
+    right: 0;
+    top: -1px;
+    height: 68px;
+    width: 68px;
+    padding: 10px;
+    box-sizing: border-box;
+    z-index: 2;
   }
 `;
