@@ -173,7 +173,7 @@ const HeaderSearch = memo(
           />
         </ConfigProvider>
         <div className="rightSearch">
-          <IconSearch></IconSearch>
+          <IconSearch select={navIndex !== null}></IconSearch>
         </div>
       </SearchWarpper>
     );

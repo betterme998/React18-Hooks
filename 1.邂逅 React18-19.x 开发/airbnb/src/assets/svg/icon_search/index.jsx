@@ -1,13 +1,15 @@
-import React, { memo } from "react";
+import React, { memo, useEffect } from "react";
 import { IconSearchWarpper } from "./style";
 import { styleStrToObject } from "../utils";
-import { Button } from "antd";
 
-const IconSearch = memo(() => {
+const IconSearch = memo(({ select }) => {
+  useEffect(() => {
+    console.log(select);
+  }, [select]);
   return (
     <IconSearchWarpper>
-      <button>
-        <div>
+      <button className={`${select ? "icon-search-button-active" : ""}`}>
+        <div className={"icon-search-container"}>
           <div>
             <svg
               viewBox="0 0 32 32"
@@ -26,7 +28,11 @@ const IconSearch = memo(() => {
               ></path>
             </svg>
           </div>
-          <div>搜索</div>
+          <div
+            className={`icon-search-text ${select ? "icon-search-text-active" : ""}`}
+          >
+            搜索
+          </div>
         </div>
       </button>
     </IconSearchWarpper>
