@@ -7,7 +7,7 @@ export const IconSearchWarpper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 24px;
+    border-radius: 50px;
     text-align: inherit;
     font-size: inherit;
     line-height: inherit;
@@ -22,22 +22,51 @@ export const IconSearchWarpper = styled.div`
       #e31c5f 50%,
       #d70466 100%
     ); */
-    transition: width 0.2s ease;
   }
   .icon-search-button-active {
     width: 80px;
+    border-radius: 24px;
   }
 
   .icon-search-container {
     display: flex;
     height: 48px;
-    width: auto;
-    gap: 8px;
+    width: 48px;
+    border-radius: 50px;
     justify-content: center;
     align-items: center;
     color: #fff;
+    transform: none;
+    background-color: #e00b41;
+    padding: 10px;
     box-sizing: border-box;
+    /* transform-origin: right; */
+    overflow: hidden;
+    transition:
+      width 0.2s ease,
+      gap 0.2s ease;
+    will-change: width;
+
+    .icon-search-text {
+      /* visibility: hidden; */
+      display: none;
+      width: 0;
+      transition:
+        opacity 0.2s ease,
+        width 0.2s ease;
+    }
     .active {
+    }
+  }
+  .icon-search-container-active {
+    gap: 8px;
+    border-radius: 24px;
+    width: 80px;
+
+    .icon-search-text-active {
+      /* visibility: visible; */
+      display: block;
+      width: auto;
     }
   }
 `;

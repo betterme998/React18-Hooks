@@ -1,15 +1,37 @@
-import React, { memo, useEffect } from "react";
+import React, { memo, useEffect, useState, useRef } from "react";
 import { IconSearchWarpper } from "./style";
 import { styleStrToObject } from "../utils";
 
 const IconSearch = memo(({ select }) => {
+  const [action, setAction] = useState(false);
+  const touchTimeoutRef = useRef(null);
+  // 清除定时器
   useEffect(() => {
-    console.log(select);
+    const touchTimer = touchTimeoutRef.current;
+    return () => {
+      if (touchTimer) {
+        clearImmediate(touchTimer);
+      }
+    };
+  }, []);
+  useEffect(() => {
+    if (select) {
+      touchTimeoutRef.current = setTimeout(() => {
+        setAction(true);
+      }, 2000);
+    } else {
+      clearTimeout(touchTimeoutRef.current);
+      touchTimeoutRef.current = null;
+      setAction(false);
+    }
+    return () => clearTimeout(touchTimeoutRef.current);
   }, [select]);
   return (
     <IconSearchWarpper>
       <button className={`${select ? "icon-search-button-active" : ""}`}>
-        <div className={"icon-search-container"}>
+        <div
+          className={`icon-search-container ${select ? "icon-search-container-active" : ""}`}
+        >
           <div>
             <svg
               viewBox="0 0 32 32"
@@ -29,7 +51,7 @@ const IconSearch = memo(({ select }) => {
             </svg>
           </div>
           <div
-            className={`icon-search-text ${select ? "icon-search-text-active" : ""}`}
+            className={`icon-search-text ${action ? "icon-search-text-active" : ""}`}
           >
             搜索
           </div>
