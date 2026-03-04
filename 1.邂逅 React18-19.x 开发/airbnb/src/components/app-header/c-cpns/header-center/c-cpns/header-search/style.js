@@ -265,7 +265,7 @@ export const SearchWarpper = styled.div`
     right: 0;
     top: -1px;
     height: 68px;
-    width: 68px;
+    width: auto;
     padding: 10px;
     box-sizing: border-box;
     z-index: 2;

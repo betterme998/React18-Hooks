@@ -51,7 +51,7 @@ const IconSearch = memo(({ select }) => {
             </svg>
           </div>
           <div
-            className={`icon-search-text ${action ? "icon-search-text-active" : ""}`}
+            className={`icon-search-text ${select ? "icon-search-text-active" : ""}`}
           >
             搜索
           </div>
