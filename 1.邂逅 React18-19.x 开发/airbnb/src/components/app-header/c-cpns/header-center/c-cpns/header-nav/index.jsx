@@ -24,7 +24,7 @@ const HeaderNav = memo(({ tabsKey, changeTabsKey }) => {
   const changeTimeoutRef = useRef(null);
 
   const pendingKeyRef = useRef(null); // 记录当前 pending 的目标 key
-  const [twirl, setTwirl] = useState(true); //是否为选择视频
+  const [twirl, setTwirl] = useState(true); //是否为选择视频，两种视频切换效果
 
   const TRANS_MS = 150;
 
@@ -70,7 +70,7 @@ const HeaderNav = memo(({ tabsKey, changeTabsKey }) => {
         iconRefs.current[key] = ref;
       }
     },
-    []
+    [],
   );
 
   // 鼠标事件处理
@@ -149,7 +149,7 @@ const HeaderNav = memo(({ tabsKey, changeTabsKey }) => {
       return 1; //默认大小
     },
     // [activeKey, pressedKey, hoveredKey, isTouchPressed]
-    [pressedKey, hoveredKey]
+    [pressedKey, hoveredKey],
   );
 
   // 使用 useMemo 缓存配置
@@ -263,7 +263,7 @@ const HeaderNav = memo(({ tabsKey, changeTabsKey }) => {
       // changeTabsKey(key);
     },
     // [activeKey, changeTabsKey, twirl, isChanging]
-    []
+    [],
   );
   return (
     <NavWrapper>
