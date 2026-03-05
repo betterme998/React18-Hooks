@@ -6,6 +6,7 @@ import React, {
   useState,
   useMemo,
   useCallback,
+  useLayoutEffect,
 } from "react";
 
 import { IconWrapper } from "./style";
@@ -27,6 +28,11 @@ const NavIcon = memo(({ ref, poster, videoSrc, twirl, keys, isActive2 }) => {
       setActive(Boolean(isActive2));
     }
   }, [isActive2]);
+  useLayoutEffect(() => {
+    const v = containerRef.current;
+    if (!v) return;
+    v.load(); //重新加载但不重新建元素
+  }, [twirl]);
 
   // 同步canvas和video尺寸
   useEffect(() => {
@@ -147,9 +153,13 @@ const NavIcon = memo(({ ref, poster, videoSrc, twirl, keys, isActive2 }) => {
     },
   }));
 
+  // const currentPoster = useMemo(
+  //   () => (isActive && !twirl ? poster.posterActive : poster.poster),
+  //   [isActive, poster, twirl],
+  // );
   const currentPoster = useMemo(
-    () => (isActive && !twirl ? poster.posterActive : poster.poster),
-    [isActive, poster, twirl]
+    () => (isActive ? poster.posterActive : poster.poster),
+    [isActive, poster],
   );
 
   return (
@@ -160,11 +170,11 @@ const NavIcon = memo(({ ref, poster, videoSrc, twirl, keys, isActive2 }) => {
           className="nav-video"
           disablePictureInPicture
           playsInline
-          autoPlay={twirl}
+          // autoPlay={twirl}
           muted
           poster={currentPoster}
           preload="auto"
-          key={twirl ? "twirl" : "normal"}
+          // key={twirl ? "twirl" : "normal"}
           // 针对某些特定环境的属性，如部分国产浏览器或WebView
           webkit-playsinline="true"
           x5-playsinline="true"

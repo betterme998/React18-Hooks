@@ -114,12 +114,13 @@ export const NavIconWrapper = styled.div`
 
   /* 把文字也放到独立合成层并开启字体平滑，避免被图标缩放时受影响 */
   .nav-tab-label-text {
-    
     will-change: transform, opacity;
     transform: translateZ(0); /* 单独合成层，避免与图标合成到同一层 */
     -webkit-font-smoothing: antialiased; /* 字体平滑 */
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
-    transition: color 0.12s ease, opacity 0.12s ease;
+    transition:
+      color 0.12s ease,
+      opacity 0.12s ease;
   }
 `;
