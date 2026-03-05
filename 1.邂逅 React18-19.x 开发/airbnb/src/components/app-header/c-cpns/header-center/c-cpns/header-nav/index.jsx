@@ -265,6 +265,9 @@ const HeaderNav = memo(({ tabsKey, changeTabsKey }) => {
     // [activeKey, changeTabsKey, twirl, isChanging]
     [],
   );
+  const stylesObject = {
+    indicator: { backgroundColor: "#222222", height: 3, marginBottom: 1 },
+  };
   return (
     <NavWrapper>
       <ConfigProvider
@@ -289,6 +292,7 @@ const HeaderNav = memo(({ tabsKey, changeTabsKey }) => {
           // onChange={handleTabChange}
           onTabClick={handleTabChange}
           items={tabItems}
+          styles={stylesObject}
         />
       </ConfigProvider>
     </NavWrapper>

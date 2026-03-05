@@ -170,7 +170,7 @@ const NavIcon = memo(({ ref, poster, videoSrc, twirl, keys, isActive2 }) => {
           className="nav-video"
           disablePictureInPicture
           playsInline
-          // autoPlay={twirl}
+          autoPlay={twirl}
           muted
           poster={currentPoster}
           preload="auto"
