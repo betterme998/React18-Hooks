@@ -61,7 +61,7 @@ export const IconWrapper = styled.div`
       background-clip: text;
       top: -1px;
       font-weight: 700;
-      font-size: 8px;
+      font-size: 0.5rem;
       text-align: center;
       text-rendering: optimizeLegibility;
       letter-spacing: 0.04em;
@@ -74,6 +74,16 @@ export const IconWrapper = styled.div`
       /* 小额调整可提高清晰度 */
       display: inline-block;
       transform: translateZ(0);
+
+      /* 防止放大恢复后模糊的额外优化 */
+      -webkit-transform: translate3d(0, 0, 0);
+      transform: translate3d(0, 0, 0);
+      filter: none;
+      -webkit-filter: none;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
   }
 `;
