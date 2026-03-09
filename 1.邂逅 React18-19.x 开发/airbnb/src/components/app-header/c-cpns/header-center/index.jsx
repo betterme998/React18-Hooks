@@ -3,6 +3,7 @@ import { CenterWrapper } from "./style";
 import HeaderNav from "./c-cpns/header-nav";
 import HeaderSearch from "./c-cpns/header-search";
 import HeaderPopover from "./c-cpns/header-popover";
+import HeaderLittleSearch from "./c-cpns/header-little-search";
 
 const HeaderCenter = memo(() => {
   return (
@@ -18,6 +19,7 @@ const HeaderCenter = memo(() => {
                   open={open}
                   handleTriggerClick={handleTriggerClick}
                 />
+                <HeaderLittleSearch />
               </div>
             )}
           </HeaderPopover>
