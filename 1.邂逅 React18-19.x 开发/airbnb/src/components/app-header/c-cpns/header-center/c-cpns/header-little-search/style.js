@@ -61,8 +61,6 @@ export const HeaderLittleSearchWarpper = styled.div`
       max-width: 100%;
       box-sizing: border-box;
       .LittleButton {
-        border-bottom-left-radius: 40px;
-        border-top-left-radius: 40px;
         margin: -1px;
         border: 1px solid transparent;
         border-radius: 4px;
@@ -85,7 +83,57 @@ export const HeaderLittleSearchWarpper = styled.div`
         outline: none; //取消元素轮廓线的样式
         text-decoration: none; //无下划线
         position: relative;
+        .LittleImgCont {
+          transform-origin: 50% 0px 0px;
+          height: 48px;
+          box-sizing: border-box;
+          .LittleImg {
+            margin-inline-start: 8px;
+            height: 48px;
+            width: 48px;
+            display: inline-block;
+            vertical-align: middle;
+            overflow-clip-margin: content-box; //以内容框（content box）的边缘作为裁剪边界
+            overflow: clip; //专门为静态裁剪设计的，适合不需要滚动交互的场景。
+          }
+        }
+        .LittleItemText {
+          padding: 0 16px 0 0;
+          padding-inline: 0 16px;
+          transition: opacity 0.15s cubic-bezier(0, 0, 1, 1) 0.15s;
+          line-height: 1.375rem;
+          font-size: 0.875rem;
+          font-weight: 500;
+          text-overflow: ellipsis;
+          flex: 1 1 auto;
+          opacity: 1;
+          white-space: nowrap; //不换行
+          overflow: hidden;
+          box-sizing: border-box;
+        }
+        .LittleItemTextCentre {
+          padding-inline: 16px;
+          padding: 0 16px;
+        }
       }
+      .LittleButtonLeft {
+        border-bottom-left-radius: 40px;
+        border-top-left-radius: 40px;
+      }
+      .LittleButtonRight {
+        border-bottom-right-radius: 40px;
+        border-top-right-radius: 40px;
+      }
+      .LittleSeparate {
+        background-color: #dddddd;
+        max-width: 1px;
+        height: 24px;
+        box-sizing: border-box;
+      }
+    }
+    .LittleSearch {
+      padding: 7px 7px 7px 0;
+      box-sizing: border-box;
     }
   }
 `;

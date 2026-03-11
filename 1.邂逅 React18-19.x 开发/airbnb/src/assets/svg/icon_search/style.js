@@ -6,7 +6,7 @@ export const IconSearchWarpper = styled.div`
   button {
     display: flex;
     justify-content: center;
-    border-radius: 50px;
+    border-radius: ${(props) => (props.radius ? `${props.radius}px` : "50px")};
     text-align: inherit;
     font-size: inherit;
     line-height: inherit;
@@ -25,9 +25,9 @@ export const IconSearchWarpper = styled.div`
     display: flex;
     position: absolute; //关键代码：这里定位后会防止元素脱离正常文档流，否则会出现抖动错乱
     right: 10px;
-    height: 48px;
-    width: 48px;
-    border-radius: 50px;
+    height: ${(props) => (props.width ? `${props.width}px` : "48px")};
+    width: ${(props) => (props.width ? `${props.width}px` : "48px")};
+    border-radius: ${(props) => (props.radius ? `${props.radius}px` : "50px")};
     justify-content: center; /*折叠式居中 */
     align-items: center;
     color: #fff;
