@@ -2,6 +2,8 @@ import React, { memo } from "react";
 import { CenterWrapper } from "./style";
 import HeaderNav from "./c-cpns/header-nav";
 import HeaderSearch from "./c-cpns/header-search";
+import HeaderSearch2 from "./c-cpns/header-search2";
+
 import HeaderPopover from "./c-cpns/header-popover";
 import HeaderLittleSearch from "./c-cpns/header-little-search";
 
@@ -15,6 +17,11 @@ const HeaderCenter = memo(() => {
               <div className="popoverSolt" ref={triggerRef}>
                 <HeaderNav />
                 <HeaderSearch
+                  setComponentBData={setComponentBData}
+                  open={open}
+                  handleTriggerClick={handleTriggerClick}
+                />
+                <HeaderSearch2
                   setComponentBData={setComponentBData}
                   open={open}
                   handleTriggerClick={handleTriggerClick}

@@ -20,6 +20,11 @@ export const CenterWrapper = styled.div`
     .NSCont {
       position: relative;
       /* background-color: red; */
+      .popoverSolt {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
     }
     .backCont {
       position: absolute;

@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 import { HeaderLittleSearchWarpper } from "./style";
-import littleImg from "./config/littleImg.config.js";
+import littleImg from "@/components/app-header/c-cpns/header-center/c-cpns/header-search2/config/littleImg.config.js";
 import IconSearch from "@/assets/svg/icon_search";
 
 const headerLittleSearch = memo((props) => {
@@ -33,7 +33,7 @@ const headerLittleSearch = memo((props) => {
           </button>
         </div>
         <div className="LittleSearch">
-          <IconSearch width={32} height={24} />
+          <IconSearch />
         </div>
       </div>
     </HeaderLittleSearchWarpper>

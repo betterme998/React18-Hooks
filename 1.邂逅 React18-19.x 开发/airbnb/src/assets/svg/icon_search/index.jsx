@@ -2,7 +2,7 @@ import React, { memo, useEffect, useState, useRef } from "react";
 import { IconSearchWarpper } from "./style";
 import { styleStrToObject } from "../utils";
 
-const IconSearch = memo(({ width = 48, radius = 50, select }) => {
+const IconSearch = memo(({ select }) => {
   const [action, setAction] = useState(false);
   const touchTimeoutRef = useRef(null);
   // 清除定时器
@@ -27,7 +27,7 @@ const IconSearch = memo(({ width = 48, radius = 50, select }) => {
     return () => clearTimeout(touchTimeoutRef.current);
   }, [select]);
   return (
-    <IconSearchWarpper width={width} radius={radius}>
+    <IconSearchWarpper>
       <button className={`${select ? "icon-search-button-active" : ""}`}>
         <div
           className={`icon-search-container ${select ? "icon-search-container-active" : ""}`}

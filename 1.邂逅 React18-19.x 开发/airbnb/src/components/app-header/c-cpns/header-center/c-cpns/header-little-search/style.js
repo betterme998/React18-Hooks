@@ -134,6 +134,13 @@ export const HeaderLittleSearchWarpper = styled.div`
     .LittleSearch {
       padding: 7px 7px 7px 0;
       box-sizing: border-box;
+      .icon-search-container {
+        position: relative;
+        right: 0;
+        height: 32px;
+        width: 32px;
+        border-radius: 24px;
+      }
     }
   }
 `;
