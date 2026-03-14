@@ -92,7 +92,6 @@ export const HeaderLittleSearchWarpper = styled.div`
             height: 48px;
             width: 48px;
             display: inline-block;
-            vertical-align: middle;
             overflow-clip-margin: content-box; //以内容框（content box）的边缘作为裁剪边界
             overflow: clip; //专门为静态裁剪设计的，适合不需要滚动交互的场景。
           }
