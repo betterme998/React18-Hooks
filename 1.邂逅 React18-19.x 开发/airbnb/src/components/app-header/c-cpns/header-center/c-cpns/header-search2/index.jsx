@@ -23,11 +23,74 @@ const HeaderSearch2 = memo(
     open,
     handleTriggerClick,
     labels,
+    tabsKey,
   }) => {
     const [navIndex, setNavIndex] = useState(null); //状态控制导航指示器位置
     const containerRef = useRef(null);
     const [state, setState] = useState(null);
     const [playedEntry, setPlayedEntry] = useState(false); // 新增：是否播放首次选中动画
+    const [little, setLittle] = useState(true); //是否缩小
+
+    // // img使用canvas绘制代码--------------------------
+    // // const imageRef = useRef(null); //引用图标容器DOM元素
+    // // const canvasRef = useRef(null); //绘制用canvas
+    // // const rafRef = useRef(null); //requestAnimationFrame id
+    // // const drawLockRef = useRef(false); //防重启
+
+    // // 同步canvas和img尺寸
+    // useEffect(() => {
+    //   const image = imageRef.current;
+    //   const canvas = canvasRef.current;
+    //   if (!image || !canvas) return;
+    //   const updateCanvasSize = () => {
+    //     console.log(imageRef);
+    //     // 如果 videoWidth 为 0，说明元数据还没准备好
+    //     if (image.width > 0) {
+    //       const dpr = window.devicePixelRatio || 1;
+    //       canvas.width = image.width * dpr;
+    //       canvas.height = image.clientHeight * dpr;
+    //     }
+    //   };
+    //   // 立即尝试一次
+    //   updateCanvasSize();
+    //   // 监听元数据加载完成事件
+    //   const handleLoadedMetadata = () => {
+    //     console.log("视频元数据已加载");
+    //     updateCanvasSize();
+    //   };
+
+    //   image.addEventListener("load", handleLoadedMetadata);
+    //   return () => {
+    //     image.removeEventListener("load", handleLoadedMetadata);
+    //   };
+    // }, []);
+    // // 每帧绘制 img 到 canvas
+    // const drawFrame = useCallback(() => {
+    //   const c = canvasRef.current;
+    //   const i = imageRef.current;
+    //   if (!c || !i) return;
+
+    //   const ctx = c.getContext("2d");
+    //   try {
+    //     ctx.clearRect(0, 0, c.width, c.height);
+    //     ctx.drawImage(i, 0, 0, c.width, c.height);
+    //   } catch (e) {}
+    //   rafRef.current = requestAnimationFrame(drawFrame);
+    // }, []); // 依赖只使用 refs，refs 在生命周期内稳定
+
+    // const startCanvasLoop = useCallback(() => {
+    //   if (drawLockRef.current) return;
+    //   drawLockRef.current = true;
+    //   if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    //   rafRef.current = requestAnimationFrame(drawFrame);
+    // }, [drawFrame]); // 明确依赖 drawFrame
+
+    // // 组件挂载时绘制img
+    // useEffect(() => {
+    //   const i = imageRef.current;
+    //   if (!i) return;
+    //   startCanvasLoop();
+    // }, [tabsKey, startCanvasLoop]);
 
     useEffect(() => {
       if (!open) {
@@ -144,7 +207,13 @@ const HeaderSearch2 = memo(
                 <span className="LittleSpan">{item.description}</span>
                 {index === 0 && (
                   <div className="LittleImgCont">
-                    <img className="LittleImg" src={item.posterActive} alt="" />
+                    <img
+                      // ref={imageRef}
+                      className="LittleImg"
+                      src={littleImg[Number(tabsKey) - 1].posterActive}
+                      alt=""
+                    />
+                    {/* <canvas ref={canvasRef} className="nav-canvas"></canvas> */}
                   </div>
                 )}
 
@@ -156,7 +225,7 @@ const HeaderSearch2 = memo(
           value: item.title,
         };
       });
-    }, []);
+    }, [tabsKey]);
     // ------------------------------------------------------气泡组件数据-----------
 
     // 当state变化时，通知ComponentA
@@ -170,6 +239,7 @@ const HeaderSearch2 = memo(
       <SearchWarpper
         open={open}
         $playedEntry={playedEntry}
+        little={little}
         className="headerSegmented"
         style={{ position: "relative" }}
       >
@@ -187,7 +257,7 @@ const HeaderSearch2 = memo(
           <Segmented
             ref={containerRef}
             // options={["Daily", "Weekly", "Monthly"]}
-            options={options2}
+            options={little ? options2 : options}
             size="large"
             block
             shape="round"
@@ -196,9 +266,7 @@ const HeaderSearch2 = memo(
             value={navIndex === null ? "" : labels[navIndex].title}
           />
         </ConfigProvider>
-        <div className="rightSearch">
-          <IconSearch select={navIndex !== null}></IconSearch>
-        </div>
+        <IconSearch select={navIndex !== null}></IconSearch>
       </SearchWarpper>
     );
   },
@@ -206,6 +274,7 @@ const HeaderSearch2 = memo(
 // 参数一
 const mapStateToProps = (state) => ({
   labels: state.header.label,
+  tabsKey: state.header.tabsKey,
 });
 
 // 参数二

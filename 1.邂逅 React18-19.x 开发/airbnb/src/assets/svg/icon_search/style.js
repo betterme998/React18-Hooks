@@ -3,6 +3,12 @@ import styled from "styled-components";
 export const IconSearchWarpper = styled.div`
   height: 100%;
   cursor: pointer;
+  z-index: 2;
+
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
   button {
     display: flex;
     justify-content: center;

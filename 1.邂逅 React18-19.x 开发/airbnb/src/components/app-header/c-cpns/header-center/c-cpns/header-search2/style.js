@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 export const SearchWarpper = styled.div`
-  width: 345px; //---------------
-  height: 46px; //---------------
+  width: ${(props) => (props.little ? "345px;" : "850px")};
+  height: ${(props) => (props.little ? "46px;" : "66px")};
 
   .ant-segmented {
     width: 100%;
@@ -14,7 +14,8 @@ export const SearchWarpper = styled.div`
     .ant-segmented-group {
       height: 100%;
       align-items: center;
-      display: grid;
+      /* display: grid; */
+      display: ${(props) => (props.little ? "flex" : "grid")};
       /* grid-template-columns: repeat(3, minmax(0, 1fr)); */
       grid-template-columns:
         minmax(0, 32.823%) minmax(0, 1fr)
@@ -56,6 +57,7 @@ export const SearchWarpper = styled.div`
         background: #ddd;
         z-index: 4; /* 保证在指示器之上 */
         pointer-events: none;
+        opacity: ${(props) => (props.little ? 0 : 1)};
       }
       .ant-segmented-item:last-child::before {
         left: -2px;
@@ -149,6 +151,7 @@ export const SearchWarpper = styled.div`
         z-index: 3;
         overflow: visible;
         height: 66px;
+        height: 100%;
         box-sizing: border-box;
         width: 100%;
         padding: 0;
@@ -259,19 +262,20 @@ export const SearchWarpper = styled.div`
     outline: none;
   }
 
-  .rightSearch {
-    position: absolute;
-    cursor: pointer;
-    right: 0;
-    top: -1px;
-    height: 68px;
-    width: auto;
-    padding: 10px;
-    box-sizing: border-box;
-    z-index: 2;
+  /* ----------------------缩小----------------------------- */
+  .icon-search-container {
+    right: ${(props) => (props.little ? "7px;" : "10px")};
+    width: ${(props) => (props.little ? "32px;" : "48px")};
+    height: ${(props) => (props.little ? "32px;" : "48px")};
+  }
+  .icon-search-container-active {
+    width: 80px;
+  }
+  & > :last-child {
+    width: ${(props) => (props.little ? "32px;" : "48px")};
+    height: ${(props) => (props.little ? "32px;" : "48px")};
   }
 
-  /* ----------------------缩小----------------------------- */
   .LittleSpan {
     padding: 0;
     border: 0;
@@ -318,7 +322,7 @@ export const SearchWarpper = styled.div`
         box-sizing: border-box;
         .LittleImg {
           margin-inline-start: 8px;
-          height: 48px;
+          /* height: 48px; */ //缩小时是否拉伸图片·高度
           width: 48px;
           display: inline-block;
           overflow-clip-margin: content-box; //以内容框（content box）的边缘作为裁剪边界

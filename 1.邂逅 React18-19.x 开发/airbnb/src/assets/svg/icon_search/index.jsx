@@ -5,6 +5,7 @@ import { styleStrToObject } from "../utils";
 const IconSearch = memo(({ select }) => {
   const [action, setAction] = useState(false);
   const touchTimeoutRef = useRef(null);
+
   // 清除定时器
   useEffect(() => {
     const touchTimer = touchTimeoutRef.current;
