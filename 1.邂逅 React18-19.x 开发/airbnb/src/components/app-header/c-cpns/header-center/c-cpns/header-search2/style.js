@@ -263,6 +263,17 @@ export const SearchWarpper = styled.div`
   }
 
   /* ----------------------缩小----------------------------- */
+  .ant-segmented-group > :nth-child(2) {
+    .ant-segmented-item-label {
+      display: ${(props) => (props.little ? "flex" : "block")};
+      justify-content: center;
+      .LittleItem {
+        width: 90px;
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+  }
   .icon-search-container {
     right: ${(props) => (props.little ? "7px;" : "10px")};
     width: ${(props) => (props.little ? "32px;" : "48px")};
@@ -319,6 +330,8 @@ export const SearchWarpper = styled.div`
       .LittleImgCont {
         transform-origin: 50% 0px 0px;
         height: 48px;
+        display: flex;
+        align-items: center;
         box-sizing: border-box;
         .LittleImg {
           margin-inline-start: 8px;
@@ -330,8 +343,8 @@ export const SearchWarpper = styled.div`
         }
       }
       .LittleItemText {
-        padding: 0 16px 0 0;
-        padding-inline: 0 16px;
+        /* padding: 0 16px 0 0;
+        padding-inline: 0 16px; */
         transition: opacity 0.15s cubic-bezier(0, 0, 1, 1) 0.15s;
         line-height: 1.375rem;
         font-size: 0.875rem;
@@ -344,8 +357,8 @@ export const SearchWarpper = styled.div`
         box-sizing: border-box;
       }
       .LittleItemTextCentre {
-        padding-inline: 16px;
-        padding: 0 16px;
+        /* padding-inline: 16px;
+        padding: 0 16px; */
       }
     }
   }

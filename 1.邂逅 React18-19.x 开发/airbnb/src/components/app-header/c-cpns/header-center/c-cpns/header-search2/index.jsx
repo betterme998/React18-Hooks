@@ -203,6 +203,8 @@ const HeaderSearch2 = memo(
         return {
           label: (
             <div className={`LittleItem LittleItem${index}`}>
+              {index === 1 && <span className="LittleSeparate"></span>}
+
               <button className="LittleButton LittleButtonLeft">
                 <span className="LittleSpan">{item.description}</span>
                 {index === 0 && (
@@ -219,7 +221,7 @@ const HeaderSearch2 = memo(
 
                 <div className="LittleItemText">{item.text}</div>
               </button>
-              {index !== 2 && <span className="LittleSeparate"></span>}
+              {index === 1 && <span className="LittleSeparate"></span>}
             </div>
           ),
           value: item.title,
