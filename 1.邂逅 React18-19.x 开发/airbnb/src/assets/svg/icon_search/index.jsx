@@ -1,32 +1,32 @@
 import React, { memo, useEffect, useState, useRef } from "react";
 import { IconSearchWarpper } from "./style";
-import { styleStrToObject } from "../utils";
+// import { styleStrToObject } from "../utils";
 
 const IconSearch = memo(({ select }) => {
-  const [action, setAction] = useState(false);
-  const touchTimeoutRef = useRef(null);
+  // const [action, setAction] = useState(false);
+  // const touchTimeoutRef = useRef(null);
 
   // 清除定时器
-  useEffect(() => {
-    const touchTimer = touchTimeoutRef.current;
-    return () => {
-      if (touchTimer) {
-        clearImmediate(touchTimer);
-      }
-    };
-  }, []);
-  useEffect(() => {
-    if (select) {
-      touchTimeoutRef.current = setTimeout(() => {
-        setAction(true);
-      }, 2000);
-    } else {
-      clearTimeout(touchTimeoutRef.current);
-      touchTimeoutRef.current = null;
-      setAction(false);
-    }
-    return () => clearTimeout(touchTimeoutRef.current);
-  }, [select]);
+  // useEffect(() => {
+  //   const touchTimer = touchTimeoutRef.current;
+  //   return () => {
+  //     if (touchTimer) {
+  //       clearImmediate(touchTimer);
+  //     }
+  //   };
+  // }, []);
+  // useEffect(() => {
+  //   if (select) {
+  //     touchTimeoutRef.current = setTimeout(() => {
+  //       setAction(true);
+  //     }, 2000);
+  //   } else {
+  //     clearTimeout(touchTimeoutRef.current);
+  //     touchTimeoutRef.current = null;
+  //     setAction(false);
+  //   }
+  //   return () => clearTimeout(touchTimeoutRef.current);
+  // }, [select]);
   return (
     <IconSearchWarpper>
       <button className={`${select ? "icon-search-button-active" : ""}`}>
@@ -40,9 +40,9 @@ const IconSearch = memo(({ select }) => {
               aria-hidden="true"
               role="presentation"
               focusable="false"
-              style={styleStrToObject(
-                "display: block; fill: none; height: 16px; width: 16px; stroke: currentcolor; stroke-width: 4; overflow: visible;",
-              )}
+              // style={styleStrToObject(
+              //   "display: block; fill: none; height: 16px; width: 16px; stroke: currentcolor; stroke-width: 4; overflow: visible;",
+              // )}
             >
               <path d="m20.666 20.666 10 10"></path>
               <path

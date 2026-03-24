@@ -56,6 +56,16 @@ export const IconSearchWarpper = styled.div`
       display: flex; /* 保证 svg 居中 */
       align-items: center;
       justify-content: center;
+      svg {
+        display: block;
+        fill: none;
+        height: 16px;
+        width: 16px;
+        stroke: currentcolor;
+        stroke-width: 4;
+        overflow: visible;
+        stroke-width: none;
+      }
     }
 
     /* 确保文字一直在流中但不可见（避免 display:none 导致的重排） */

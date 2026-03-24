@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 export const SearchWarpper = styled.div`
-  width: ${(props) => (props.little ? "345px;" : "850px")};
-  height: ${(props) => (props.little ? "46px;" : "66px")};
+  width: ${(props) => (props.little ? "345px" : "850px")};
+  height: ${(props) => (props.little ? "46px" : "66px")};
 
   .ant-segmented {
     width: 100%;
@@ -79,6 +79,7 @@ export const SearchWarpper = styled.div`
 
       /*  */
       .ant-segmented-item-selected::before,
+      .ant-segmented-item.ant-segmented-item-selected::before,
       .ant-segmented-item-selected + .ant-segmented-item::before {
         opacity: 0;
       }
@@ -150,8 +151,7 @@ export const SearchWarpper = styled.div`
         position: absolute;
         z-index: 3;
         overflow: visible;
-        height: 66px;
-        height: 100%;
+        height: ${(props) => (props.little ? "100%" : "66px")};
         box-sizing: border-box;
         width: 100%;
         padding: 0;
@@ -278,6 +278,13 @@ export const SearchWarpper = styled.div`
     right: ${(props) => (props.little ? "7px;" : "10px")};
     width: ${(props) => (props.little ? "32px;" : "48px")};
     height: ${(props) => (props.little ? "32px;" : "48px")};
+    & > div:first-child {
+      svg {
+        width: ${(props) => (props.little ? "12px;" : "16px")} !important;
+        height: ${(props) => (props.little ? "12px;" : "16px")} !important;
+        stroke-width: 5.33333;
+      }
+    }
   }
   .icon-search-container-active {
     width: 80px;
@@ -355,6 +362,7 @@ export const SearchWarpper = styled.div`
         white-space: nowrap; //不换行
         overflow: hidden;
         box-sizing: border-box;
+        color: #222;
       }
       .LittleItemTextCentre {
         /* padding-inline: 16px;

@@ -24,12 +24,19 @@ const HeaderSearch2 = memo(
     handleTriggerClick,
     labels,
     tabsKey,
+    little, //是否缩小
   }) => {
     const [navIndex, setNavIndex] = useState(null); //状态控制导航指示器位置
     const containerRef = useRef(null);
     const [state, setState] = useState(null);
     const [playedEntry, setPlayedEntry] = useState(false); // 新增：是否播放首次选中动画
-    const [little, setLittle] = useState(true); //是否缩小
+    // const [little, setLittle] = useState(false);
+
+    // 避免闭包问题
+    const playedEntryRef = useRef(navIndex);
+    useEffect(() => {
+      playedEntryRef.current = playedEntry;
+    }, [playedEntry]);
 
     // // img使用canvas绘制代码--------------------------
     // // const imageRef = useRef(null); //引用图标容器DOM元素
@@ -96,6 +103,7 @@ const HeaderSearch2 = memo(
       if (!open) {
         setNavIndex(null);
         setPlayedEntry(false);
+        // 后续思路：滑动滚动条需要关闭气泡，取消搜索框选中，目前取消气泡是判读点击位置，可能需要再传入一个专门处理滑动的函数，并且气泡组件也需要改
       }
     }, [open]);
 
@@ -240,7 +248,7 @@ const HeaderSearch2 = memo(
     return (
       <SearchWarpper
         open={open}
-        $playedEntry={playedEntry}
+        $playedEntry={playedEntryRef.current}
         little={little}
         className="headerSegmented"
         style={{ position: "relative" }}
@@ -250,7 +258,12 @@ const HeaderSearch2 = memo(
             components: {
               Segmented: {
                 trackPadding: 0,
-                itemHoverBg: open ? "#DDDDDD" : "#EBEBEB",
+                itemActiveBg: little ? "rgba(0,0,0,0)" : "rgba(0,0,0,0.15)",
+                itemHoverBg: little
+                  ? "rgba(0,0,0,0)"
+                  : open
+                    ? "#DDDDDD"
+                    : "#EBEBEB",
                 trackBg: open ? "#EBEBEB" : "#fff",
               },
             },

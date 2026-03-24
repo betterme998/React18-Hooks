@@ -141,6 +141,10 @@ export const SearchWarpper = styled.div`
           //选中关闭按钮
           display: flex;
         }
+
+        &::before {
+          opacity: 0;
+        }
       }
 
       /* 新增：确保未选中滑块的文字也在背景之上 */
