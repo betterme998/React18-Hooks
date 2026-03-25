@@ -7,8 +7,10 @@ export const HeaderWrapper = styled.div`
   height: 96px;
   box-sizing: border-box;
   padding: 0 48px;
-  position: relative;
-  box-sizing: border-box;
+  position: sticky;
+  z-index: 100;
+  width: 100%;
+  top: 0px;
 
   @media (min-width: 375px) {
     padding: 0 24px;

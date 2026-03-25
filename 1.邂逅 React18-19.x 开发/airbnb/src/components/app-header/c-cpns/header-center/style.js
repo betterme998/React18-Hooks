@@ -32,8 +32,8 @@ export const CenterWrapper = styled.div`
       top: 0;
       z-index: -1;
       width: 100%;
-      height: 96px;
-      transform: scaleY(2.08);
+      height: 80px;
+      transform: scaleY(2.5);
       transition: transform 451.75438596491193ms
         linear(
           0,
@@ -78,6 +78,16 @@ export const CenterWrapper = styled.div`
           1
         );
       transform: scaleY(0.48);
+    }
+  }
+  @media (min-width: 1440px) {
+    .search .backCont {
+      height: 96px;
+    }
+  }
+  @media (min-width: 1440px) {
+    .search .backCont {
+      transform: scaleY(2.08);
     }
   }
 `;
