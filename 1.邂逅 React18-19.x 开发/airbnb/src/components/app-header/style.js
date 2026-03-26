@@ -8,7 +8,7 @@ export const HeaderWrapper = styled.div`
   box-sizing: border-box;
   padding: 0 48px;
   position: sticky;
-  z-index: 100;
+  z-index: 99;
   width: 100%;
   top: 0px;
 

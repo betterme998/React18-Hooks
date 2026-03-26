@@ -38,20 +38,18 @@ const HeaderPopover = memo(({ children }) => {
 
     if (index === 0) {
       widthRef.current = Math.round(containerRect.width * 0.5);
-      leftRef.current = Math.round(containerRect.left);
+      leftRef.current = 0;
 
       setBubbleStyle({ left: leftRef.current, top, width: widthRef.current });
     } else if (index === 1) {
       widthRef.current = Math.round(containerRect.width * 0.8);
       leftRef.current = Math.round(
-        containerRect.left + (containerRect.width - widthRef.current) / 2,
+        (containerRect.width - widthRef.current) / 2,
       );
       setBubbleStyle({ left: leftRef.current, top, width: widthRef.current });
     } else if (index === 2) {
       widthRef.current = Math.round(containerRect.width * 0.6);
-      leftRef.current = Math.round(
-        containerRect.width - widthRef.current + containerRect.left,
-      );
+      leftRef.current = Math.round(containerRect.width - widthRef.current);
       setBubbleStyle({ left: leftRef.current, top, width: widthRef.current });
     }
   }, []);
@@ -121,7 +119,7 @@ const HeaderPopover = memo(({ children }) => {
           left: bubbleStyle?.left,
           width: bubbleStyle?.width,
           marginTop: 8,
-          zIndex: 50,
+          zIndex: 100,
           transform: open ? "scale(1)" : "scale(0)",
           /* 关键设置：从中心变换 */
           transformOrigin: "center",
@@ -160,7 +158,8 @@ const HeaderPopover = memo(({ children }) => {
         </div>
       )}
 
-      {createPortal(popoverItems, document.querySelector("#popoverPortals"))}
+      {/* 气泡 */}
+      {popoverItems}
 
       {/* <Popover
         open={open}
